@@ -1,0 +1,42 @@
+{
+  "name": "hire2inspire",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=dev nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "cron": "^2.1.0",
+    "cross-env": "^7.0.3",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "firebase-admin": "^11.5.0",
+    "form-data": "^4.0.0",
+    "googleapis": "^108.0.1",
+    "http-errors": "^1.7.3",
+    "joi": "^17.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.38",
+    "mongoose": "^5.9.19",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^2.x",
+    "nodemailer": "^6.8.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

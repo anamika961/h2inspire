@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: API Documentation for Hire2Inspire
+  description: This is  REST API collection for Hire To Inspire Application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Development server
+  - url: http://localhost:5000
+    description: Development server without api
+paths:
+  /admin/register:
+    tags: Todo CRUD operations
+    post:
+      summary: Create a Admin user.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The admin email ID.
+                  example: "admin@gmail.com"
+                password:
+                  type: string
+                  example: "Admin@123"
+                type:
+                   type: string
+                   example: "2"   
+      responses:
+        201:
+          description: Admin Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Admin created"
+                  data:
+                    type: object
+                    properties:
+                      accessToken: 
+                        type: string
+                      refreshToken:
+                        type: string 
+        400:
+          description: Admin Creation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Error message"                   
+ 
