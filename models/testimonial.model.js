@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const TestimonialSchema = mongoose.Schema({
+    name:{
+        type: String
+    },
     cmp_name: {
         type: String
     },
