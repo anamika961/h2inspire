@@ -26,3 +26,4 @@ const UserCreditSchema = mongoose.Schema({
 }, {timestamps: true});
 
 module.exports = mongoose.model("user_credits", UserCreditSchema);
+
