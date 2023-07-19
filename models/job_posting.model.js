@@ -94,6 +94,7 @@ const JobPostingSchema = mongoose.Schema({
         type: String,
         trim: false
     },
+    
     /**
      * 1 => Active
      * 2 => CLosed
@@ -120,12 +121,16 @@ const JobPostingSchema = mongoose.Schema({
         type: Array,
         required: true
     },
+    announcement: {
+        type: String,
+    },
     budget: {
         type: Number
     },
     expired_on: {
         type: Date
     }
+
 }, {timestamps: true});
 
 
