@@ -106,6 +106,7 @@ const JobPostingSchema = mongoose.Schema({
             values: [1,2,3],
             message: "only 1:(active)/2:(closed)/3:(draft) allowed."
         },
+        
         default: 1,
         required: true
     },
