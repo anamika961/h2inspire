@@ -315,7 +315,8 @@ module.exports = {
     
             if (jobPostingData) {
                 let userCreditData2;
-                if (userCreditData.length && req.body.status == 1 && existingJobPostingData.status != 1) {
+                // console.log("data>>>>>",typeof(existingJobPostingData.status))
+                if (userCreditData?.length && req.body.status == 1 && existingJobPostingData.status != 1) {
                     if(userCreditData[0].remainingFreeCount > 0) {
                         userCreditData2 = await UserCredit.findOneAndUpdate({employer: userId}, {$inc: {free_used_count: 1}}, {new: true})
                     }
