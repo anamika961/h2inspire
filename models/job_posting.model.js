@@ -120,6 +120,9 @@ const JobPostingSchema = mongoose.Schema({
         type: Array,
         required: true
     },
+    make_announcement: {
+        type: String,
+    },
     budget: {
         type: Number
     },
