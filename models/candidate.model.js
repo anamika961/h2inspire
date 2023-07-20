@@ -113,6 +113,7 @@ const CandidateSchema = new Schema(
             type: Array
         },
 	},
+    
 	{ timestamps: true }
 );
 
