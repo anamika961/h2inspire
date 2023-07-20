@@ -108,7 +108,10 @@ const CandidateSchema = new Schema(
                 message: "only 0:(new)/1:(reviewing)/2:(interviewing)/3:(offer) allowed."
             },
             default: 0
-        }
+        },
+        screening_q_a: {
+            type: Array
+        },
 	},
 	{ timestamps: true }
 );
