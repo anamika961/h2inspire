@@ -7,6 +7,7 @@ const RecruiterModel = require("../models/recruiter.model");
 const Agency = require("../models/agency.model");
 const Admin = require("../models/admin.model");
 const UserCredit = require('../models/user_credit.model');
+const Candidate = require("../models/candidate.model");
 
 module.exports = {
     allList: async (req, res, next) => {
@@ -119,12 +120,19 @@ module.exports = {
                     path: "employer",
                     select: "fname lname email employer_image"
                 }
-            ]).sort({_id: -1})
-    
+            ]).sort({_id: -1});
+
+            let jobIds = job_postings.map(e => e._id.toString());
+
+
+            const candidateData = await Candidate.find({agency_job: {$in: jobIds}})
+
+
             return res.status(200).send({
                 error: false,
                 message: "Job posting list",
-                data: job_postings
+                data: job_postings,
+                candidateData
             })
         } catch (error) {
             next(error);

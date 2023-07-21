@@ -1,0 +1,2 @@
+[Fri, 21 Jul 2023 10:19:15 GMT] - ::1 - - "GET /api/job-posting/list-by-employer HTTP/1.1" code - 400 46 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"message":"Employer not found."}
+[Fri, 21 Jul 2023 10:20:39 GMT] - ::1 - - "GET /api/job-posting/list-by-employer HTTP/1.1" code - 400 46 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"message":"Employer not found."}
