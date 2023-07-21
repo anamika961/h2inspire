@@ -111,7 +111,6 @@ module.exports = {
             let token = req.headers['authorization']?.split(" ")[1];
             let {userId, dataModel} = await getUserViaToken(token)
             const checkEmployer = await Employer.findOne({_id: userId})
-            
             if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
             const job_postings = await JobPosting.find({employer: userId}).populate([
