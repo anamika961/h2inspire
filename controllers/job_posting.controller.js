@@ -128,10 +128,7 @@ module.exports = {
             const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}}).populate([
                 {
                     path:"candidate",
-                    populate: {
-                        path: "candidate" ,
-                        select:" "
-                     }
+                    select:" "
                 }
             ])
 

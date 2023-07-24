@@ -6,12 +6,19 @@ const CandidateJobSchema = mongoose.Schema({
         type: ObjectId,
         ref: 'job_postings'
     },
-    candidate :[
-        {
+    candidate : {
             type: ObjectId,
             ref: 'candidates'
-        }
-    ]
+    },
+    request:{
+        type: String,
+        enum: {
+            values: [0,1,2],
+            message: "only 0:(pending)/1:(accepted)/2:(rejected) allowed.",
+            default: 0
+        },
+    }
+    
 
 }, {timestamps: true});
 
