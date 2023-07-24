@@ -127,8 +127,7 @@ module.exports = {
 
             const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}})
 
-        
-
+    
             return res.status(200).send({
                 error: false,
                 message: "Job posting list",
