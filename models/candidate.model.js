@@ -16,6 +16,10 @@ const CandidateSchema = new Schema(
             ref: 'agencies',
             trim: true
         },
+        // emp_job:{
+        //     type: ObjectId,
+        //     ref: 'job_postings',
+        // },
         recruiter: {
             type: ObjectId,
             ref: 'recruiters',

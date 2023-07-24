@@ -1,6 +1,7 @@
 const createError = require('http-errors')
 const CandidateModel = require('../models/candidate.model');
 const AgencyJobModel = require('../models/agency_job.model');
+const CandidateJobModel = require('../models/candidate_job.model');
 const Recruiter = require('../models/recruiter.model');
 const { getUserViaToken } = require('../helpers/jwt_helper');
 const Agency = require('../models/agency.model');
@@ -35,20 +36,18 @@ module.exports = {
             const agencyJobExist = await AgencyJobModel.findOne({_id: req.body.agency_job})
             
             // if corresponding agency job not exist
-            if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" })
+            if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" });
 
+            // const emailData = req.body.email;
+            // console.log("email>>>",emailData);
+            // const phoneData = req.body.phone
+            // console.log("phone>>>",phoneData)
             // Checking the candidate exist or not
             const candidateExist = await CandidateModel.findOne({
-                $and: [
-                    { job: agencyJobExist.job },
-                    {
-                        $or: [
-                            {email: req.body.email},
-                            {phone: req.body.phone}
-                        ]
-                    }
-                ]
+                $or:[{email:req.body.email},{phone:req.body.phone}]
             })
+
+            console.log("candidate>>>>>",candidateExist)
             
             // if candidate exist
             if(candidateExist) return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
@@ -67,13 +66,22 @@ module.exports = {
             
             const agencyJobUpdate = await AgencyJobModel.findOneAndUpdate({_id: agencyJobExist._id}, {$push: {candidates: candidateDataResult._id}}, {new: true})
 
+            req.body.emp_job = candidateDataResult?.agency_job?.job;
+            req.body.candidate = candidateDataResult?._id;
+
+            const candidateJobData = new CandidateJobModel(req.body)
+
+            const candidateJob = await candidateJobData.save()
+
+
             // console.log("3", agencyJobUpdate);
 
             if (candidateDataResult) {
                 return res.status(201).send({
                     error: false,
                     message: "Candidate submitted",
-                    data: candidateDataResult
+                    data: candidateDataResult,
+                    candidateJob
                 })
             }
             return res.status(400).send({
