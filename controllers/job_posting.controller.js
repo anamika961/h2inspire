@@ -125,7 +125,15 @@ module.exports = {
 
             let jobIds = job_postings.map(e => e._id.toString());
 
-            const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}})
+            const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}}).populate([
+                {
+                    path:"candidate",
+                    populate: {
+                        path: "candidate" ,
+                        select:" "
+                     }
+                }
+            ])
 
     
             return res.status(200).send({
