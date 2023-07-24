@@ -272,5 +272,19 @@ module.exports = {
         } catch (error) {
             next(error)
         }
+    },
+
+    requestUpdate: async (req, res, next) => {
+        try {
+            // Status update
+            const candidateJobData = await CandidateJobModel.findOneAndUpdate({_id: req.params.candidateId}, {request: req.body.request}, {new: true})
+
+            if(!candidateJobData) return res.status(400).send({error: true, message: "Candidate status is not updated"})
+
+            return res.status(200).send({error: false, message: "Candidate status updated"})
+
+        } catch (error) {
+            next(error)
+        }
     }
 }

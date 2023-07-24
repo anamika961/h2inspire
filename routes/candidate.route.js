@@ -40,4 +40,6 @@ CandidateRouter.patch('/resume-upload/:candidateId', upload.single('resume'), ve
 
 CandidateRouter.get('/detail/:id', verifyAccessToken, CandidateController.details)
 
+CandidateRouter.patch('/request/:candidateId', CandidateController.requestUpdate)
+
 module.exports = CandidateRouter
