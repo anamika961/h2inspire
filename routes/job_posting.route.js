@@ -23,4 +23,6 @@ JobPostingRouter.post('/invite-agencies', verifyAccessToken, JobPostingControlle
 
 JobPostingRouter.post('/agency-self-job-assign-declne', verifyAccessToken, JobPostingController.agencySelfJobAssignDecline)
 
+JobPostingRouter.post('/hiring-detail', JobPostingController.hiringDetail)
+
 module.exports = JobPostingRouter

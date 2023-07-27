@@ -9,6 +9,7 @@ const Admin = require("../models/admin.model");
 const UserCredit = require('../models/user_credit.model');
 const Candidate = require("../models/candidate.model");
 const CandidateJobModel = require('../models/candidate_job.model');
+const HiringDetail = require('../models/hiringDetails.model');
 
 module.exports = {
     allList: async (req, res, next) => {
@@ -251,12 +252,20 @@ module.exports = {
                     select: "fname lname email employer_image"
                 }
             ]);
+
+            const hiringDetail = await HiringDetail.findOne({job:req.params.id}).populate([
+                {
+                    path: "job",
+                    select: "job_name"
+                }
+            ]);
     
             if (jobPostingData) {
                 return res.status(200).send({
                     error: false,
                     message: "Job detail found!",
-                    data: jobPostingData
+                    data: jobPostingData,
+                    hiringDetail
                 })
             }
             return res.status(400).send({
@@ -495,6 +504,23 @@ module.exports = {
             next(error)
         }
     },
+
+    // add hiring details
+    hiringDetail: async (req, res, next) => {
+        try {
+            const hiringDetailsData = new HiringDetail(req.body)
+            const result = await hiringDetailsData.save();
+    
+            return res.status(200).send({
+                error: false,
+                message: "Hiring Detail",
+                data: result
+            })
+        } catch (error) {
+            next(error)
+        }
+    },
+
 
     // Assign recruiter to a job
     assignRecruiter: async (req, res, next) => {
