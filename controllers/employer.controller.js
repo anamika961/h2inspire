@@ -10,6 +10,7 @@ const {
 const bcrypt = require('bcrypt')
 const Admin = require('../models/admin.model')
 const UserCredit = require('../models/user_credit.model')
+const Billing = require('../models/billing.model')
 
 module.exports = {
   list: async (req, res, next) => {
@@ -36,10 +37,12 @@ module.exports = {
       const checkAdmin = await Admin.findOne({_id: userId})
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "User unauthorized." })
       const employerData = await Employer.findOne({_id: req.params.id})
+      const billingData = await Billing.findOne({employer:req.params.id})
       res.status(200).send({
         error: false,
         message: 'Employer detail',
-        data: employerData
+        data: employerData,
+        billingData
       })
     } catch (error) {
       next(error)
@@ -307,6 +310,37 @@ module.exports = {
       next(error)
     }
   },
+//////////////////////// billing //////////////////////
+  billingAdd: async (req, res, next) => {
+    try {
+      let billingList = await Billing.findOne({employer:req.body.employer});
+      let result
+      if(billingList){
+        result = await Billing.findOneAndUpdate({employer:req.body.employer},req.body,{new:true})
+      //  console.log("result>>>>>",result)
+
+      }else{
+        const billingData = new Billing(req.body);
+        result = await billingData.save()
+      }
+      message = {
+        error: false,
+        message: "Billing data added",
+        data: result
+      }
+      return res.status(200).send(message);
+
+    } catch (error) {
+      next(error)
+    }
+  },
+
+
+  ///////////////////////////// list /////////////////////////////////////
+
+
+
+
 
   logout: async (req, res, next) => {
     try {

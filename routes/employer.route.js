@@ -25,6 +25,8 @@ EmployerRouter.patch('/change-password', verifyAccessToken, EmployerController.c
 
 EmployerRouter.post('/refresh-token', EmployerController.refreshToken)
 
+EmployerRouter.post('/billing', EmployerController.billingAdd)
+
 EmployerRouter.delete('/logout', EmployerController.logout)
 
 module.exports = EmployerRouter
