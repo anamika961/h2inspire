@@ -1,0 +1,3 @@
+[Fri, 28 Jul 2023 08:29:28 GMT] - ::1 - - "GET /api/employer/detail/64747ec4caf4f90033746906 HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}
+[Fri, 28 Jul 2023 08:29:31 GMT] - ::1 - - "GET /api/employer/detail/64747ec4caf4f90033746906 HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}
+[Fri, 28 Jul 2023 08:30:17 GMT] - ::1 - - "GET /api/employer/detail/64747ec4caf4f90033746906 HTTP/1.1" code - 401 45 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"message":"User unauthorized."}

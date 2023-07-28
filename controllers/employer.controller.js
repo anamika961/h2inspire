@@ -37,12 +37,12 @@ module.exports = {
       const checkAdmin = await Admin.findOne({_id: userId})
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "User unauthorized." })
       const employerData = await Employer.findOne({_id: req.params.id})
-      const billingData = await Billing.findOne({employer:req.params.id})
+     // const billingData = await Billing.findOne({employer:req.params.id})
       res.status(200).send({
         error: false,
         message: 'Employer detail',
         data: employerData,
-        billingData
+       // billingData
       })
     } catch (error) {
       next(error)
@@ -126,10 +126,13 @@ module.exports = {
       const checkEmployer = await Employer.findOne({_id: userId})
       if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
+      const billingData = await Billing.findOne({employer:userId})
+
       res.status(200).send({
         error: false,
         message: 'Employer data',
-        data: checkEmployer
+        data: checkEmployer,
+        billingData
       })
     } catch (error) {
       next(error)
