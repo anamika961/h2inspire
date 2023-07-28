@@ -13,7 +13,7 @@ const billingSchema = mongoose.Schema({
         type: String
     },
     ph_no:{
-        type: Date
+        type: Number
     },
     gst_no:{
         type:String
