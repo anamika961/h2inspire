@@ -126,7 +126,7 @@ module.exports = {
       const checkEmployer = await Employer.findOne({_id: userId})
       if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
-      const billingData = await Billing.findOne({employer:userId})
+      const billingData = await Billing.find({employer:userId}).sort({_id:-1})
 
       res.status(200).send({
         error: false,
@@ -316,16 +316,9 @@ module.exports = {
 //////////////////////// billing //////////////////////
   billingAdd: async (req, res, next) => {
     try {
-      let billingList = await Billing.findOne({employer:req.body.employer});
-      let result
-      if(billingList){
-        result = await Billing.findOneAndUpdate({employer:req.body.employer},req.body,{new:true})
-      //  console.log("result>>>>>",result)
-
-      }else{
         const billingData = new Billing(req.body);
         result = await billingData.save()
-      }
+
       message = {
         error: false,
         message: "Billing data added",
