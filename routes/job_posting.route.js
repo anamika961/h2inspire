@@ -25,4 +25,6 @@ JobPostingRouter.post('/agency-self-job-assign-declne', verifyAccessToken, JobPo
 
 JobPostingRouter.post('/hiring-detail', JobPostingController.hiringDetail)
 
+JobPostingRouter.patch('/hired-status/:id', verifyAccessToken, JobPostingController.updateStatus)
+
 module.exports = JobPostingRouter

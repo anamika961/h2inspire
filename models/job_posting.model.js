@@ -130,6 +130,10 @@ const JobPostingSchema = mongoose.Schema({
     },
     expired_on: {
         type: Date
+    },
+    is_hired:{
+        type:Boolean,
+        default:false
     }
 
 }, {timestamps: true});
