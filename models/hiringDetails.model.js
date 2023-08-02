@@ -7,32 +7,29 @@ const HiringDetailSchema = mongoose.Schema({
         ref: 'job_postings',
 
     },
-    candidate:{
-        type:ObjectId,
-        ref: 'candidates',
-    },
-    desg_offered :{
-        type:String
-    },
-    comp_offered : {
-        type: String
-    },
-    date_of_joining:{
-        type: Date
-    },
-    work_location:{
-        type:String
-    },
-    comp_name:{
-        type:String
-    },
-    // candidate:[
-    //     {
-    //         type:ObjectId,
-    //         ref: 'candidates',
-    
-    //     }
-    // ],
+    offerd_detail:[
+        {
+            candidate:{
+                type:ObjectId,
+                ref: 'candidates',
+            },
+            desg_offered :{
+                type:String
+            },
+            comp_offered : {
+                type: String
+            },
+            date_of_joining:{
+                type: Date
+            },
+            work_location:{
+                type:String
+            },
+            comp_name:{
+                type:String
+            }
+        }
+    ]
     
 
 }, {timestamps: true});

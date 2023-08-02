@@ -257,13 +257,13 @@ module.exports = {
                 }
             ]);
 
-            const hiringDetail = await HiringDetail.findOne({job:req.params.id}).populate([
+            const hiringDetail = await HiringDetail.find({job:req.params.id}).populate([
                 {
                     path: "job",
                     select: "job_name"
                 },
                 {
-                    path: "candidate",
+                    path: "offerd_detail.candidate",
                     select: " "
                 }
             ]);
