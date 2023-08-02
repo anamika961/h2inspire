@@ -67,7 +67,9 @@ module.exports = {
             const agencyJobUpdate = await AgencyJobModel.findOneAndUpdate({_id: agencyJobExist._id}, {$push: {candidates: candidateDataResult._id}}, {new: true})
 
             req.body.emp_job = candidateDataResult?.job;
-            console.log("emp_job>>>>", req.body.emp_job)
+            req.body.agency_id = candidateDataResult?.agency;
+            console.log("emp_job>>>>", req.body.emp_job);
+            console.log("id>>>>", req.body.agency_id)
             req.body.candidate = candidateDataResult?._id;
 
             const candidateJobData = new CandidateJobModel(req.body)

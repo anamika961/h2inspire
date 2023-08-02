@@ -130,6 +130,10 @@ module.exports = {
                 {
                     path:"candidate",
                     select:" "
+                },
+                {
+                    path:"agency_id",
+                    select:" "
                 }
             ])
 

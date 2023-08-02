@@ -10,6 +10,11 @@ const CandidateJobSchema = mongoose.Schema({
             type: ObjectId,
             ref: 'candidates'
     },
+    agency_id: {
+        type: ObjectId,
+        ref: 'agencies',
+        trim: true
+    },
     request:{
         type: String,
         enum: {
