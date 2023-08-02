@@ -116,6 +116,10 @@ const CandidateSchema = new Schema(
         screening_q_a: {
             type: Array
         },
+        is_hired:{
+            type:Boolean,
+            default:false
+        }
 	},
 	{ timestamps: true }
 );

@@ -518,11 +518,18 @@ module.exports = {
         try {
             const hiringDetailsData = new HiringDetail(req.body)
             const result = await hiringDetailsData.save();
+
+          //  console.log("id>>>",result?.offerd_detail[0]?.candidate);
+
+            const candidateData = await Candidate.findOneAndUpdate({_id:result?.offerd_detail[0]?.candidate},{is_hired:true},{new:true});
+
+          //  console.log("candidateData>>>",candidateData)
     
             return res.status(200).send({
                 error: false,
                 message: "Hiring Detail",
-                data: result
+                data: result,
+                candidateData
             })
         } catch (error) {
             next(error)
