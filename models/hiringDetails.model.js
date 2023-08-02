@@ -7,6 +7,10 @@ const HiringDetailSchema = mongoose.Schema({
         ref: 'job_postings',
 
     },
+    candidate:{
+        type:ObjectId,
+        ref: 'candidates',
+    },
     desg_offered :{
         type:String
     },
@@ -22,13 +26,13 @@ const HiringDetailSchema = mongoose.Schema({
     comp_name:{
         type:String
     },
-    candidate:[
-        {
-            type:ObjectId,
-            ref: 'candidates',
+    // candidate:[
+    //     {
+    //         type:ObjectId,
+    //         ref: 'candidates',
     
-        }
-    ]
+    //     }
+    // ],
     
 
 }, {timestamps: true});

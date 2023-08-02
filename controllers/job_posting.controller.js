@@ -261,6 +261,10 @@ module.exports = {
                 {
                     path: "job",
                     select: "job_name"
+                },
+                {
+                    path: "candidate",
+                    select: " "
                 }
             ]);
     
