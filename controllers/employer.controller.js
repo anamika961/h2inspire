@@ -134,7 +134,7 @@ module.exports = {
 
       const transactionData = await Transaction.findOne({employer:userId}).populate([
         {
-          path:"candidate",
+          path:"passbook_amt.candidate",
           select:"fname lname agency",
           populate:{
             path:"agency",
