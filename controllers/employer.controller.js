@@ -130,13 +130,16 @@ module.exports = {
       const checkEmployer = await Employer.findOne({_id: userId})
       if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
-      const billingData = await Billing.find({employer:userId}).sort({_id:-1})
+      const billingData = await Billing.find({employer:userId}).sort({_id:-1});
+
+      const transactionData = await Transaction.findOne({employer:userId})
 
       res.status(200).send({
         error: false,
         message: 'Employer data',
         data: checkEmployer,
-        billingData
+        billingData,
+        transactionData
       })
     } catch (error) {
       next(error)
