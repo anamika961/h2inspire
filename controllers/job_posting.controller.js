@@ -10,6 +10,7 @@ const UserCredit = require('../models/user_credit.model');
 const Candidate = require("../models/candidate.model");
 const CandidateJobModel = require('../models/candidate_job.model');
 const HiringDetail = require('../models/hiringDetails.model');
+// const Transaction = require('../models/transaction.model')
 
 module.exports = {
     allList: async (req, res, next) => {
@@ -211,10 +212,12 @@ module.exports = {
 
             const jobPostingData = new JobPosting(req.body);
             const result = await jobPostingData.save();
+
+            console.log("result>>>>",result)
     
             if (result) {
                 let userCreditData2;
-                if (userCreditData.length && req.body.status == 1) {
+                if (userCreditData?.length && req.body.status == 1) {
                     if(userCreditData[0].remainingFreeCount > 0) {
                         userCreditData2 = await UserCredit.findOneAndUpdate({employer: userId}, {$inc: {free_used_count: 1}}, {new: true})
                     }
@@ -521,9 +524,9 @@ module.exports = {
 
           //  console.log("id>>>",result?.offerd_detail[0]?.candidate);
 
-            const candidateData = await Candidate.findOneAndUpdate({_id:result?.offerd_detail[0]?.candidate},{is_hired:true},{new:true});
+            const candidateData = await Candidate.findOneAndUpdate({_id:result?.candidate},{is_hired:true},{new:true});
 
-          //  console.log("candidateData>>>",candidateData)
+         
     
             return res.status(200).send({
                 error: false,

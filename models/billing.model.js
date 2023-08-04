@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const billingSchema = mongoose.Schema({
+    hire_id:{
+        type:ObjectId,
+        ref: 'hiringDetails',
+    },
     employer:{
         type:ObjectId,
         ref: 'employers',

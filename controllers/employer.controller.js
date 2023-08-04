@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt')
 const Admin = require('../models/admin.model')
 const UserCredit = require('../models/user_credit.model')
 const Billing = require('../models/billing.model')
+const Transaction = require('../models/transaction.model')
 
 module.exports = {
   list: async (req, res, next) => {
@@ -66,6 +67,9 @@ module.exports = {
       const refreshToken = await signRefreshToken(savedEmployer.id, "employers")
 
       const UserCreditData = await UserCredit.findOneAndUpdate({employer: savedEmployer._id}, {$inc: {free_count: 1}}, {upsert: true, new: true}).select("free_count purchased_count free_used_count purchased_used_count")
+
+      const transactionData = new Transaction({employer:savedEmployer.id});
+      const tranResult = await transactionData.save();
 
       res.status(201).send({
         error: false,
@@ -317,7 +321,48 @@ module.exports = {
   billingAdd: async (req, res, next) => {
     try {
         const billingData = new Billing(req.body);
-        result = await billingData.save()
+        result = await billingData.save();
+
+        let billinglist = await Billing.findOne({_id:result?._id}).populate([
+            {
+              path:"hire_id",
+              select:"",
+              populate:{
+                path:"candidate",
+                select:"fname lname email agency",
+                populate:{
+                  path:"agency",
+                  select:""
+                }
+              }
+            }
+        ]);
+
+        console.log("billinglist",billinglist);
+
+        let billingId = billinglist?._id
+        let amount = (billinglist?.hire_id?.comp_offered) * (2/100);
+        let designation = billinglist?.hire_id?.desg_offered;
+        let candidateData = billinglist?.hire_id?.candidate?._id;
+        
+        const transactionData = await Transaction.findOneAndUpdate(
+          { employer: result?.employer },
+          {
+            '$inc': { 'total_amount': amount },
+            '$push': {
+              passbook_amt: {
+                amount: amount,
+                type: "payble",
+              },
+            },
+            billing_id: billingId,
+            candidate: candidateData,
+            desg: designation
+          },
+          { new: true }
+        );
+        
+       console.log("transactionData>>>",transactionData)
 
       message = {
         error: false,
