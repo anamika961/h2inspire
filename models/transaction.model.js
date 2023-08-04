@@ -14,17 +14,17 @@ const transactionSchema = mongoose.Schema({
         type:ObjectId,
         ref: 'employers',
     },
-    candidate:{
-        type:ObjectId,
-        ref: 'candidates',
-    },
-    desg:{
-        type:String
-    },
-    agency:{
-        type:ObjectId,
-        ref: 'agencies',
-    },
+    // candidate:{
+    //     type:ObjectId,
+    //     ref: 'candidates',
+    // },
+    // desg:{
+    //     type:String
+    // },
+    // agency:{
+    //     type:ObjectId,
+    //     ref: 'agencies',
+    // },
     passbook_amt:[{
         amount:{
             type:Number
@@ -35,7 +35,18 @@ const transactionSchema = mongoose.Schema({
                 values:["payble","paid"],
                 message:'please select between -credit/debit'
             }
-        }
+        },
+        candidate:{
+            type:ObjectId,
+            ref: 'candidates',
+        },
+        desg:{
+            type:String
+        },
+        agency:{
+            type:ObjectId,
+            ref: 'agencies',
+        },
    }],
     total_amount:{
         type:Number

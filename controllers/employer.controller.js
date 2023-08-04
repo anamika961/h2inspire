@@ -132,7 +132,16 @@ module.exports = {
 
       const billingData = await Billing.find({employer:userId}).sort({_id:-1});
 
-      const transactionData = await Transaction.findOne({employer:userId})
+      const transactionData = await Transaction.findOne({employer:userId}).populate([
+        {
+          path:"candidate",
+          select:"fname lname agency",
+          populate:{
+            path:"agency",
+            select:" "
+          }
+        }
+      ])
 
       res.status(200).send({
         error: false,
@@ -356,11 +365,11 @@ module.exports = {
               passbook_amt: {
                 amount: amount,
                 type: "payble",
+                billing_id: billingId,
+                candidate: candidateData,
+                desg: designation
               },
             },
-            billing_id: billingId,
-            candidate: candidateData,
-            desg: designation
           },
           { new: true }
         );
