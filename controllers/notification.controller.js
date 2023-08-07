@@ -74,5 +74,24 @@ module.exports = {
         } catch (error) {
             next(error)
         }
-    }
+    },
+
+    listByAgency: async (req, res, next) => {
+        try {
+            const notifications = await Notification.find({
+                $and: [
+                    { cleared: false },
+                    { agency: req.params.id }
+                ]
+            }).sort({_id: -1})
+    
+            return res.status(200).send({
+                error: false,
+                message: "Notification list",
+                data: notifications
+            })
+        } catch (error) {
+            next(error);
+        }
+    },
 }

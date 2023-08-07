@@ -11,6 +11,7 @@ const Candidate = require("../models/candidate.model");
 const CandidateJobModel = require('../models/candidate_job.model');
 const HiringDetail = require('../models/hiringDetails.model');
 // const Transaction = require('../models/transaction.model')
+const sendNotification = require('../helpers/send_notification');
 
 module.exports = {
     allList: async (req, res, next) => {
@@ -524,10 +525,22 @@ module.exports = {
 
           //  console.log("id>>>",result?.offerd_detail[0]?.candidate);
 
-            const candidateData = await Candidate.findOneAndUpdate({_id:result?.candidate},{is_hired:true},{new:true});
+            const candidateData = await Candidate.findOneAndUpdate({_id:result?.candidate},{is_hired:true},{new:true}).populate([
+                {
+                    path:"agency",
+                    select:"first_name last_name"
+                }
+            ]);
 
-         
-    
+
+
+            // let sendNotificationData = await sendNotification({
+            //     user: candidateData?.fname,
+            //     agency:candidateData?.agency,
+            //     title: "Candidate hired successfully",
+            //     description: "Candidate hired successfully."
+            // });
+
             return res.status(200).send({
                 error: false,
                 message: "Hiring Detail",

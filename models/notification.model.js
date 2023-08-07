@@ -13,6 +13,10 @@ const NotificationSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    agency:{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'agencies'
+    },
     seen:{
         type: Boolean,
         default: false

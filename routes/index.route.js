@@ -14,6 +14,7 @@ const IndustryRouter = require('./industry.route');
 const RoleRouter = require('./role.route');
 const CreditRouter = require('./credit.route');
 const TestimonialRouter = require('./testimonial.route');
+const TransactionRouter = require('./transaction.route');
 
 
 router.use("/admin", AdminAuthRouter);
@@ -29,6 +30,7 @@ router.use("/industry", IndustryRouter);
 router.use("/role", RoleRouter);
 router.use("/credit", CreditRouter);
 router.use("/testimonial", TestimonialRouter);
+router.use("/transaction", TransactionRouter);
 
 
 module.exports = router;

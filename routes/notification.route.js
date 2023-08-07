@@ -14,5 +14,7 @@ notificationRouter.post("/notification-status-change", verifyAccessToken, Notifi
 
 notificationRouter.post("/notification-clear", verifyAccessToken, NotificationController.clearNotification);
 
+//notificationRouter.get("/list-by-agency/:id", NotificationController.listByAgency);
+
 
 module.exports = notificationRouter;
