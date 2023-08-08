@@ -365,7 +365,7 @@ module.exports = {
             '$push': {
               passbook_amt: {
                 amount: amount,
-                type: "paid",
+                type: "payble",
                 billing_id: billingId,
                 candidate: candidateData,
                 desg: designation,
