@@ -356,6 +356,7 @@ module.exports = {
         let amount = (billinglist?.hire_id?.comp_offered) * (2/100);
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
+        let tranId = Math.floor(Math.random() * 90000) + 10000
         
         const transactionData = await Transaction.findOneAndUpdate(
           { employer: result?.employer },
@@ -364,10 +365,12 @@ module.exports = {
             '$push': {
               passbook_amt: {
                 amount: amount,
-                type: "payble",
+                type: "paid",
                 billing_id: billingId,
                 candidate: candidateData,
-                desg: designation
+                desg: designation,
+                transaction_id: tranId,
+                invoice_file:""
               },
             },
           },
@@ -387,11 +390,6 @@ module.exports = {
       next(error)
     }
   },
-
-
-  ///////////////////////////// list /////////////////////////////////////
-
-
 
 
 

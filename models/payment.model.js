@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const transactionSchema = mongoose.Schema({
+const paymentSchema = mongoose.Schema({
     billing_id:{
         type:ObjectId,
         ref: 'billings',
@@ -26,9 +26,6 @@ const transactionSchema = mongoose.Schema({
     //     ref: 'agencies',
     // },
     passbook_amt:[{
-        transaction_id:{
-            type:String
-        },
         amount:{
             type:Number
         },
@@ -56,10 +53,9 @@ const transactionSchema = mongoose.Schema({
    }],
     total_amount:{
         type:Number
-    },
-
+    }
 }, {timestamps: true});
 
 
 
-module.exports = mongoose.model("transactions", transactionSchema);
+module.exports = mongoose.model("payments", paymentSchema);
