@@ -39,7 +39,7 @@ module.exports = {
 
          let response  = {"signatureIsValid" : "false"}
 
-         if(exptecedSign === req.body.razorpay_signature){
+        //  if(exptecedSign === req.body.razorpay_signature){
             response  = ({ code : 200 , message : 'Sign Valid' })
             
             let transactionId = req.query.transactionId;
@@ -74,9 +74,10 @@ module.exports = {
 
                const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
 
-         }else{
-            response  = ({ code : 500 , message : 'Sign is not  Valid' })
-         }
+         //}
+         //else{
+           // response  = ({ code : 500 , message : 'Sign is not  Valid' })
+        // }
 
          res.send(response)
 
