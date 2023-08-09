@@ -40,7 +40,6 @@ module.exports = {
            
             const getEmpData  = await Transaction.find({employer:req.params.id})
 
-            //console.log(getEmpData[0].passbook_amt,'pdata',transactionId)
 
 
             function addInvoiceKey(transactions, targetTransactionId, invoiceValue) {
@@ -49,7 +48,6 @@ module.exports = {
                   if (transactions[i].transaction_id == targetTransactionId) {
                       
                     transactions[i]["invoice_file"] = invoiceValue;
-                   // console.log(transactions[i],'comming')
                     
                   }
                 }
@@ -69,7 +67,7 @@ module.exports = {
             
             return res.status(200).send({
                 error: false,
-                message: "data",
+                message: "Invoice uploaded",
                 data: result
             })
         } catch (error) {

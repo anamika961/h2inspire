@@ -2,58 +2,36 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const paymentSchema = mongoose.Schema({
-    billing_id:{
-        type:ObjectId,
-        ref: 'billings',
-    },
-    // hiring_id:{
+    // employer:{
     //     type:ObjectId,
-    //     ref: 'hiringDetails',
+    //     ref: 'employers',
     // },
-    employer:{
-        type:ObjectId,
-        ref: 'employers',
-    },
-    // candidate:{
-    //     type:ObjectId,
-    //     ref: 'candidates',
+    // amount:{
+    //     type:Number
     // },
-    // desg:{
+    // currency:{
     //     type:String
     // },
-    // agency:{
-    //     type:ObjectId,
-    //     ref: 'agencies',
+    // receipt:{
+    //     type:String
     // },
-    passbook_amt:[{
-        amount:{
-            type:Number
-        },
-        type:{
-            type:String,
-            enum:{
-                values:["payble","paid"],
-                message:'please select between -credit/debit'
-            }
-        },
-        candidate:{
-            type:ObjectId,
-            ref: 'candidates',
-        },
-        desg:{
-            type:String
-        },
-        agency:{
-            type:ObjectId,
-            ref: 'agencies',
-        },
-        invoice_file:{
-            type:String
-        }
-   }],
-    total_amount:{
-        type:Number
+    // orderId:{
+    //     type:String
+    // }
+
+    orderCreationId:{
+        type:String
+    },
+    razorpayPaymentId:{
+        type:String
+    },
+    razorpayOrderId:{
+        type:String
+    },
+    razorpaySignature:{
+        type:String
     }
+    
 }, {timestamps: true});
 
 

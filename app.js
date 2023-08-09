@@ -60,6 +60,8 @@ if (process.env.NODE_ENV == 'dev') {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.use(express.json({ extended: false }));
+
 /*** swagger start here ***/
 // const swaggerUi = require('swagger-ui-express');
 // const YAML = require('yamljs');

@@ -1,0 +1,2 @@
+[Wed, 09 Aug 2023 08:06:54 GMT] - ::1 - - "POST /api/razorpay/order HTTP/1.1" code - 200 4 "-" "PostmanRuntime/7.29.3" request {"amount":400} response "yyyy"
+[Wed, 09 Aug 2023 08:14:57 GMT] - ::1 - - "POST /api/razorpay/order HTTP/1.1" code - 200 257 "-" "PostmanRuntime/7.29.3" request {"amount":400} response {"code":200,"message":"order created","data":{"id":"order_MNtsGkkTQLfsyz","entity":"order","amount":40000,"amount_paid":0,"amount_due":40000,"currency":"INR","receipt":null,"offer_id":null,"status":"created","attempts":0,"notes":[],"created_at":1691568897}}
