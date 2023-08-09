@@ -1,5 +1,9 @@
 require("dotenv").config();
 const Razorpay = require("razorpay");
+
+const crypto = require("crypto");
+
+
 //const RazorpayRouter = express.Router();
 
 // const razorpayKeyId = 'rzp_test_EPG86gnU8XaZU4';
@@ -21,5 +25,29 @@ module.exports = {
                 return res.send({ code : 200 , message:"order created", data:order});
                 
             });
+},
+
+    paymentVerify: (req,res) =>{
+         let body  = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
+
+         console.log(body,"data")
+
+         let exptecedSign = crypto.createHmac('sha256',"s4C9EprcRpvMe36mpFIV0bmG")
+         .update(body.toString())
+         .digest('hex')
+
+         let response  = {"signatureIsValid" : "false"}
+
+         if(exptecedSign === req.body.razorpay_signature){
+            response  = ({ code : 200 , message : 'Sign Valid' })
+         }else{
+            response  = ({ code : 500 , message : 'Sign is not  Valid' })
+         }
+
+         res.send(response)
+
+
+
 }
+
 }
