@@ -560,7 +560,7 @@ module.exports = {
 
             var mailOptions = {
                 from: 'developer@demo91.co.in',
-                to: 'bera.anamika961@gmail.com',
+                to: agencyMail,
                 subject: `Hired candidate!`,
                 html:`
                 <head>
