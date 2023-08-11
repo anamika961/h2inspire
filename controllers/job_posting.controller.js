@@ -12,6 +12,18 @@ const CandidateJobModel = require('../models/candidate_job.model');
 const HiringDetail = require('../models/hiringDetails.model');
 // const Transaction = require('../models/transaction.model')
 const sendNotification = require('../helpers/send_notification');
+const nodemailer = require("nodemailer");
+
+var transport = nodemailer.createTransport({
+    host: "mail.demo91.co.in",
+    port: 465,
+    auth: {
+      user: "developer@demo91.co.in",
+      pass: "Developer@2023"
+    }
+  });
+
+
 
 module.exports = {
     allList: async (req, res, next) => {
@@ -532,14 +544,49 @@ module.exports = {
                 }
             ]);
 
+            let agencyId = candidateData?.agency?._id;
+            //console.log("agency>>>>",agency)
+
+            const agengydata = await Agency.findOne({_id:agencyId});
+            //console.log("agengydata>>>>",agengydata)
+
+            let agencyMail = agengydata?.corporate_email;
+           // console.log("agencyMail>>>>",agencyMail)
+
+            let agencyName = agengydata?.name;
+
+            console.log("agencyName>>>>",agencyName)
 
 
-            // let sendNotificationData = await sendNotification({
-            //     user: candidateData?.fname,
-            //     agency:candidateData?.agency,
-            //     title: "Candidate hired successfully",
-            //     description: "Candidate hired successfully."
-            // });
+            var mailOptions = {
+                from: 'developer@demo91.co.in',
+                to: 'bera.anamika961@gmail.com',
+                subject: `Hired candidate!`,
+                html:`
+                <head>
+                    <title>Notification: Candidate Hired - Backend Development Position</title>
+            </head>
+            <body>
+                <p>Dear ${agencyName},</p>
+                <p>I hope this email finds you well. We are writing to formally notify you that the candidate you submitted for the Backend Development position has been successfully hired for the role.</p>
+                <p>After a thorough evaluation of the candidate's qualifications, skills, and experience, we are pleased to inform you that they have met our requirements and are an excellent fit for our team. We were particularly impressed with their expertise in [mention specific skills or technologies], which we believe will greatly contribute to our projects and initiatives.</p>
+                <p>We appreciate the effort you put into identifying and presenting this candidate to us. Your support throughout the recruitment process has been instrumental in helping us find the right candidate for our team.</p>
+                <p>At this point, we kindly request your assistance in initiating the necessary steps to finalize the onboarding process for the candidate. This includes coordinating any remaining paperwork, sharing important company information, and facilitating a smooth transition into their new role.</p>
+                <p>Once again, we extend our gratitude for your collaboration and for connecting us with such a promising candidate. We look forward to future opportunities to work together.</p>
+                <p>If you have any further questions or require additional information, please feel free to reach out to us. We value our partnership and appreciate your prompt attention to this matter.</p>
+                <p>Thank you and best regards,</p>
+                <p> Hire2Inspire </p>
+            </body>
+        `
+ };   
+            transport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
+
 
             return res.status(200).send({
                 error: false,
