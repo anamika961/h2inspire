@@ -29,57 +29,57 @@ module.exports = {
 },
 
     paymentVerify: async(req,res) =>{
-         let body  = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
+      let body  = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
 
-         console.log(body,"data")
+      console.log(body,"data")
 
-         let exptecedSign = crypto.createHmac('sha256',"s4C9EprcRpvMe36mpFIV0bmG")
-         .update(body.toString())
-         .digest('hex')
+      let exptecedSign = crypto.createHmac('sha256',"s4C9EprcRpvMe36mpFIV0bmG")
+      .update(body.toString())
+      .digest('hex')
 
-         let response  = {"signatureIsValid" : "false"}
+      let response  = {"signatureIsValid" : "false"}
 
-        //  if(exptecedSign === req.body.razorpay_signature){
-            response  = ({ code : 200 , message : 'Sign Valid' })
+     //  if(exptecedSign === req.body.razorpay_signature){
+         response  = ({ code : 200 , message : 'Sign Valid' })
+         
+         let transactionId = req.query.transactionId;
+         let type = req.body.type
+         
+         let emp_id = req.body.emp_id;
+
+         // console.log(invoice_file,"msg")
+        
+         const getEmpData  = await Transaction.find({employer:emp_id})
+
+
+
+         function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
             
-            let transactionId = req.query.transactionId;
-            let type = req.body.type
+             for (let i = 0; i < transactions.length; i++) {
+               if (transactions[i].transaction_id == targetTransactionId) {
+                   
+                 transactions[i]["type"] = invoiceValue;
+                 
+               }
+             }
+            return transactions;
             
-            let emp_id = req.body.emp_id;
+         //    console.log(transactions,'transactions')
+           }
+          
+           const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
+           , "paid");
+         //   console.log(req.body,"msg")
+            console.log(updatedData);
 
-            // console.log(invoice_file,"msg")
-           
-            const getEmpData  = await Transaction.find({employer:emp_id})
+            const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
 
+      //}
+      //else{
+        // response  = ({ code : 500 , message : 'Sign is not  Valid' })
+     // }
 
-
-            function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
-               
-                for (let i = 0; i < transactions.length; i++) {
-                  if (transactions[i].transaction_id == targetTransactionId) {
-                      
-                    transactions[i]["type"] = invoiceValue;
-                    
-                  }
-                }
-               return transactions;
-               
-            //    console.log(transactions,'transactions')
-              }
-             
-              const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
-              , "paid");
-            //   console.log(req.body,"msg")
-               console.log(updatedData);
-
-               const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
-
-         //}
-         //else{
-           // response  = ({ code : 500 , message : 'Sign is not  Valid' })
-        // }
-
-         res.send(response)
+      res.send(response)
 
 
 
