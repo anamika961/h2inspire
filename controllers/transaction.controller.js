@@ -14,9 +14,9 @@ module.exports = {
                     select:"fname lname agency",
                     populate:{
                         path:"agency",
-                        select:"first_name last_name"
+                        select:"name corporate_email",
                     }
-                }
+                },
             ]);
     
             return res.status(200).send({
