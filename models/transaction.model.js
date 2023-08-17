@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const transactionSchema = mongoose.Schema({
-    billing_id:{
-        type:ObjectId,
-        ref: 'billings',
-    },
+    // billing_id:{
+    //     type:ObjectId,
+    //     ref: 'billings',
+    // },
     // hiring_id:{
     //     type:ObjectId,
     //     ref: 'hiringDetails',
@@ -52,7 +52,11 @@ const transactionSchema = mongoose.Schema({
         },
         invoice_file:{
             type:String
-        }
+        },
+        billing_id:{
+            type:ObjectId,
+            ref: 'billings',
+        },
    }],
     total_amount:{
         type:Number

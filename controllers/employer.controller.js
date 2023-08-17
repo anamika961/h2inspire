@@ -140,6 +140,14 @@ module.exports = {
             path:"agency",
             select:" "
           }
+        },
+        {
+          path:"passbook_amt.billing_id",
+          select:" ",
+          populate:{
+            path:"hire_id",
+            select:" "
+          }
         }
       ])
 

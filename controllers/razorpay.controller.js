@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Razorpay = require("razorpay");
 const Transaction = require("../models/transaction.model");
-
+const axios = require('axios');
 const crypto = require("crypto");
 
 
@@ -82,8 +82,32 @@ module.exports = {
 
       res.send(response)
 
+},
+fetchPayment: async(req,res,next) =>{     
+ try{
+   let paymentId = req.query.paymentId;
+    const options = {
+    method: 'POST',
+    url: 'https://api.razorpay.com/v1/payments/${paymentId}',
+    headers: {
+      'key_id': "rzp_test_A5J0IpRjznLJud",
+      'key-secret': "lgxCslklCA4LRtdTkvv7rfcj",
+      'content-type': 'application/json'
+    },
+    
+  };
 
+  let resp = await axios.request(options);
 
-}
+  // console.log("resp>>>",resp)
 
+  return res.status(200).send({
+    error: false,
+    message: "payment status update.",
+    data: resp
+  });
+ }catch (error) {
+      next(error)
+    }
+},
 }
