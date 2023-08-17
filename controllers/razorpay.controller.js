@@ -16,8 +16,8 @@ module.exports = {
             let instance = new Razorpay({ key_id: 'rzp_test_A5J0IpRjznLJud', key_secret: 'lgxCslklCA4LRtdTkvv7rfcj' })
             console.log(req.body.amount);
             var options = {
-              // amount: req.body.amount * 100,  // amount in the smallest currency unit
-              amount: req.query.amount * 100,
+              amount: req.body.amount * 100,  // amount in the smallest currency unit
+              //amount: req.query.amount * 100,
               currency: "INR",
             };
             instance.orders.create(options, function(err, order) {
