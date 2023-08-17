@@ -17,6 +17,14 @@ module.exports = {
                         select:"name corporate_email",
                     }
                 },
+                {
+                    path:"passbook_amt.billing_id",
+                    select:" ",
+                    populate:{
+                      path:"hire_id",
+                      select:" "
+                    }
+                  }
             ]);
     
             return res.status(200).send({
