@@ -23,6 +23,8 @@ AdminAuthRouter.patch('/agency-approval/:jobId', verifyAccessToken, AdminAuthCon
 
 AdminAuthRouter.patch("/payment-status",verifyAccessToken, AdminAuthController.paymentStatusUpdate);
 
+AdminAuthRouter.patch("/agency-payment-status",verifyAccessToken, AdminAuthController.paymentAgencyStatusUpdate);
+
 AdminAuthRouter.post('/refresh-token', AdminAuthController.refreshToken)
 
 AdminAuthRouter.delete('/logout', AdminAuthController.logout)

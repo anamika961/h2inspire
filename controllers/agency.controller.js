@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt')
 const AgencyJobModel = require('../models/agency_job.model')
 const Recruiter = require('../models/recruiter.model')
 const Admin = require('../models/admin.model')
+const AgencyTransaction = require('../models/agency_transaction.model')
 
 module.exports = {
   allList: async (req, res, next) => {
@@ -57,7 +58,10 @@ module.exports = {
       const savedAgency = await AgencyData.save()
       // console.log(savedAgency.id);
       const accessToken = await signAccessToken(savedAgency.id, "agency")
-      const refreshToken = await signRefreshToken(savedAgency.id, "agency")
+      const refreshToken = await signRefreshToken(savedAgency.id, "agency");
+
+      const transactionData = new AgencyTransaction({agency:savedAgency.id});
+      const tranResult = await transactionData.save();
 
       res.status(201).send({
         error: false,

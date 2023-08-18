@@ -15,6 +15,7 @@ const AgencyJobModel = require("../models/agency_job.model");
 const RecruiterModel = require("../models/recruiter.model");
 const Agency = require("../models/agency.model");
 const Transaction = require("../models/transaction.model");
+const AgencyTransaction = require('../models/agency_transaction.model')
 
 module.exports = {
   register: async (req, res, next) => {
@@ -324,6 +325,55 @@ module.exports = {
             console.log(updatedData);
 
             const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
+
+      return res.status(200).send({
+        error: false,
+        message: "payment status update.",
+        data: result
+      });
+    } catch (error) {
+      next(error)
+    }
+  },
+
+
+  paymentAgencyStatusUpdate: async(req,res,next) => {
+    try {
+      let token = req.headers['authorization']?.split(" ")[1];
+      let {userId, dataModel} = await getUserViaToken(token)
+      const checkAdmin = await Admin.findOne({_id: userId}).select("-password -otp")
+      if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
+
+      let transactionId = req.body.transactionId;
+         let type = req.body.type
+         
+         let agencyId = req.body.agencyId;
+
+         // console.log(invoice_file,"msg")
+        
+         const getEmpData  = await Transaction.find({agency:agencyId})
+
+
+         function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
+            
+             for (let i = 0; i < transactions.length; i++) {
+               if (transactions[i].transaction_id == targetTransactionId) {
+                   
+                 transactions[i]["type"] = invoiceValue;
+                 
+               }
+             }
+            return transactions;
+            
+         //    console.log(transactions,'transactions')
+           }
+          
+           const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
+           , "paid");
+         //   console.log(req.body,"msg")
+            console.log(updatedData);
+
+            const result = await AgencyTransaction.findOneAndUpdate({agency:agencyId},{passbook_amt:updatedData}, {new: true});
 
       return res.status(200).send({
         error: false,

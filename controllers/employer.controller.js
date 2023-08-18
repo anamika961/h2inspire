@@ -12,6 +12,7 @@ const Admin = require('../models/admin.model')
 const UserCredit = require('../models/user_credit.model')
 const Billing = require('../models/billing.model')
 const Transaction = require('../models/transaction.model')
+const AgencyTransaction = require('../models/agency_transaction.model')
 
 module.exports = {
   list: async (req, res, next) => {
@@ -387,7 +388,36 @@ module.exports = {
           { new: true }
         );
         
-       console.log("transactionData>>>",transactionData)
+       //console.log("transactionData>>>",transactionData)
+
+       let agencyId = billinglist?.hire_id?.candidate?.agency?._id;
+
+       console.log("agencyId",agencyId)
+      
+       let amountData = (billinglist?.hire_id?.comp_offered) * (1/100);
+
+       const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+        { agency: agencyId },
+        {
+          '$inc': { 'total_amount': amountData },
+          '$push': {
+            passbook_amt: {
+              amount: amountData,
+              type: "payble",
+              billing_id: billingId,
+              candidate: candidateData,
+              desg: designation,
+              transaction_id: tranId,
+              invoice_file:"",
+              invoice_No:invNo,
+              employer:result?.employer
+            },
+          },
+        },
+        { new: true }
+      );
+
+        console.log("transactionData>>>",agencyTransactionData)
 
       message = {
         error: false,

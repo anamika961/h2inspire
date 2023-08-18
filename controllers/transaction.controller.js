@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Transaction = require("../models/transaction.model");
+const AgencyTransaction = require('../models/agency_transaction.model')
 
 module.exports = {
     list: async (req, res, next) => {
@@ -26,11 +27,15 @@ module.exports = {
                     }
                   }
             ]);
+
+            const agency_transaction_data = await AgencyTransaction.find({})
     
             return res.status(200).send({
                 error: false,
                 message: "Transaction list",
-                data: transaction_data
+                data: transaction_data,
+                agency_transaction_data
+                
             })
         } catch (error) {
             next(error);
