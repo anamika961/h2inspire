@@ -351,7 +351,7 @@ module.exports = {
 
          // console.log(invoice_file,"msg")
         
-         const getEmpData  = await Transaction.find({agency:agencyId})
+         const getEmpData  = await AgencyTransaction.find({agency:agencyId})
 
 
          function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
