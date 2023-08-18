@@ -28,6 +28,15 @@ const AdminSchema = new Schema({
   address:{
     type:String
   },
+  phone_no:{
+    type:String
+  },
+  website:{
+    type:String
+  },
+  company_name:{
+    type:String
+  },
 
   /**
    * 1: Super/Main admin

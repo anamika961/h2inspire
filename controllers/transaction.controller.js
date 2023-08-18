@@ -28,7 +28,28 @@ module.exports = {
                   }
             ]);
 
-            const agency_transaction_data = await AgencyTransaction.find({})
+            const agency_transaction_data = await AgencyTransaction.find({}).populate([
+                {
+                    path:"agency",
+                    select:"name"
+                },
+                {
+                    path:"passbook_amt.candidate",
+                    select:"fname lname",
+                    populate:{
+                        path:"agency",
+                        select:"name corporate_email",
+                    }
+                },
+                {
+                    path:"passbook_amt.billing_id",
+                    select:" ",
+                    populate:{
+                      path:"hire_id",
+                      select:" "
+                    }
+                  }
+            ]);
     
             return res.status(200).send({
                 error: false,
