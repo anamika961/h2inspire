@@ -27,4 +27,6 @@ AdminAuthRouter.post('/refresh-token', AdminAuthController.refreshToken)
 
 AdminAuthRouter.delete('/logout', AdminAuthController.logout)
 
+AdminAuthRouter.patch('/update/:adminId', AdminAuthController.adminUpdate)
+
 module.exports = AdminAuthRouter

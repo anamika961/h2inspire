@@ -25,6 +25,9 @@ const AdminSchema = new Schema({
     required: true,
     trim: true
   },
+  address:{
+    type:String
+  },
 
   /**
    * 1: Super/Main admin

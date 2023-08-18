@@ -57,6 +57,9 @@ const transactionSchema = mongoose.Schema({
             type:ObjectId,
             ref: 'billings',
         },
+        invoice_No:{
+            type:String
+        },
    }],
     total_amount:{
         type:Number

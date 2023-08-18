@@ -364,7 +364,8 @@ module.exports = {
         let amount = (billinglist?.hire_id?.comp_offered) * (2/100);
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
-        let tranId = Math.floor(Math.random() * 90000) + 10000
+        let tranId = Math.floor(Math.random() * 90000) + 10000;
+        let invNo = "INV/NO/" + Math.floor(1000 + Math.random() * 9000);
         
         const transactionData = await Transaction.findOneAndUpdate(
           { employer: result?.employer },
@@ -378,7 +379,8 @@ module.exports = {
                 candidate: candidateData,
                 desg: designation,
                 transaction_id: tranId,
-                invoice_file:""
+                invoice_file:"",
+                invoice_No:invNo
               },
             },
           },

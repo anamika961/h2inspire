@@ -270,6 +270,22 @@ module.exports = {
     }
   },
 
+  adminUpdate: async (req, res, next) => {
+    try {
+        const result = await Admin.findOneAndUpdate({_id: req.params.adminId}, req.body, {new: true});
+
+        if(!result) return res.status(200).send({ error: false, message: "Admin not updated" })
+
+        return res.status(200).send({
+            error: false,
+            message: "Admin Updated",
+            data: result
+        })
+    } catch (error) {
+        next(error)
+    }
+},
+
 
   paymentStatusUpdate: async(req,res,next) => {
     try {
