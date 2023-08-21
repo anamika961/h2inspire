@@ -33,7 +33,9 @@ module.exports = {
             ) return res.status(401).send({ error: true, message: "User unauthorized." })
             
             // Checking the corresponding agency job exist or not
-            const agencyJobExist = await AgencyJobModel.findOne({_id: req.body.agency_job})
+            const agencyJobExist = await AgencyJobModel.findOne({_id: req.body.agency_job});
+
+            console.log("agencyJobExist",agencyJobExist)
             
             // if corresponding agency job not exist
             if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" });
@@ -48,9 +50,17 @@ module.exports = {
             })
 
             console.log("candidate>>>>>",candidateExist)
+            console.log("candidate.id",candidateExist?.agency_job)
+            console.log('patrams',req.body.agency_job)
+
+            if(candidateExist?.agency_job == req.body.agency_job){
+                console.log('in..')
+                return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
+            }
+                
             
             // if candidate exist
-            if(candidateExist) return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
+            
 
             // if corresponding agency job exist and candidate not exist
             // Submit candidate here
@@ -68,8 +78,8 @@ module.exports = {
 
             req.body.emp_job = candidateDataResult?.job;
             req.body.agency_id = candidateDataResult?.agency;
-            console.log("emp_job>>>>", req.body.emp_job);
-            console.log("id>>>>", req.body.agency_id)
+            // console.log("emp_job>>>>", req.body.emp_job);
+            // console.log("id>>>>", req.body.agency_id)
             req.body.candidate = candidateDataResult?._id;
 
             const candidateJobData = new CandidateJobModel(req.body)
