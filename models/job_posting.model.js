@@ -125,11 +125,14 @@ const JobPostingSchema = mongoose.Schema({
     announcement: {
         type: String,
     },
-    budget: {
-        type: Number
-    },
+    // budget: {
+    //     type: Number
+    // },
     diversity:{
         type:String
+    },
+    hired_target_date:{
+        type:Date
     },
     expired_on: {
         type: Date
