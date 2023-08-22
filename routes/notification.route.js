@@ -6,7 +6,7 @@ const { verifyAccessToken } = require("../helpers/jwt_helper");
 
 notificationRouter.post("/add", );
 
-notificationRouter.get("/get-by-user/:id", verifyAccessToken, NotificationController.listByUser);
+notificationRouter.get("/get-by-user/:id", NotificationController.listByUser);
 
 notificationRouter.get("/get-by-user-last-10/:id", verifyAccessToken, NotificationController.listByUserLast10);
 

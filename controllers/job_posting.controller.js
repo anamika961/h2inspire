@@ -588,6 +588,15 @@ module.exports = {
                 }
             });
 
+            let sendNotificationData = await sendNotification({
+                user: agencyId,
+                title: "Candidate Hired",
+                description: "Candidate Hired"
+            });
+
+            console.log("sendNotificationData",sendNotificationData)
+    
+
 
             return res.status(200).send({
                 error: false,
