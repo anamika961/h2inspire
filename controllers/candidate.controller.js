@@ -9,7 +9,18 @@ const ObjectId = require('mongoose').Types.ObjectId;
 var admin = require("firebase-admin");
 var serviceAccount = require("../hire2inspire-firebase-adminsdk.json");
 const express = require('express')
-const app = express()
+const app = express();
+const nodemailer = require("nodemailer");
+
+var transport = nodemailer.createTransport({
+    host: "mail.demo91.co.in",
+    port: 465,
+    auth: {
+      user: "developer@demo91.co.in",
+      pass: "Developer@2023"
+    }
+  });
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -84,10 +95,59 @@ module.exports = {
 
             const candidateJobData = new CandidateJobModel(req.body)
 
-            const candidateJob = await candidateJobData.save()
+            const candidateJob = await candidateJobData.save();
 
+            const candidatelist = await CandidateModel.findOne({_id:candidateDataResult?._id});
+            //console.log("agengydata>>>>",agengydata)
 
-            // console.log("3", agencyJobUpdate);
+            let candidateEmail = candidatelist?.email;
+            let candidatefName = candidatelist?.fname;
+            let candidatelName = candidatelist?.lname;
+
+             console.log("candidateEmail>>>>",candidateEmail)
+
+            var mailOptions = {
+                from: 'developer@demo91.co.in',
+                to: 'bera.anamika961@gmail.com',
+                subject: `Subject: Confirmation of CV Submission for [Job Role] - Next Steps`,
+                html:`
+                <head>
+                    <title>Notification: Candidate Hired - Backend Development Position</title>
+            </head>
+            <body>
+                <p>Dear ${candidatefName} ${candidatelName} ,</p>
+                <p>I hope this email finds you well. I am writing to confirm that we have received your application for the [Job Role] at [Company Name]. We appreciate your interest in joining our team and taking the time to submit your CV. Your application is currently being reviewed by our recruitment team.</p>
+
+                <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
+
+                <p><strong>Screening Questions:</strong></p>
+                <ol>
+                    <li>Can you provide a brief overview of your relevant experience in [specific skill or qualification] and how it aligns with the requirements of the [Job Role]?</li>
+                    <li>What motivated you to apply for this particular position at [Company Name]?</li>
+                    <li>Could you share a challenging project you've worked on in the past and how you successfully overcame obstacles to achieve the desired outcome?</li>
+                    <li>The [Job Role] often requires effective collaboration with cross-functional teams. Can you give an example of a situation where you had to work closely with individuals from different departments to achieve a common goal?</li>
+                    <li>In [Job Role], strong [specific skill] is essential. Please describe how you have demonstrated proficiency in this skill throughout your career.</li>
+                </ol>
+
+                <p>Please respond to these questions by [deadline for response]. You can either reply directly to this email or send your answers as a separate document. If you have any questions or need further clarification, please don't hesitate to reach out.</p>
+
+                <p>We understand the value of your time and effort, and we are excited about the possibility of you joining our team. We will carefully review your responses and notify you regarding the next steps in the selection process.</p>
+
+                <p>Thank you again for considering [Company Name] as your potential employer. We look forward to learning more about you through your responses to the screening questions.</p>
+
+                <p>Best regards,</p>
+                <p>Hire2Inspire</p>
+            </body>
+        `
+ };   
+            transport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
+
 
             if (candidateDataResult) {
                 return res.status(201).send({
