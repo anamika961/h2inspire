@@ -366,7 +366,42 @@ module.exports = {
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
         let tranId = Math.floor(Math.random() * 90000) + 10000;
-        let invNo = "INV/NO/" + Math.floor(1000 + Math.random() * 9000);
+        // let invNo = "INV/NO/" + Math.floor(1000 + Math.random() * 9000);
+
+        const generateNextInvoice = (prevInv) => {
+    
+          if(prevInv == undefined){
+            console.log('here')
+            return "H2I/23-24-01"
+          }else{
+            const [, yearPart, numberPart] = prevInv.match(/(\d{2}-\d{2})-(\d{2})/);
+            let newNumberPart = (parseInt(numberPart, 10) + 1).toString().padStart(2, '0')
+            const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
+            let currentYear = new Date().getFullYear() % 100;
+            let currentYearNext  = currentYear+1;
+            if(currentMonth > 3 && currentYear != 23){
+              if(currentYear != yearPart.split('-')[0]){
+                return `H2I/${currentYear}-${currentYearNext}-01`  
+              }else{
+                return `H2I/${currentYear}-${currentYearNext}-${(parseInt(numberPart, 10) + 1).toString().padStart(2, '0')}`  
+              }
+              
+            }
+            
+            else{
+              return `H2I/${currentYear}-${currentYearNext}-${newNumberPart}`
+            }
+            
+          }
+      }
+      
+
+     let transactionlist = await Transaction.findOne({});
+    
+     let PrevInvoiceId  = transactionlist?.passbook_amt[transactionlist?.passbook_amt?.length -1]?.invoice_No
+      console.log("transactionlist",transactionlist?.passbook_amt[transactionlist?.passbook_amt?.length -1]?.invoice_No);
+      
+      //let data2  = generateNextInvoice();
         
         const transactionData = await Transaction.findOneAndUpdate(
           { employer: result?.employer },
@@ -381,7 +416,7 @@ module.exports = {
                 desg: designation,
                 transaction_id: tranId,
                 invoice_file:"",
-                invoice_No:invNo
+                invoice_No:generateNextInvoice(PrevInvoiceId)
               },
             },
           },
@@ -392,7 +427,7 @@ module.exports = {
 
        let agencyId = billinglist?.hire_id?.candidate?.agency?._id;
 
-       console.log("agencyId",agencyId)
+       //console.log("agencyId",agencyId)
       
        let amountData = (billinglist?.hire_id?.comp_offered) * (1/100);
 
@@ -409,7 +444,7 @@ module.exports = {
               desg: designation,
               transaction_id: tranId,
               invoice_file:"",
-              invoice_No:invNo,
+              invoice_No:generateNextInvoice(PrevInvoiceId),
               employer:result?.employer
             },
           },
@@ -417,7 +452,7 @@ module.exports = {
         { new: true }
       );
 
-        console.log("transactionData>>>",agencyTransactionData)
+       // console.log("transactionData>>>",agencyTransactionData)
 
       message = {
         error: false,
