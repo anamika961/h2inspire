@@ -535,6 +535,23 @@ module.exports = {
             const hiringDetailsData = new HiringDetail(req.body)
             const result = await hiringDetailsData.save();
 
+            hiringList = await HiringDetail.findOne({_id:result?._id}).populate([
+                {
+                    path:"job",
+                    select:"job_name"
+                },
+                {
+                    path:"candidate",
+                    select:"fname lname"
+                }
+            ]);
+
+            let candidateFname = hiringList?.candidate?.fname;
+            let candidateLname = hiringList?.candidate?.lname;
+            let jobRole = hiringList?.job?.job_name;
+            let compName = hiringList?.comp_name;
+
+
           //  console.log("id>>>",result?.offerd_detail[0]?.candidate);
 
             const candidateData = await Candidate.findOneAndUpdate({_id:result?.candidate},{is_hired:true},{new:true}).populate([
@@ -591,7 +608,7 @@ module.exports = {
             let sendNotificationData = await sendNotification({
                 user: agencyId,
                 title: "Candidate Hired",
-                description: "Candidate Hired"
+                description: `${candidateFname} ${candidateLname} get a job offer from ${compName} with ${jobRole}`
             });
 
             console.log("sendNotificationData",sendNotificationData)

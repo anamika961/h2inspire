@@ -124,7 +124,7 @@ oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 const sendNotification = async (req, res) => {
     const user = req.user
     const title = req.title
-    const description = req.desc
+    const description = req.description
     const notificationData = new Notification({user, title, description})
     const result = await notificationData.save();
     return result;

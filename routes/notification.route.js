@@ -10,9 +10,9 @@ notificationRouter.get("/get-by-user/:id", NotificationController.listByUser);
 
 notificationRouter.get("/get-by-user-last-10/:id", verifyAccessToken, NotificationController.listByUserLast10);
 
-notificationRouter.post("/notification-status-change", verifyAccessToken, NotificationController.statusChange);
+notificationRouter.get("/notification-status-change/:id", NotificationController.statusChange);
 
-notificationRouter.post("/notification-clear", verifyAccessToken, NotificationController.clearNotification);
+notificationRouter.get("/notification-clear/:id",  NotificationController.clearNotification);
 
 //notificationRouter.get("/list-by-agency/:id", NotificationController.listByAgency);
 

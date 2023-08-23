@@ -42,15 +42,11 @@ module.exports = {
 
     statusChange: async (req, res, next) => {
         try {
-            if(req.body.notificationId !== '') {
-                console.log('hello');
-                const result = await Notification.updateOne({ _id: req.body.notificationId }, {seen: req.body.status});
-            } else {
-                const result = await Notification.updateMany({ user: req.body.userId }, {seen: req.body.status});
-            }
+            let notificationData = await Notification.findOneAndUpdate({_id:req.params.id},{seen:true},{new:true})
             message = {
                 error: false,
                 message: "All notification status updated",
+                data:notificationData
             };
             res.status(200).send(message);
         } catch (error) {
@@ -60,15 +56,11 @@ module.exports = {
 
     clearNotification: async (req, res, next) => {
         try {
-            if(req.body.notificationId !== '') {
-                console.log('hello');
-                const result = await Notification.updateOne({ _id: req.body.notificationId }, {cleared: req.body.cleared});
-            } else {
-                const result = await Notification.updateMany({ user: req.body.userId }, {cleared: req.body.cleared});
-            }
+            let notificationData = await Notification.findOneAndUpdate({_id:req.params.id},{cleared:true},{new:true})
             message = {
                 error: false,
-                message: "Notification cleared"
+                message: "Notification cleared",
+                data:notificationData
             };
             res.status(200).send(message);
         } catch (error) {
