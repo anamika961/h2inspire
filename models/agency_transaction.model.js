@@ -62,6 +62,9 @@ const agencyTransactionSchema = mongoose.Schema({
             type:String
         },
    }],
+   description:{
+    type:String
+    },
     total_amount:{
         type:Number
     },

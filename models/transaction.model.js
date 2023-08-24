@@ -61,7 +61,10 @@ const transactionSchema = mongoose.Schema({
             type:String
         },
    }],
-    total_amount:{
+   description:{
+        type:String
+   },
+   total_amount:{
         type:Number
     },
 

@@ -324,7 +324,7 @@ module.exports = {
          //   console.log(req.body,"msg")
             console.log(updatedData);
 
-            const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
+            const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData,description:req.body.description}, {new: true});
 
       return res.status(200).send({
         error: false,
@@ -373,7 +373,7 @@ module.exports = {
          //   console.log(req.body,"msg")
             console.log(updatedData);
 
-            const result = await AgencyTransaction.findOneAndUpdate({agency:agencyId},{passbook_amt:updatedData}, {new: true});
+            const result = await AgencyTransaction.findOneAndUpdate({agency:agencyId},{passbook_amt:updatedData,description:req.body.description}, {new: true});
 
       return res.status(200).send({
         error: false,
