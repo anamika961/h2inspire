@@ -13,6 +13,7 @@ const UserCredit = require('../models/user_credit.model')
 const Billing = require('../models/billing.model')
 const Transaction = require('../models/transaction.model')
 const AgencyTransaction = require('../models/agency_transaction.model')
+const UserSubscription = require("../models/user_subscription.model");
 
 module.exports = {
   list: async (req, res, next) => {
@@ -40,10 +41,22 @@ module.exports = {
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "User unauthorized." })
       const employerData = await Employer.findOne({_id: req.params.id})
      // const billingData = await Billing.findOne({employer:req.params.id})
+
+     const employerSubscriptionData = await UserSubscription.findOne({employer: req.params.id}).populate([
+      {
+          path:"employer",
+          select:""
+      },
+      {
+          path:"package",
+          select:""
+      }
+  ]);
       res.status(200).send({
         error: false,
         message: 'Employer detail',
         data: employerData,
+        employerSubscriptionData
        // billingData
       })
     } catch (error) {
@@ -150,14 +163,26 @@ module.exports = {
             select:" "
           }
         }
-      ])
+      ]);
+
+      const employerSubscriptionData = await UserSubscription.findOne({employer: userId}).populate([
+        {
+            path:"employer",
+            select:""
+        },
+        {
+            path:"package",
+            select:""
+        }
+    ]);
 
       res.status(200).send({
         error: false,
         message: 'Employer data',
         data: checkEmployer,
         billingData,
-        transactionData
+        transactionData,
+        employerSubscriptionData
       })
     } catch (error) {
       next(error)

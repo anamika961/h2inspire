@@ -16,6 +16,8 @@ const CreditRouter = require('./credit.route');
 const TestimonialRouter = require('./testimonial.route');
 const TransactionRouter = require('./transaction.route');
 const RazorpayRouter = require('./razorpay.route');
+const PackageRouter = require('./package.route');
+const UserSubscriptionRouter = require('./user_subscription.route');
 
 
 router.use("/admin", AdminAuthRouter);
@@ -33,6 +35,8 @@ router.use("/credit", CreditRouter);
 router.use("/testimonial", TestimonialRouter);
 router.use("/transaction", TransactionRouter);
 router.use("/razorpay", RazorpayRouter);
+router.use("/package", PackageRouter);
+router.use("/user-subscription", UserSubscriptionRouter);
 
 
 module.exports = router;
