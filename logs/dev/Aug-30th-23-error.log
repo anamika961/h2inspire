@@ -1,0 +1,4 @@
+[Wed, 30 Aug 2023 08:28:07 GMT] - ::1 - - "PATCH /api/admin/payment-status HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {"transactionId":"35154","emp_id":"64ccb537c121c066b86cc5f6","description":"test description"} response {"error":true,"status":401,"message":"jwt expired"}
+[Wed, 30 Aug 2023 08:28:17 GMT] - ::1 - - "PATCH /api/admin/payment-status HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {"transactionId":"35154","emp_id":"64ccb537c121c066b86cc5f6","description":"test description"} response {"error":true,"status":401,"message":"jwt expired"}
+[Wed, 30 Aug 2023 13:53:12 GMT] - ::1 - - "GET /api/employer/all-list HTTP/1.1" code - 401 52 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"Unauthorized"}
+[Wed, 30 Aug 2023 13:55:02 GMT] - ::1 - - "GET /api/agency/all-list HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}

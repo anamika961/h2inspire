@@ -5,6 +5,8 @@ const EmployerRouter = express.Router()
 
 EmployerRouter.get('/list', verifyAccessToken, EmployerController.list)
 
+EmployerRouter.get('/all-list', EmployerController.alllist)
+
 EmployerRouter.get('/detail/:id', verifyAccessToken, EmployerController.detail)
 
 EmployerRouter.post('/register', EmployerController.register)

@@ -33,6 +33,19 @@ module.exports = {
     }
   },
 
+  alllist: async (req, res, next) => {
+    try {
+      const employerData = await Employer.find({}).sort({_id: -1})
+      res.status(200).send({
+        error: false,
+        message: 'Employer list',
+        data: employerData
+      })
+    } catch (error) {
+      next(error)
+    }
+  },
+
   detail: async (req, res, next) => {
     try {
       let token = req.headers['authorization']?.split(" ")[1];

@@ -27,6 +27,19 @@ module.exports = {
     }
   },
 
+  list: async (req, res, next) => {
+    try {
+      const agencies = await Agency.find({}).select(["-password", "-otp"]).sort("-_id")
+      return res.status(200).send({
+        error: false,
+        message: "All agencies",
+        data: agencies
+      })
+    } catch (error) {
+      next(error)
+    }
+  },
+
   allDetail: async (req, res, next) => {
     try {
       let token = req.headers['authorization']?.split(" ")[1];

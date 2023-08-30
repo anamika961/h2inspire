@@ -5,6 +5,8 @@ const AgencyRouter = express.Router()
 
 AgencyRouter.get('/all-list', verifyAccessToken, AgencyController.allList)
 
+AgencyRouter.get('/list', AgencyController.list)
+
 AgencyRouter.get('/all-detail/:id', verifyAccessToken, AgencyController.allDetail)
 
 AgencyRouter.post('/register', AgencyController.register)
