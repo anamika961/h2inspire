@@ -1,0 +1,4 @@
+[Mon, 28 Aug 2023 07:47:44 GMT] - ::1 - - "GET /api/transaction/list HTTP/1.1" code - 500 102 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"The comparison function must be either a function or undefined"}
+[Mon, 28 Aug 2023 08:06:40 GMT] - ::1 - - "GET /api/transaction/list HTTP/1.1" code - 500 102 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"The comparison function must be either a function or undefined"}
+[Mon, 28 Aug 2023 08:27:52 GMT] - ::1 - - "GET /api/transaction/list HTTP/1.1" code - 500 59 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"sort is not defined"}
+[Mon, 28 Aug 2023 08:28:10 GMT] - ::1 - - "GET /api/transaction/list HTTP/1.1" code - 500 93 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"Transaction.aggregate(...).populate is not a function"}

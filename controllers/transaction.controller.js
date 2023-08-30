@@ -28,6 +28,7 @@ module.exports = {
                   }
             ]);
 
+
             const agency_transaction_data = await AgencyTransaction.find({}).populate([
                 {
                     path:"agency",
@@ -54,7 +55,8 @@ module.exports = {
                     }
                   }
             ]);
-    
+
+
             return res.status(200).send({
                 error: false,
                 message: "Transaction list",
@@ -112,6 +114,76 @@ module.exports = {
             next(error)
         }
     },
+
+    // list: async (req, res, next) => {
+    //     try {
+    //         const transaction_data = await Transaction.aggregate([
+    //             { $sort: { _id: -1 } },])
+    //         // ]).populate([
+    //         //     {
+    //         //         path:"employer",
+    //         //         select:"fname lname"
+    //         //     },
+    //         //     {
+    //         //         path:"passbook_amt.candidate",
+    //         //         select:"fname lname agency",
+    //         //         populate:{
+    //         //             path:"agency",
+    //         //             select:"name corporate_email",
+    //         //         }
+    //         //     },
+    //         //     {
+    //         //         path:"passbook_amt.billing_id",
+    //         //         select:" ",
+    //         //         populate:{
+    //         //           path:"hire_id",
+    //         //           select:" "
+    //         //         }
+    //         //       }
+    //         // ]);
+
+    //        // console.log("sorted data",transaction_data)
+
+
+    //         const agency_transaction_data = await AgencyTransaction.find({}).populate([
+    //             {
+    //                 path:"agency",
+    //                 select:"name"
+    //             },
+    //             {
+    //                 path:"passbook_amt.candidate",
+    //                 select:"fname lname",
+    //                 populate:{
+    //                     path:"agency",
+    //                     select:"name corporate_email agency_account_info",
+    //                     populate:{
+    //                         path:"AgencyUserAccountInfo",
+    //                         select:"first_name last_name personal_phone agency_location"
+    //                     }
+    //                 }
+    //             },
+    //             {
+    //                 path:"passbook_amt.billing_id",
+    //                 select:" ",
+    //                 populate:{
+    //                   path:"hire_id",
+    //                   select:" "
+    //                 }
+    //               }
+    //         ]);
+
+
+    //         return res.status(200).send({
+    //             error: false,
+    //             message: "Transaction list",
+    //             data: transaction_data,
+    //             agency_transaction_data
+                
+    //         })
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // },
        
 
 }

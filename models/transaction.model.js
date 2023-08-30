@@ -60,10 +60,10 @@ const transactionSchema = mongoose.Schema({
         invoice_No:{
             type:String
         },
+        description:{
+            type:String
+        },
    }],
-   description:{
-        type:String
-   },
    total_amount:{
         type:Number
     },

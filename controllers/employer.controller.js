@@ -387,7 +387,7 @@ module.exports = {
         console.log("billinglist",billinglist);
 
         let billingId = billinglist?._id
-        let amount = (billinglist?.hire_id?.comp_offered) * (10.33/100);
+        let amount = (billinglist?.hire_id?.comp_offered) * (9.33/100);
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
         let tranId = Math.floor(Math.random() * 90000) + 10000;
