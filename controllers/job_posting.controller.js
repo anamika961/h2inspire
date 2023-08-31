@@ -657,6 +657,26 @@ module.exports = {
     },
 
 
+    agencyList: async(req, res, next) =>{
+        try{
+            let agencyJobData = await AgencyJobModel.find({job:req.params.id});
+            let agencyIds = agencyJobData.map(e => e.agency.toString());
+
+          //  console.log("agencyIds",agencyIds)
+
+            let agencyList = await Agency.find({_id: {$in: agencyIds}});
+
+            return res.status(200).send({
+                error: false,
+                message: "Agency list",
+                data: agencyList
+            })
+        }catch(error){
+            next(error)
+        }
+    },
+
+
     // Assign recruiter to a job
     assignRecruiter: async (req, res, next) => {
         try {

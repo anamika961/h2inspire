@@ -1,0 +1,1 @@
+[Thu, 31 Aug 2023 13:33:08 GMT] - ::1 - - "GET /api/job-posting/agency-list HTTP/1.1" code - 500 75 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"agencyJobData.map is not a function"}

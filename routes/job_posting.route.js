@@ -27,4 +27,6 @@ JobPostingRouter.post('/hiring-detail', JobPostingController.hiringDetail)
 
 JobPostingRouter.patch('/hired-status/:id', verifyAccessToken, JobPostingController.updateStatus)
 
+JobPostingRouter.get('/agency-list/:id', JobPostingController.agencyList)
+
 module.exports = JobPostingRouter
