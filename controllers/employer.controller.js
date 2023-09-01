@@ -400,7 +400,9 @@ module.exports = {
         console.log("billinglist",billinglist);
 
         let billingId = billinglist?._id
-        let amount = (billinglist?.hire_id?.comp_offered) * (9.33/100);
+        let amount = (billinglist?.hire_id?.comp_offered) * (8.83/100);
+        let agency_amount = (billinglist?.hire_id?.comp_offered) * (8.33/100);
+        let h2i_amount = (billinglist?.hire_id?.comp_offered) * (0.5/100);
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
         let tranId = Math.floor(Math.random() * 90000) + 10000;
@@ -448,6 +450,8 @@ module.exports = {
             '$push': {
               passbook_amt: {
                 amount: amount,
+                "split_amount.agency_amount": agency_amount,
+                "split_amount.h2i_amount":h2i_amount,
                 type: "payble",
                 billing_id: billingId,
                 candidate: candidateData,
@@ -468,6 +472,8 @@ module.exports = {
        //console.log("agencyId",agencyId)
       
        let amountData = (billinglist?.hire_id?.comp_offered) * (8.33/100);
+        let agency_amountData = (billinglist?.hire_id?.comp_offered) * (7.83/100);
+        let h2i_amountData = (billinglist?.hire_id?.comp_offered) * (0.5/100);
 
        const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
         { agency: agencyId },
@@ -476,6 +482,8 @@ module.exports = {
           '$push': {
             passbook_amt: {
               amount: amountData,
+              "split_amount.agency_amount": agency_amountData,
+              "split_amount.h2i_amount":h2i_amountData,
               type: "payble",
               billing_id: billingId,
               candidate: candidateData,

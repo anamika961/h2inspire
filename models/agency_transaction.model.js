@@ -33,6 +33,14 @@ const agencyTransactionSchema = mongoose.Schema({
         amount:{
             type:Number
         },
+        split_amount:{
+            agency_amount:{
+                type:Number
+            },
+            h2i_amount:{
+                type:Number
+            },
+        },
         type:{
             type:String,
             enum:{
@@ -64,6 +72,12 @@ const agencyTransactionSchema = mongoose.Schema({
         description:{
             type:String
         },
+        gst_in:{
+            type:String
+        },
+        hsn_code:{
+            type:String
+        }
    }],
     total_amount:{
         type:Number
