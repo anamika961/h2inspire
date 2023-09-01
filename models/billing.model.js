@@ -27,6 +27,9 @@ const billingSchema = mongoose.Schema({
     },
     invoice:{
         type:Array
+    },
+    supply_code:{
+        type:String
     }
     
 

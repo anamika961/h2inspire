@@ -76,6 +76,27 @@ const transactionSchema = mongoose.Schema({
         },
         hsn_code:{
             type:String
+        },
+        gst_type:{
+            type:String
+        },
+        cgst:{
+            type:String
+        },
+        igst:{
+            type:String
+        },
+        sgst:{
+            type:String
+        },
+        gst_cal_amount:{
+            type:Number
+        },
+        cgst_cal_amount:{
+            type:Number
+        },
+        sgst_cal_amount:{
+            type:Number
         }
    }],
    total_amount:{

@@ -399,6 +399,7 @@ module.exports = {
 
         console.log("billinglist",billinglist);
 
+
         let billingId = billinglist?._id
         let amount = (billinglist?.hire_id?.comp_offered) * (8.83/100);
         let agency_amount = (billinglist?.hire_id?.comp_offered) * (8.33/100);
@@ -406,7 +407,6 @@ module.exports = {
         let designation = billinglist?.hire_id?.desg_offered;
         let candidateData = billinglist?.hire_id?.candidate?._id;
         let tranId = Math.floor(Math.random() * 90000) + 10000;
-        // let invNo = "INV/NO/" + Math.floor(1000 + Math.random() * 9000);
 
         const generateNextInvoice = (prevInv) => {
     
@@ -442,14 +442,18 @@ module.exports = {
       console.log("transactionlist",transactionlist?.passbook_amt[transactionlist?.passbook_amt?.length -1]?.invoice_No);
       
       //let data2  = generateNextInvoice();
-        
+      let gstAmount;
+      let cgstAmount;
+      let sgstAmount;
+      if(billinglist?.supply_code == "29"){
+        gstAmount = (amount * (18/100));
         const transactionData = await Transaction.findOneAndUpdate(
           { employer: result?.employer },
           {
             '$inc': { 'total_amount': amount },
             '$push': {
               passbook_amt: {
-                amount: amount,
+                amount: amount + gstAmount ,
                 "split_amount.agency_amount": agency_amount,
                 "split_amount.h2i_amount":h2i_amount,
                 type: "payble",
@@ -458,12 +462,50 @@ module.exports = {
                 desg: designation,
                 transaction_id: tranId,
                 invoice_file:"",
-                invoice_No:generateNextInvoice(PrevInvoiceId)
+                invoice_No:generateNextInvoice(PrevInvoiceId),
+                gst_in:"09ABCCS9765L1ZH",
+                hsn_code:"SAC 9983",
+                gst_type:"IGST",
+                igst:"18%",
+                gst_cal_amount: gstAmount,
               },
             },
           },
           { new: true }
         );
+      }else{
+        cgstAmount = (amount * (9/100));
+        sgstAmount = (amount * (9/100));
+        const transactionData = await Transaction.findOneAndUpdate(
+          { employer: result?.employer },
+          {
+            '$inc': { 'total_amount': amount },
+            '$push': {
+              passbook_amt: {
+                amount: amount + cgstAmount + sgstAmount,
+                "split_amount.agency_amount": agency_amount,
+                "split_amount.h2i_amount":h2i_amount,
+                type: "payble",
+                billing_id: billingId,
+                candidate: candidateData,
+                desg: designation,
+                transaction_id: tranId,
+                invoice_file:"",
+                invoice_No:generateNextInvoice(PrevInvoiceId),
+                gst_in:"09ABCCS9765L1ZH",
+                hsn_code:"SAC 9983",
+                gst_type:"CGST/SGST",
+                cgst:"9%",
+                sgst:"9%",
+                cgst_cal_amount: (amount * (9/100)),
+                sgst_cal_amount:  (amount * (9/100)),
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+        
         
        //console.log("transactionData>>>",transactionData)
 
@@ -475,30 +517,75 @@ module.exports = {
         let agency_amountData = (billinglist?.hire_id?.comp_offered) * (7.83/100);
         let h2i_amountData = (billinglist?.hire_id?.comp_offered) * (0.5/100);
 
-       const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
-        { agency: agencyId },
-        {
-          '$inc': { 'total_amount': amountData },
-          '$push': {
-            passbook_amt: {
-              amount: amountData,
-              "split_amount.agency_amount": agency_amountData,
-              "split_amount.h2i_amount":h2i_amountData,
-              type: "payble",
-              billing_id: billingId,
-              candidate: candidateData,
-              desg: designation,
-              transaction_id: tranId,
-              invoice_file:"",
-              invoice_No:generateNextInvoice(PrevInvoiceId),
-              employer:result?.employer
-            },
-          },
-        },
-        { new: true }
-      );
 
-       // console.log("transactionData>>>",agencyTransactionData)
+        let gstAmountData;
+        let cgstAmountData;
+        let sgstAmountData;
+
+        if(billinglist?.supply_code == "29"){
+          gstAmountData = (agency_amountData * (18/100));
+          const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+            { agency: agencyId },
+            {
+              '$inc': { 'total_amount': amountData },
+              '$push': {
+                passbook_amt: {
+                  amount: amountData,
+                  "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
+                  "split_amount.h2i_amount":h2i_amountData,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId),
+                  employer:result?.employer,
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"IGST",
+                  igst:"18%",
+                  gst_cal_amount: gstAmountData,
+                },
+              },
+            },
+            { new: true }
+          );    
+        }else{
+          cgstAmountData = (agency_amountData * (9/100));
+          sgstAmountData = (agency_amountData * (9/100));
+          const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+            { agency: agencyId },
+            {
+              '$inc': { 'total_amount': amountData },
+              '$push': {
+                passbook_amt: {
+                  amount: amountData,
+                  "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
+                  "split_amount.h2i_amount":h2i_amountData,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId),
+                  employer:result?.employer,
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"CGST/SGST",
+                  cgst:"9%",
+                  sgst:"9%",
+                  cgst_cal_amount: cgstAmountData,
+                  sgst_cal_amount:  sgstAmountData,
+                },
+              },
+            },
+            { new: true }
+          );
+    
+        }
+   
 
       message = {
         error: false,
