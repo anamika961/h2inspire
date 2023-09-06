@@ -9,7 +9,7 @@ const JobPostingSchema = mongoose.Schema({
     },
     comp_name:{
         type:String
-    }
+    },
     job_name: {
         type: String,
         trim: true,
