@@ -126,7 +126,11 @@ module.exports = {
                 // },
                 {
                     path: "candidate",
-                    select: " "
+                    select: " ",
+                    populate:{
+                        path:"agency",
+                        select:"name corporate_email"
+                    }
                 }
             ]).select("candidate");
     
