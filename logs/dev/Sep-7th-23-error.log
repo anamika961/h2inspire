@@ -1,0 +1,2 @@
+[Thu, 07 Sep 2023 05:20:13 GMT] - ::1 - - "GET /api/job-posting/detail/64c3a9c59d89d5005388eb65 HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}
+[Thu, 07 Sep 2023 05:37:57 GMT] - ::1 - - "GET /api/job-posting/detail/64ccb66b7260bf00531a2615 HTTP/1.1" code - 500 64 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"candidate is not defined"}

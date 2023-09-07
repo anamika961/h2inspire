@@ -274,15 +274,15 @@ module.exports = {
             ]);
 
             const hiringDetail = await HiringDetail.find({job:req.params.id}).populate([
+                // {
+                //     path: "job",
+                //     select: "job_name"
+                // },
                 {
-                    path: "job",
-                    select: "job_name"
-                },
-                {
-                    path: "offerd_detail.candidate",
+                    path: "candidate",
                     select: " "
                 }
-            ]);
+            ]).select("candidate");
     
             if (jobPostingData) {
                 return res.status(200).send({
