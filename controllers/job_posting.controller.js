@@ -106,17 +106,35 @@ module.exports = {
 
     detail: async (req, res, next) => {
         try {
+            let token = req.headers['authorization']?.split(" ")[1];
+            let {userId, dataModel} = await getUserViaToken(token)
+            const checkEmployer = await Employer.findOne({_id: userId})
+
+            if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not authorized." })
+
             const job_posting_data = await JobPosting.findOne({_id: req.params.id}).populate([
                 {
                     path: "employer",
                     select: "fname lname email employer_image"
                 }
-            ]).sort({_id: -1})
+            ]);
+
+            const hiringDetail = await HiringDetail.find({job:req.params.id}).populate([
+                // {
+                //     path: "job",
+                //     select: "job_name"
+                // },
+                {
+                    path: "candidate",
+                    select: " "
+                }
+            ]).select("candidate");
     
             return res.status(200).send({
                 error: false,
                 message: "Job posting detail",
-                data: job_posting_data
+                data: job_posting_data,
+                hiringDetail
             })
         } catch (error) {
             next(error);
@@ -274,15 +292,15 @@ module.exports = {
             ]);
 
             const hiringDetail = await HiringDetail.find({job:req.params.id}).populate([
-                // {
-                //     path: "job",
-                //     select: "job_name"
-                // },
+                {
+                    path: "job",
+                    select: "job_name"
+                },
                 {
                     path: "candidate",
                     select: " "
                 }
-            ]).select("candidate");
+            ]);
     
             if (jobPostingData) {
                 return res.status(200).send({

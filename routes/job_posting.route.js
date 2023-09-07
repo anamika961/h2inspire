@@ -11,7 +11,7 @@ JobPostingRouter.get('/all-list', JobPostingController.allList)
 
 JobPostingRouter.get('/agency-job-list', verifyAccessToken, JobPostingController.agencyJobList)
 
-// JobPostingRouter.get('/agency-job-detail/:id', verifyAccessToken, JobPostingController.agencyJobDetail)
+JobPostingRouter.get('/detail-job/:id', verifyAccessToken, JobPostingController.detail)
 
 JobPostingRouter.get('/detail/:id', verifyAccessToken, JobPostingController.detailJobPosting)
 
