@@ -1,0 +1,7 @@
+[Mon, 11 Sep 2023 11:54:28 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 11:54:56 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 11:55:03 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 11:55:47 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 11:55:52 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 11:58:12 GMT] - ::1 - - "GET /api/package-type/add HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"name":"SCALE"} response {"error":true,"status":404,"message":"Not Found"}
+[Mon, 11 Sep 2023 14:22:40 GMT] - ::1 - - "POST /api/user-subscription/add HTTP/1.1" code - 500 67 "-" "PostmanRuntime/7.29.3" request {"employer":"64ccb537c121c066b86cc5f6","package":"64ff0f229c1a177ceb78540a","quantity":2,"total_amount":998} response {"error":true,"status":500,"message":"total_amount is not defined"}

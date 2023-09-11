@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const UserSubscription = require("../models/user_subscription.model");
+const Package = require("../models/package.model");
+const PackageType = require("../models/package_type.model");
 
 module.exports = {
     listbyId: async (req, res, next) => {
@@ -27,11 +29,47 @@ module.exports = {
 
     create: async (req, res, next) => {
         try {
-            const subscription_data = new UserSubscription(req.body)
-            const result = await subscription_data.save();
+            let packageId = req.body.package;
+            // console.log({packageId})
+            let packageData = await Package.findOne({_id:packageId});
+            let packageTypeId = packageData?.package_type;
 
-           // console.log("result",req.body)
+            let packageNameData = await PackageType.findOne({_id:packageTypeId});
+            let packageName = packageNameData?.name
+            console.log({packageName});
+            // let subscription_data;
+            // let result
+            if(packageName == "PAY AS YOU GO"){
+                let packageAmount = packageData?.payAsYou_detail?.amount;
+                req.body.total_amount = packageAmount * req.body.quantity;
 
+                // console.log({packageAmount});
+                // console.log({total_amount})
+                // subscription_data = new UserSubscription(req.body)
+                // result = await subscription_data.save();
+
+            }else if(packageName == "BUSINESS"){
+                let packageAmount = packageData?.business_detail?.amount;
+                req.body.total_amount = packageAmount;
+                // subscription_data = new UserSubscription(req.body)
+                // result = await subscription_data.save();
+            }else if(packageName == "SCALE"){
+                // let packageType
+                if(packageData?.scale_detail[0].type == "monthly"){
+                    let packageAmount = packageData?.scale_detail[0]?.amount;
+                    req.body.total_amount = packageAmount;
+                    // subscription_data = new UserSubscription(req.body)
+                    // result = await subscription_data.save();
+                }else if(packageData?.scale_detail[1]?.type == "quaterly"){
+                    let packageAmount = packageData?.scale_detail[1]?.amount;
+                    req.body.total_amount = packageAmount;
+                    // subscription_data = new UserSubscription(req.body)
+                    // result = await subscription_data.save();
+                }
+            }
+
+             const subscription_data = new UserSubscription(req.body)
+             const result = await subscription_data.save();
             return res.status(200).send({
                 error: false,
                 message: "User subscribed successfully",

@@ -4,7 +4,13 @@ const Package = require("../models/package.model");
 module.exports = {
     list: async (req, res, next) => {
         try {
-            const package_data = await Package.find({});
+            const package_data = await Package.find({}).populate([
+                {
+                    path:"package_type",
+                    select:""
+                }
+            ]);
+    ;
     
             return res.status(200).send({
                 error: false,
@@ -51,7 +57,12 @@ module.exports = {
 
     detail: async (req, res, next) => {
         try {
-            const result = await Package.findOne({_id: req.params.id});
+            const result = await Package.findOne({_id: req.params.id}).populate([
+                {
+                    path:"package_type",
+                    select:""
+                }
+            ]);
     
             return res.status(200).send({
                 error: false,

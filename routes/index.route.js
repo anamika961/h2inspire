@@ -18,6 +18,7 @@ const TransactionRouter = require('./transaction.route');
 const RazorpayRouter = require('./razorpay.route');
 const PackageRouter = require('./package.route');
 const UserSubscriptionRouter = require('./user_subscription.route');
+const PackageTypeRouter = require('./package_type.route');
 
 
 router.use("/admin", AdminAuthRouter);
@@ -37,6 +38,7 @@ router.use("/transaction", TransactionRouter);
 router.use("/razorpay", RazorpayRouter);
 router.use("/package", PackageRouter);
 router.use("/user-subscription", UserSubscriptionRouter);
+router.use("/package-type", PackageTypeRouter);
 
 
 module.exports = router;

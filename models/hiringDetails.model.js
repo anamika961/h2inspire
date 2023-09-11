@@ -4,7 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const HiringDetailSchema = mongoose.Schema({
     job:{
         type:ObjectId,
-        ref: 'job_postings',
+        ref: 'packageTypes',
 
     },
     candidate:{

@@ -11,6 +11,12 @@ const UserSubscriptionSchema = mongoose.Schema({
         ref: "packages",
         required: true
     },
+    quantity:{
+        type:Number
+    },
+    total_amount:{
+        type:Number
+    },
     status:{
         type:Boolean,
         default:false

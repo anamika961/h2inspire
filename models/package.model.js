@@ -1,30 +1,73 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const PackageSchema = mongoose.Schema({
-   title:{
-       type:String
+   package_type:{
+        type:ObjectId,
+        ref: 'packageTypes',
    },
    desc:{
        type:String
    },
-   amount:{
-       type:Number
-   },
-   package_type:{
-      type:String
-   },
    note:{
        type:String
    },
-   job_credit:{
-    type:String
+   payAsYou_detail:{
+       amount:{
+            type:Number
+       },
+       type:{
+           type:String
+       },
+    //    quantity:{
+    //         type:Number
+    //    },
+       job_credit:{
+           type:Number
+       },
+       job_activity:{
+           type:String
+       },
+       job_credit_validity:{
+        type:String
+    },
    },
-   job_active:{
-    type:String
-   },
-   job_credit_validity:{
-    type:String
-   }
+   business_detail:{
+    amount:{
+         type:Number
+    },
+    type:{
+        type:String
+    },
+    job_credit:{
+        type:Number
+    },
+    job_activity:{
+        type:String
+    },
+    job_credit_validity:{
+     type:String
+    },
+    },
+    scale_detail:[
+        {
+            amount:{
+                type:Number
+           },
+           type:{
+               type:String
+           },
+           job_credit:{
+               type:Number
+           },
+           job_activity:{
+               type:String
+           },
+           job_credit_validity:{
+            type:String
+           },
+        }
+    ]
 }, {timestamps: true});
 
 module.exports = mongoose.model("packages", PackageSchema);
