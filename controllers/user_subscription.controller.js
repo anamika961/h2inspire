@@ -41,7 +41,7 @@ module.exports = {
             // let result
             if(packageName == "PAY AS YOU GO"){
                 let packageAmount = packageData?.payAsYou_detail?.amount;
-                req.body.total_amount = packageAmount * req.body.quantity;
+                req.body.total_amount = packageAmount * req.body.quantity * (0.18/100);
 
                 // console.log({packageAmount});
                 // console.log({total_amount})
@@ -50,19 +50,19 @@ module.exports = {
 
             }else if(packageName == "BUSINESS"){
                 let packageAmount = packageData?.business_detail?.amount;
-                req.body.total_amount = packageAmount;
+                req.body.total_amount = packageAmount * (0.18/100);
                 // subscription_data = new UserSubscription(req.body)
                 // result = await subscription_data.save();
             }else if(packageName == "SCALE"){
                 // let packageType
                 if(packageData?.scale_detail[0].type == "monthly"){
                     let packageAmount = packageData?.scale_detail[0]?.amount;
-                    req.body.total_amount = packageAmount;
+                    req.body.total_amount = packageAmount * (0.18/100);
                     // subscription_data = new UserSubscription(req.body)
                     // result = await subscription_data.save();
                 }else if(packageData?.scale_detail[1]?.type == "quaterly"){
                     let packageAmount = packageData?.scale_detail[1]?.amount;
-                    req.body.total_amount = packageAmount;
+                    req.body.total_amount = packageAmount * (0.18/100);
                     // subscription_data = new UserSubscription(req.body)
                     // result = await subscription_data.save();
                 }
