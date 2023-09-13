@@ -145,8 +145,7 @@ const JobPostingSchema = mongoose.Schema({
         default:false
     },
     no_of_opening:{
-        type:Number,
-        default:0
+        type:Number
     }
 
 }, {timestamps: true});
