@@ -41,8 +41,8 @@ module.exports = {
             // let result
             if(packageName == "PAY AS YOU GO"){
                 let packageAmount = packageData?.payAsYou_detail?.amount;
-                let gstAmount = packageAmount * (0.18/100);
-                req.body.total_amount = packageAmount * req.body.quantity + gstAmount ;
+                let gstAmount = packageAmount * (18/100);
+                req.body.total_amount = (packageAmount * req.body.quantity + gstAmount).toFixed(2) ;
 
                 // console.log({packageAmount});
                 // console.log({total_amount})
@@ -51,22 +51,22 @@ module.exports = {
 
             }else if(packageName == "BUSINESS"){
                 let packageAmount = packageData?.business_detail?.amount;
-                let gstAmount = packageAmount * (0.18/100);
-                req.body.total_amount = packageAmount + gstAmount ;
+                let gstAmount = packageAmount * (18/100);
+                req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
                 // subscription_data = new UserSubscription(req.body)
                 // result = await subscription_data.save();
             }else if(packageName == "SCALE"){
                 // let packageType
                 if(packageData?.scale_detail[0].type == "monthly"){
                     let packageAmount = packageData?.scale_detail[0]?.amount;
-                    let gstAmount = packageAmount * (0.18/100);
-                    req.body.total_amount = packageAmount + gstAmount ;
+                    let gstAmount = packageAmount * (18/100);
+                    req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
                     // subscription_data = new UserSubscription(req.body)
                     // result = await subscription_data.save();
                 }else if(packageData?.scale_detail[1]?.type == "quaterly"){
                     let packageAmount = packageData?.scale_detail[1]?.amount;
-                    let gstAmount = packageAmount * (0.18/100);
-                    req.body.total_amount = packageAmount + gstAmount ;
+                    let gstAmount = packageAmount * (18/100);
+                    req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
                     // subscription_data = new UserSubscription(req.body)
                     // result = await subscription_data.save();
                 }
