@@ -91,6 +91,8 @@ module.exports = {
     }
   },
 
+  
+
   detail: async (req, res, next) => {
     try {
       let token = req.headers['authorization']?.split(" ")[1];
