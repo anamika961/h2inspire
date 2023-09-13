@@ -143,6 +143,10 @@ const JobPostingSchema = mongoose.Schema({
     is_hired:{
         type:Boolean,
         default:false
+    },
+    no_of_opening:{
+        type:Number,
+        default:0
     }
 
 }, {timestamps: true});

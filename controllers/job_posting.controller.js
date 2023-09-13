@@ -584,6 +584,8 @@ module.exports = {
                 }
             ]);
 
+            const jobData = await JobPosting.findOneAndUpdate({_id:result?.job},{ '$inc': { 'no_of_opening': -1 }, })
+
             let agencyId = candidateData?.agency?._id;
             //console.log("agency>>>>",agency)
 
