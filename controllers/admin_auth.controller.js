@@ -413,11 +413,22 @@ module.exports = {
 
       const transactionData = await Transaction.find({});
 
-        // let totalSpend = 0;
-        // transactionData.forEach((element,index)=>{
-        //   totalSpend += element?.total_amount : null
-        // });
+        let totalSpend = 0;
+        for(let i = 0 ; i<transactionData?.length ; i++){
+          if(transactionData[i]?.total_amount !== undefined){
+            totalSpend = totalSpend + transactionData[i]?.total_amount;
+          }
+        }
 
+      let totalgiveto = 0;
+      const agencyTransactionData = await AgencyTransaction.find({});
+      for(let i = 0 ; i<agencyTransactionData?.length ; i++){
+        if(agencyTransactionData[i]?.total_amount !== undefined){
+          totalgiveto = totalgiveto + agencyTransactionData[i]?.total_amount;
+        }
+      };
+
+      let totalSaving = totalSpend - totalgiveto;
 
       return res.status(200).send({
         error: false,
@@ -427,6 +438,7 @@ module.exports = {
           averageSalary: (totalHireAmount/totalHired).toFixed(2) ,
           averagePlacementFee: 0.5,
           totalSpend:totalSpend,
+          totalSaving:totalSaving
 
         }
       })
