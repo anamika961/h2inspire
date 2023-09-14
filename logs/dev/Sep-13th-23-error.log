@@ -1,0 +1,2 @@
+[Wed, 13 Sep 2023 14:19:49 GMT] - ::1 - - "GET /api/employer/dashboard HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}
+[Wed, 13 Sep 2023 14:20:00 GMT] - ::1 - - "GET /api/employer/dashboard HTTP/1.1" code - 500 65 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"agencyJobs is not defined"}

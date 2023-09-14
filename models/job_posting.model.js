@@ -146,6 +146,18 @@ const JobPostingSchema = mongoose.Schema({
     },
     no_of_opening:{
         type:Number
+    },
+    hired_count:{
+        type:Number
+    },
+    interviewin_count:{
+        type:Number
+    },
+    reviewing_count:{
+        type:Number
+    },
+    offer_count:{
+        type:Number
     }
 
 }, {timestamps: true});

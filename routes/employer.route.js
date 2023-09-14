@@ -31,4 +31,7 @@ EmployerRouter.post('/billing', EmployerController.billingAdd)
 
 EmployerRouter.delete('/logout', EmployerController.logout)
 
+EmployerRouter.get('/dashboard', verifyAccessToken, EmployerController.dashboard)
+
+
 module.exports = EmployerRouter

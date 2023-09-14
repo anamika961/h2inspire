@@ -14,6 +14,7 @@ const Billing = require('../models/billing.model')
 const Transaction = require('../models/transaction.model')
 const AgencyTransaction = require('../models/agency_transaction.model')
 const UserSubscription = require("../models/user_subscription.model");
+const JobPosting = require("../models/job_posting.model");
 
 module.exports = {
   list: async (req, res, next) => {
@@ -598,6 +599,39 @@ module.exports = {
       next(error)
     }
   },
+
+
+  dashboard: async (req, res, next) => {
+    try {
+      let token = req.headers['authorization']?.split(" ")[1];
+      let {userId, dataModel} = await getUserViaToken(token)
+      const checkEmployer = await Employer.findOne({_id: userId})
+      if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
+
+      const empJobs = await JobPosting.find({employer: userId}).sort({_id: -1});
+
+      // for(var i in empJobs){
+      //   if(empJobs[i]?.offer_count >= 0){
+      //     job
+      //   }
+      // }
+
+      return res.status(200).send({
+        error: false,
+        message: "Employer dashboard data.",
+        data: empJobs,
+        counts: {
+          activeJobs: empJobs.filter(e => e.status == "1").length,
+          closedJobs: empJobs.filter(e => e.status == "2").length,
+          draftJobs:  empJobs.filter(e => e.status == "3").length,
+          offerJobs:  empJobs.filter(e => e.offer_count >= 0).length,
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  },
+
 
 
 
