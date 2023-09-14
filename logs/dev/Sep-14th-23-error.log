@@ -1,0 +1,5 @@
+[Thu, 14 Sep 2023 09:13:26 GMT] - ::1 - - "GET /api/admin/dashboard HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":404,"message":"Not Found"}
+[Thu, 14 Sep 2023 10:22:53 GMT] - ::1 - - "GET /api/admin/dashboard HTTP/1.1" code - 500 81 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"transactionData.forEach is not a function"}
+[Thu, 14 Sep 2023 10:55:52 GMT] - ::1 - - "PATCH /api/candidate/request/64be4ddeb9b36a0052e46fb3 HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.29.3" request {"request":"1"} response {"error":true,"status":500,"message":"result is not defined"}
+[Thu, 14 Sep 2023 10:56:49 GMT] - ::1 - - "PATCH /api/candidate/request/64be4ddeb9b36a0052e46fb3 HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.29.3" request {"request":"1"} response {"error":true,"status":500,"message":"result is not defined"}
+[Thu, 14 Sep 2023 10:57:27 GMT] - ::1 - - "PATCH /api/candidate/request/64be4ddeb9b36a0052e46fb3 HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.29.3" request {"request":"1"} response {"error":true,"status":500,"message":"result is not defined"}

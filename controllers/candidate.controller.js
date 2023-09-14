@@ -361,14 +361,16 @@ module.exports = {
             // Status update
             const candidateJobData = await CandidateJobModel.findOneAndUpdate({_id: req.params.candidateId}, {request: req.body.request}, {new: true})
 
+            console.log("candidateJobData",candidateJobData?.request)
+
             if(candidateJobData?.request == "1"){
-                const jobData = await JobPosting.findOneAndUpdate({_id:result?.job},{ '$inc': { 'reviewing_count': 1 }, },{new:true});
+                const jobData = await JobPosting.findOneAndUpdate({_id:candidateJobData?.emp_job},{ '$inc': { 'reviewing_count': 1 }, },{new:true});
             }
             else if(candidateJobData?.request == "2"){
-                const jobData = await JobPosting.findOneAndUpdate({_id:result?.job},{ '$inc': { 'interviewin_count': 1 }, },{new:true});
+                const jobData = await JobPosting.findOneAndUpdate({_id:candidateJobData?.emp_job},{ '$inc': { 'interviewin_count': 1 }, },{new:true});
             }
             else if(candidateJobData?.request == "3"){
-                const jobData = await JobPosting.findOneAndUpdate({_id:result?.job},{ '$inc': { 'offer_count': 1 }, },{new:true});
+                const jobData = await JobPosting.findOneAndUpdate({_id:candidateJobData?.emp_job},{ '$inc': { 'offer_count': 1 }, },{new:true});
             }
 
             if(!candidateJobData) return res.status(400).send({error: true, message: "Candidate status is not updated"})

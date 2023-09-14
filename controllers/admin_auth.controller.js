@@ -15,7 +15,8 @@ const AgencyJobModel = require("../models/agency_job.model");
 const RecruiterModel = require("../models/recruiter.model");
 const Agency = require("../models/agency.model");
 const Transaction = require("../models/transaction.model");
-const AgencyTransaction = require('../models/agency_transaction.model')
+const AgencyTransaction = require('../models/agency_transaction.model');
+const HiringDetail = require('../models/hiringDetails.model');
 
 module.exports = {
   register: async (req, res, next) => {
@@ -395,6 +396,41 @@ module.exports = {
       const refToken = await signRefreshToken(userId, "admins")
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
+      next(error)
+    }
+  },
+
+  dashboard: async (req,res,next) =>{
+    try{
+      const hiringData = await HiringDetail.find({});
+
+      let totalHireAmount = 0;
+      hiringData.forEach((element,index)=>{
+        totalHireAmount += element?.comp_offered
+      });
+
+      let totalHired = hiringData.length;
+
+      const transactionData = await Transaction.find({});
+
+        // let totalSpend = 0;
+        // transactionData.forEach((element,index)=>{
+        //   totalSpend += element?.total_amount : null
+        // });
+
+
+      return res.status(200).send({
+        error: false,
+        message: "Admin dashboard data.",
+        data:{
+          totalHired: totalHired,
+          averageSalary: (totalHireAmount/totalHired).toFixed(2) ,
+          averagePlacementFee: 0.5,
+          totalSpend:totalSpend,
+
+        }
+      })
+    }catch(error){
       next(error)
     }
   },
