@@ -158,6 +158,10 @@ const JobPostingSchema = mongoose.Schema({
     },
     offer_count:{
         type:Number
+    },
+    is_deleted:{
+        type:Boolean,
+        default:false
     }
 
 }, {timestamps: true});

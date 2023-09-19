@@ -691,6 +691,38 @@ module.exports = {
     },
 
 
+    deleteStatus: async(req, res, next) => {
+        try{
+            let token = req.headers['authorization']?.split(" ")[1];
+            let {userId, dataModel} = await getUserViaToken(token)
+            const checkEmployer = await Employer.findOne({_id: userId})
+            const checkAdmin = await Admin.findOne({_id: userId})
+            if (
+                (!checkEmployer || !checkAdmin) &&
+                !["employers", "admins"].includes(dataModel)
+            ) return res.status(401).send({ error: true, message: "User unauthorized." });
+
+            const jobData = await JobPosting.findOneAndUpdate({_id:req.params.id},{is_deleted:true},{new:true});
+
+            if(jobData) {
+                return res.status(201).send({
+                    error: false,
+                    message: "Hired status update",
+                    data: jobData
+                })
+            }
+            return res.status(400).send({
+                error: true,
+                message: "Hired status failed"
+            })
+
+        }catch(error){
+            next(error)
+        }
+    },
+
+
+
     agencyList: async(req, res, next) =>{
         try{
             let agencyJobData = await AgencyJobModel.find({job:req.params.id});
