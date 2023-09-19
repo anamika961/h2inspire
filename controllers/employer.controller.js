@@ -179,16 +179,22 @@ module.exports = {
         }
       ]);
 
-      const employerSubscriptionData = await UserSubscription.findOne({employer: userId}).populate([
+      const employerSubscriptionData = await UserSubscription.find({employer: userId}).populate([
         {
             path:"employer",
             select:""
         },
         {
             path:"package",
-            select:""
+            select:"",
+            populate:{
+              path:"package_type",
+              select:"name"
+            }
         }
     ]);
+
+    console.log("employerSubscriptionData",employerSubscriptionData)
 
       res.status(200).send({
         error: false,

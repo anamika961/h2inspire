@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const UserSubscription = require("../models/user_subscription.model");
 const Package = require("../models/package.model");
 const PackageType = require("../models/package_type.model");
+const path = require("path");
+const fs = require("fs");
+const { generateInvoicePdf } = require('../utils/pdf-generator');
 
 module.exports = {
     listbyId: async (req, res, next) => {
@@ -74,6 +77,14 @@ module.exports = {
 
              const subscription_data = new UserSubscription(req.body)
              const result = await subscription_data.save();
+
+             const fileName = Date.now()+ '.pdf'
+          //  const filePath = path.join(__dirname, `../../uploads/invoices/${fileName}`);
+            const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+        
+            // orderPrice = Number(orderPrice).toFixed(2)
+            const invoiceDetails = { amount:"20" };
+            generateInvoicePdf(invoiceDetails, filePath);
             return res.status(200).send({
                 error: false,
                 message: "User subscribed successfully",
