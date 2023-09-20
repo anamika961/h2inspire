@@ -143,7 +143,7 @@ module.exports = {
             });
             var mailOptions = {
                 from: 'developer@demo91.co.in',
-                to: `bera.amamika961@gmail.con`,
+                to: `bera.amamika961@gmail.com`,
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
