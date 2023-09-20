@@ -144,7 +144,7 @@ module.exports = {
 
             var mailOptions = {
                 from: 'developer@demo91.co.in',
-                to: 'anamika.bera@onenesstechs.in',
+                to: empEmail,
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
