@@ -46,4 +46,6 @@ CandidateRouter.patch('/apply-job/:candidateId', CandidateController.candidateJo
 
 CandidateRouter.get('/detail-job/:candidateId', CandidateController.candidateJobDetail)
 
+CandidateRouter.patch('/update/:id', CandidateController.update)
+
 module.exports = CandidateRouter

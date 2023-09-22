@@ -384,6 +384,24 @@ module.exports = {
             next(error)
         }
     },
+
+    update: async (req, res, next) => {
+        try {
+            const result = await CandidateModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
+    
+            if(!result) return res.status(200).send({ error: false, message: "Candidate not updated" })
+
+            return res.status(200).send({
+                error: false,
+                message: "Candidate Updated",
+                data: result
+            })
+        } catch (error) {
+            next(error)
+        }
+    },
+
+
     candidateJobUpdate: async (req, res, next) => {
         try {
             const candidateJobData = await CandidateJobModel.findOneAndUpdate({candidate: req.params.candidateId},req.body,{new: true}).populate([
@@ -394,7 +412,11 @@ module.exports = {
                 {
                     path:"agency_id",
                     select:""
-                }
+                },
+                {
+                    path:"candidate",
+                    select:""
+                },
             ]);
 
             if(!candidateJobData) return res.status(400).send({error: true, message: "Candidate status is not updated"})
@@ -416,7 +438,12 @@ module.exports = {
                 {
                     path:"agency_id",
                     select:""
-                }
+                },
+                {
+                    path:"candidate",
+                    select:""
+                },
+
             ]);
     
             return res.status(200).send({
