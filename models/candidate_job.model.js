@@ -22,6 +22,39 @@ const CandidateJobSchema = mongoose.Schema({
             message: "only 0:(pending)/1:(interviewing)/2:(reviewing) allowed.",
             default: 0
         },
+    },
+    screening_q_a: {
+        type: Array
+    },
+    review_apply:{
+        type:Boolean,
+        default:false
+    },
+    start_application:{
+        type:Boolean,
+        default:false
+    },
+    submit_app:{
+        type:Boolean,
+        default:false
+    },
+    review:{
+        communication_skill:{
+            type:String
+        },
+        position_knwdlg:{
+            type:String
+        },
+        proffesioalsm:{
+            type:String
+        }
+    },
+    review_comment:{
+        type:String
+    },
+    final_submit:{
+        type:Boolean,
+        default:false
     }
     
 

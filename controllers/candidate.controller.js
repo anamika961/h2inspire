@@ -52,10 +52,6 @@ module.exports = {
             // if corresponding agency job not exist
             if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" });
 
-            // const emailData = req.body.email;
-            // console.log("email>>>",emailData);
-            // const phoneData = req.body.phone
-            // console.log("phone>>>",phoneData)
             // Checking the candidate exist or not
             const candidateExist = await CandidateModel.findOne({
                 $or:[{email:req.body.email},{phone:req.body.phone}]
@@ -90,8 +86,6 @@ module.exports = {
 
             req.body.emp_job = candidateDataResult?.job;
             req.body.agency_id = candidateDataResult?.agency;
-            // console.log("emp_job>>>>", req.body.emp_job);
-            // console.log("id>>>>", req.body.agency_id)
             req.body.candidate = candidateDataResult?._id;
 
             const candidateJobData = new CandidateJobModel(req.body)
@@ -105,6 +99,7 @@ module.exports = {
                 }
             ])
 
+
             const candidatelist = await CandidateModel.findOne({_id:candidateDataResult?._id});
             //console.log("agengydata>>>>",agengydata)
 
@@ -112,7 +107,11 @@ module.exports = {
             let candidatefName = candidatelist?.fname;
             let candidatelName = candidatelist?.lname;
 
-            let jobRole = candidatejobdata?.emp_job?.job_name
+            let jobRole = candidatejobdata?.emp_job?.job_name;
+
+            let jobId = candidatejobdata?.emp_job;
+
+            let candidateId = candidatejobdata?.candidate;
 
              console.log("candidateEmail>>>>",candidateEmail)
 
@@ -138,6 +137,10 @@ module.exports = {
                     <li>The ${jobRole} often requires effective collaboration with cross-functional teams. Can you give an example of a situation where you had to work closely with individuals from different departments to achieve a common goal?</li>
                     <li>In ${jobRole}, strong [specific skill] is essential. Please describe how you have demonstrated proficiency in this skill throughout your career.</li>
                 </ol>
+
+                <p>Find the link <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}" 
+                target="blank"/></p>
+
 
                 <p>Please respond to these questions by [deadline for response]. You can either reply directly to this email or send your answers as a separate document. If you have any questions or need further clarification, please don't hesitate to reach out.</p>
 
@@ -378,6 +381,51 @@ module.exports = {
             return res.status(200).send({error: false, message: "Candidate status updated"})
 
         } catch (error) {
+            next(error)
+        }
+    },
+    candidateJobUpdate: async (req, res, next) => {
+        try {
+            const candidateJobData = await CandidateJobModel.findOneAndUpdate({candidate: req.params.candidateId},req.body,{new: true}).populate([
+                {
+                    path:"emp_job",
+                    select:""
+                },
+                {
+                    path:"agency_id",
+                    select:""
+                }
+            ]);
+
+            if(!candidateJobData) return res.status(400).send({error: true, message: "Candidate status is not updated"})
+
+            return res.status(200).send({error: false, message: "Candidate status updated"})
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    candidateJobDetail: async(req,res,next) => {
+        try{
+            const result = await CandidateJobModel.findOne({candidate: req.params.candidateId}).populate([
+                {
+                    path:"emp_job",
+                    select:""
+                },
+                {
+                    path:"agency_id",
+                    select:""
+                }
+            ]);
+    
+            return res.status(200).send({
+                error: false,
+                message: "Detail of candidate job",
+                data: result
+            })
+
+        }catch(error){
             next(error)
         }
     }

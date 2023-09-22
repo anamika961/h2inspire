@@ -42,4 +42,8 @@ CandidateRouter.get('/detail/:id', verifyAccessToken, CandidateController.detail
 
 CandidateRouter.patch('/request/:candidateId', CandidateController.requestUpdate)
 
+CandidateRouter.patch('/apply-job/:candidateId', CandidateController.candidateJobUpdate)
+
+CandidateRouter.get('/detail-job/:candidateId', CandidateController.candidateJobDetail)
+
 module.exports = CandidateRouter
