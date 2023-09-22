@@ -138,7 +138,7 @@ module.exports = {
                     <li>In ${jobRole}, strong [specific skill] is essential. Please describe how you have demonstrated proficiency in this skill throughout your career.</li>
                 </ol>
 
-                <p>Find the link <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}" 
+                <p>Find the link <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}">Find your job</a>
                 target="blank"/></p>
 
 
