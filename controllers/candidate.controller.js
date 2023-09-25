@@ -419,6 +419,10 @@ module.exports = {
                 },
             ]);
 
+            if(candidateJobData?.screening_q_a.length != null){
+                const candidateUpdate = await CandidateModel.findOneAndUpdate({_id:req.params.candidateId},{"$push":{screening_q_a:candidateJobData?.screening_q_a}},{new:true})
+            }
+
             if(!candidateJobData) return res.status(400).send({error: true, message: "Candidate status is not updated"})
 
             return res.status(200).send({error: false, message: "Candidate status updated"})

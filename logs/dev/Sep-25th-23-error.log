@@ -1,0 +1,1 @@
+[Mon, 25 Sep 2023 07:14:22 GMT] - ::1 - - "PATCH /api/candidate/apply-job/650dd97461b82a0053b3c622 HTTP/1.1" code - 400 81 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":400,"message":"Unexpected string in JSON at position 231"}
