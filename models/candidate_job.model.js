@@ -55,6 +55,10 @@ const CandidateJobSchema = mongoose.Schema({
     final_submit:{
         type:Boolean,
         default:false
+    },
+    is_screeing_qu_exist:{
+        type:Boolean,
+        default:false
     }
     
 

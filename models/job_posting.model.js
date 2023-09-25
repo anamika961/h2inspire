@@ -123,7 +123,7 @@ const JobPostingSchema = mongoose.Schema({
     },
     screeing_questions: {
         type: Array,
-        required: true
+        //required: true
     },
     announcement: {
         type: String,
@@ -160,6 +160,10 @@ const JobPostingSchema = mongoose.Schema({
         type:Number
     },
     is_deleted:{
+        type:Boolean,
+        default:false
+    },
+    is_screeing_qu_exist:{
         type:Boolean,
         default:false
     }
