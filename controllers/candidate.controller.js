@@ -362,7 +362,9 @@ module.exports = {
     requestUpdate: async (req, res, next) => {
         try {
             // Status update
-            const candidateJobData = await CandidateJobModel.findOneAndUpdate({_id: req.params.candidateId}, {request: req.body.request}, {new: true})
+            const candidateJobData = await CandidateJobModel.findOneAndUpdate({candidate: req.params.candidateId}, {request: req.body.request}, {new: true});
+
+            const candidateData = await CandidateModel.findOneAndUpdate({_id: req.params.candidateId}, {status: candidateJobData?.request}, {new: true})
 
             console.log("candidateJobData",candidateJobData?.request)
 

@@ -109,7 +109,7 @@ const CandidateSchema = new Schema(
             type: String,
             enum: {
                 values: [0,1,2,3,4],
-                message: "only 0:(new)/1:(reviewing)/2:(interviewing)/3:(offer)/4:(rejected) allowed."
+                message: "only 0:(pending)/1:(reviewing)/2:(interviewing)/3:(offer)/4:(rejected) allowed."
             },
             default: 0
         },
