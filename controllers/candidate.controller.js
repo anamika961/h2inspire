@@ -423,6 +423,10 @@ module.exports = {
                 },
             ]);
 
+            if(candidateJobData?.final_submit == true){
+                const candidateDataUpdate = await CandidateModel.findOneAndUpdate({_id:req.params.candidateId},{final_submit:true},{new:true})
+            }
+
             if(candidateJobData?.screening_q_a.length != null){
                 const candidateUpdate = await CandidateModel.findOneAndUpdate({_id:req.params.candidateId},{"$push":{screening_q_a:candidateJobData?.screening_q_a}},{new:true})
             }
