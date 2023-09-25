@@ -1,1 +1,4 @@
 [Mon, 25 Sep 2023 07:14:22 GMT] - ::1 - - "PATCH /api/candidate/apply-job/650dd97461b82a0053b3c622 HTTP/1.1" code - 400 81 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":400,"message":"Unexpected string in JSON at position 231"}
+[Mon, 25 Sep 2023 08:30:54 GMT] - ::1 - - "PATCH /api/candidate/request/650d63c666dc84005331d7ba HTTP/1.1" code - 400 58 "-" "PostmanRuntime/7.29.3" request {"request":"2"} response {"error":true,"message":"Candidate status is not updated"}
+[Mon, 25 Sep 2023 08:31:08 GMT] - ::1 - - "PATCH /api/candidate/request/650d63c666dc84005331d7ba HTTP/1.1" code - 400 58 "-" "PostmanRuntime/7.29.3" request {"request":"1"} response {"error":true,"message":"Candidate status is not updated"}
+[Mon, 25 Sep 2023 08:32:34 GMT] - ::1 - - "PATCH /api/candidate/request/650d63c666dc84005331d7ba HTTP/1.1" code - 400 58 "-" "PostmanRuntime/7.29.3" request {"request":"1"} response {"error":true,"message":"Candidate status is not updated"}

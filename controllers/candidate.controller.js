@@ -364,6 +364,8 @@ module.exports = {
             // Status update
             const candidateJobData = await CandidateJobModel.findOneAndUpdate({candidate: req.params.candidateId}, {request: req.body.request}, {new: true});
 
+            console.log({candidateJobData})
+
             const candidateData = await CandidateModel.findOneAndUpdate({_id: req.params.candidateId}, {status: candidateJobData?.request}, {new: true})
 
             console.log("candidateJobData",candidateJobData?.request)
