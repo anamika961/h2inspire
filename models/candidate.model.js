@@ -119,7 +119,11 @@ const CandidateSchema = new Schema(
         is_hired:{
             type:Boolean,
             default:false
-        }
+        },
+        final_submit:{
+            type:Boolean,
+            default:false
+        },
 	},
 	{ timestamps: true }
 );
