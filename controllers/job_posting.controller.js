@@ -280,14 +280,14 @@ module.exports = {
 
     detailJobPosting: async (req, res, next) => {
         try {
-            let token = req.headers['authorization']?.split(" ")[1];
-            let {userId, dataModel} = await getUserViaToken(token)
-            const checkEmployer = await Employer.findOne({_id: userId})
-            const checkAgency = await Agency.findOne({_id: userId})
-            const checkRecruiter = await RecruiterModel.findOne({_id: userId})
-            const checkAdmin = await Admin.findOne({_id: userId})
+            // let token = req.headers['authorization']?.split(" ")[1];
+            // let {userId, dataModel} = await getUserViaToken(token)
+            // const checkEmployer = await Employer.findOne({_id: userId})
+            // const checkAgency = await Agency.findOne({_id: userId})
+            // const checkRecruiter = await RecruiterModel.findOne({_id: userId})
+            // const checkAdmin = await Admin.findOne({_id: userId})
 
-            if((!checkEmployer || !checkAgency || !checkRecruiter || !checkAdmin) && !["employers", "agency", "recruiters", "admins"].includes(dataModel)) return res.status(400).send({ error: true, message: "User not authorized." })
+            // if((!checkEmployer || !checkAgency || !checkRecruiter || !checkAdmin) && !["employers", "agency", "recruiters", "admins"].includes(dataModel)) return res.status(400).send({ error: true, message: "User not authorized." })
 
             const jobPostingData = await JobPosting.findOne({_id: req.params.id}).populate([
                 {

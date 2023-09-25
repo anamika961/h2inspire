@@ -13,7 +13,7 @@ JobPostingRouter.get('/agency-job-list', verifyAccessToken, JobPostingController
 
 JobPostingRouter.get('/detail-job/:id', verifyAccessToken, JobPostingController.detail)
 
-JobPostingRouter.get('/detail/:id', verifyAccessToken, JobPostingController.detailJobPosting)
+JobPostingRouter.get('/detail/:id', JobPostingController.detailJobPosting)
 
 JobPostingRouter.patch('/update/:id', verifyAccessToken, JobPostingController.updateJobPosting)
 
