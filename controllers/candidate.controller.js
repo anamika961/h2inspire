@@ -53,9 +53,8 @@ module.exports = {
             if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" });
 
             // Checking the candidate exist or not
-            const candidateExist = await CandidateModel.findOne({
-                $or:[{email:req.body.email},{phone:req.body.phone}]
-            })
+            const candidateExist = await CandidateModel.findOne({email:req.body.email});
+            const candidateExist1 = await CandidateModel.findOne({phone:req.body.phone})
 
             console.log("candidate>>>>>",candidateExist)
             console.log("candidate.id",candidateExist?.agency_job)
@@ -65,7 +64,9 @@ module.exports = {
                 console.log('in..')
                 return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
             }
-                
+            else if(candidateExist1?.agency_job == req.body.agency_job){
+                return res.status(400).send({ error: true, message: `Candidate data already exist with this phone no ${candidateExist1?.phone}` })
+            }
             
             // if candidate exist
             
@@ -129,24 +130,9 @@ module.exports = {
 
                 <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
 
-                <p><strong>Screening Questions:</strong></p>
-                <ol>
-                    <li>Can you provide a brief overview of your relevant experience in [specific skill or qualification] and how it aligns with the requirements of the ${jobRole}?</li>
-                    <li>What motivated you to apply for this particular position at [Company Name]?</li>
-                    <li>Could you share a challenging project you've worked on in the past and how you successfully overcame obstacles to achieve the desired outcome?</li>
-                    <li>The ${jobRole} often requires effective collaboration with cross-functional teams. Can you give an example of a situation where you had to work closely with individuals from different departments to achieve a common goal?</li>
-                    <li>In ${jobRole}, strong [specific skill] is essential. Please describe how you have demonstrated proficiency in this skill throughout your career.</li>
-                </ol>
-
-                <p>Find the link <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}">Find your job</a>
-                target="blank"/></p>
-
-
-                <p>Please respond to these questions by [deadline for response]. You can either reply directly to this email or send your answers as a separate document. If you have any questions or need further clarification, please don't hesitate to reach out.</p>
-
-                <p>We understand the value of your time and effort, and we are excited about the possibility of you joining our team. We will carefully review your responses and notify you regarding the next steps in the selection process.</p>
-
-                <p>Thank you again for considering [Company Name] as your potential employer. We look forward to learning more about you through your responses to the screening questions.</p>
+                <p>Find the link 
+                <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
+              </p>
 
                 <p>Best regards,</p>
                 <p>Hire2Inspire</p>
