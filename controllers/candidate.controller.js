@@ -222,6 +222,7 @@ module.exports = {
             submitted_candidates_id = candidateDataResult.map(e => e._id) 
             const agencyJobUpdate = await AgencyJobModel.findOneAndUpdate({_id: agencyJobExist._id}, {$push: {candidates: submitted_candidates_id}}, {new: true})
             // console.log("agencyJobUpdate >>>>>>>>>>>> ", agencyJobUpdate);
+              console.log({candidateDataResult});
 
             if (candidateDataResult.length) {
                 return res.status(201).send({

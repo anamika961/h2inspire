@@ -74,26 +74,30 @@ module.exports = {
                 let resp;
                 if (req.params.csvType == 'bulk-candidate') {
                     
-                    results.map(e => {
+                    results.map((e)=>{
                         e.agency_job = req.body.agency_job;
-                        e.agency = agencyJobDetail?.agency || undefined;
-                        e.job = agencyJobDetail?.job || undefined;
-                        e.recruiter = checkRecruiter?._id || undefined;
-
-                        e.must_have_qualification_q_a = [];
-                        e.must_have_qualification_questions = e.must_have_qualification_questions.split("|").map(e1 => e1.trim())
-                        e.must_have_qualification_answers = e.must_have_qualification_answers.split("|").map(e => e.trim())
-                        e.must_have_qualification_questions.forEach((ele, index) => {
-                            e.must_have_qualification_q_a.push({
-                                question: ele,
-                                answer: e.must_have_qualification_answers[index]
-                            })
-                        })
-                        e.must_have_qualification_answers = undefined
-                        e.must_have_qualification_questions = undefined
-
-                        return e
                     })
+                    
+                    // results.map(e => {
+                    //     // e.agency_job = req.body.agency_job;
+                    //     // e.agency = agencyJobDetail?.agency || undefined;
+                    //     // e.job = agencyJobDetail?.job || undefined;
+                    //     // e.recruiter = checkRecruiter?._id || undefined;
+
+                    //     // e.must_have_qualification_q_a = [];
+                    //     // e.must_have_qualification_questions = e.must_have_qualification_questions.split("|").map(e1 => e1.trim())
+                    //     // e.must_have_qualification_answers = e.must_have_qualification_answers.split("|").map(e => e.trim())
+                    //     // e.must_have_qualification_questions.forEach((ele, index) => {
+                    //     //     e.must_have_qualification_q_a.push({
+                    //     //         question: ele,
+                    //     //         answer: e.must_have_qualification_answers[index]
+                    //     //     })
+                    //     // })
+                    //     // e.must_have_qualification_answers = undefined
+                    //     // e.must_have_qualification_questions = undefined
+
+                    //     return e;
+                    // })
                     
                     // removing temporary CSV file
                     fs.unlink(fileName, (err) => {
@@ -102,25 +106,52 @@ module.exports = {
                             next(err)
                         }
                     })
-                    const emails = results.map(e => e.email)
-                    const phones = results.map(e => e.phone)
+                   
 
-                    const checkdata = await Candidate.findOne({
-                        $and: [
-                            { agency_job: req.body.agency_job },
-                            { 
-                                email: {
-                                    $in: emails
-                                }
-                            },
-                            {
-                                phone: {
-                                    $in: phones
-                                }
-                            },
-                        ]
-                    })
-                    if(checkdata) return res.status(400).send({error: true, message: `Candidate already exist`})
+                    // const checkdata = await Candidate.findOne({
+                    //     $and: [
+                    //         { agency_job: req.body.agency_job },
+                    //         { 
+                    //             email: {
+                    //                 $in: emails
+                    //             }
+                    //         },
+                    //         {
+                    //             phone: {
+                    //                 $in: phones
+                    //             }
+                    //         },
+                    //     ]
+                    // })
+                   // console.log({results})
+                   
+                   let candidateExist ;
+                   let candidateExist1;
+
+                    for(let i = 0 ; i<results.length ; i++){
+                        // console.log(results[i]?.email)
+                        candidateExist = await Candidate.findOne({email:results[i]?.email});
+                        candidateExist1 = await Candidate.findOne({phone:results[i]?.phone});
+                    }
+
+                    console.log(candidateExist1)
+                    // console.log(candidateExist?.agency_job)
+                    // console.log(req.body.agency_job)
+
+                
+                    // const candidateExist = await Candidate.findOne({email:e.email});
+                    // console.log(candidateExist)
+                    // // const candidateExist1 = await Candidate.findOne({phone:req.body.phone});
+                    // // console.log(candidateExist)
+
+                    if(candidateExist?.agency_job == req.body.agency_job){
+                        console.log('in..')
+                        return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
+                    }
+                    else if(candidateExist1?.agency_job == req.body.agency_job){
+                        return res.status(400).send({ error: true, message: `Candidate data already exist with this phone no ${candidateExist1?.phone}` })
+                    }
+                    // if(checkdata) return res.status(400).send({error: true, message: `Candidate already exist`})
 
                     // Candidate log CSV Uppload 
                     resp = await Candidate.insertMany(results);
