@@ -31,6 +31,6 @@ JobPostingRouter.get('/agency-list/:id', JobPostingController.agencyList)
 
 JobPostingRouter.get('/soft-delete/:id', JobPostingController.deleteStatus);
 
-JobPostingRouter.patch('/job-update/:agencyJob', JobPostingController.agencyJobUpdate)
+JobPostingRouter.patch('/job-update/:job', JobPostingController.agencyJobUpdate)
 
 module.exports = JobPostingRouter

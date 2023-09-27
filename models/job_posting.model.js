@@ -166,7 +166,12 @@ const JobPostingSchema = mongoose.Schema({
     is_screeing_qu_exist:{
         type:Boolean,
         default:false
+    },
+    is_decline:{
+        type:Boolean,
+        default:false
     }
+
 
 }, {timestamps: true});
 

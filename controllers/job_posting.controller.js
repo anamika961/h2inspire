@@ -852,7 +852,7 @@ module.exports = {
             const checkAgency = await Agency.findOne({_id: userId})
             if(!checkAgency && dataModel != "agency") return res.status(400).send({ error: true, message: "Agency not found." })
 
-            const jobUpdata = await AgencyJobModel.findOneAndUpdate({_id:req.params.agencyJob},{is_decline:req.body.is_decline},{new:true});
+            const jobUpdata = await JobPosting.findOneAndUpdate({_id:req.params.job},{is_decline:req.body.is_decline},{new:true});
 
             console.log("jobUpdata",jobUpdata)
 
