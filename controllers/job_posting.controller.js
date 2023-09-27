@@ -843,4 +843,35 @@ module.exports = {
             next(error);
         }
     },
+
+    // Agency job update
+    agencyJobUpdate: async (req, res, next) => {
+        try {
+            let token = req.headers['authorization']?.split(" ")[1];
+            let {userId, dataModel} = await getUserViaToken(token)
+            const checkAgency = await Agency.findOne({_id: userId})
+            if(!checkAgency && dataModel != "agency") return res.status(400).send({ error: true, message: "Agency not found." })
+
+            const jobUpdata = await AgencyJobModel.findOneAndUpdate({_id:req.params.agencyJob},{is_decline:true},{new:true});
+
+            console.log("jobUpdata",jobUpdata)
+
+            
+            if(jobUpdata) {
+                return res.status(201).send({
+                    error: false,
+                    message: `Success`,
+                    data: jobUpdata
+                })
+            }
+            return res.status(400).send({
+                error: true,
+                message: "Agency job assign/decline failed"
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    },
+
 }

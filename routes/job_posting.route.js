@@ -29,6 +29,8 @@ JobPostingRouter.patch('/hired-status/:id', verifyAccessToken, JobPostingControl
 
 JobPostingRouter.get('/agency-list/:id', JobPostingController.agencyList)
 
-JobPostingRouter.get('/soft-delete/:id', JobPostingController.deleteStatus)
+JobPostingRouter.get('/soft-delete/:id', JobPostingController.deleteStatus);
+
+JobPostingRouter.get('/job-update/:agencyJob', JobPostingController.agencyJobUpdate)
 
 module.exports = JobPostingRouter

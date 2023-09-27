@@ -35,7 +35,11 @@ const AgencyJobSchema = mongoose.Schema({
             type: ObjectId,
             ref: 'candidates'
         }
-    ]
+    ],
+    is_decline:{
+        type:Boolean,
+        default:false
+    }
 }, {timestamps: true});
 
 
