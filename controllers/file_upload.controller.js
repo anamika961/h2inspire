@@ -73,7 +73,7 @@ module.exports = {
             .on('end', async() => {
                 let resp;
                 if (req.params.csvType == 'bulk-candidate') {
-                    
+                    console.log("ajob", req.body.agency_job)
                     results.map((e)=>{
                         e.agency_job = req.body.agency_job;
                     })
@@ -130,11 +130,11 @@ module.exports = {
 
                     for(let i = 0 ; i<results.length ; i++){
                         // console.log(results[i]?.email)
-                        candidateExist = await Candidate.findOne({email:results[i]?.email});
-                        candidateExist1 = await Candidate.findOne({phone:results[i]?.phone});
+                        candidateExist = await Candidate.findOne({$and:[{email:results[i]?.email},{agency_job:req.body.agency_job}]});
+                        candidateExist1 = await Candidate.findOne({$and:[{phone:results[i]?.phone},{agency_job:req.body.agency_job}]});
                     }
 
-                    console.log(candidateExist1)
+                    console.log(candidateExist,"res")
                     // console.log(candidateExist?.agency_job)
                     // console.log(req.body.agency_job)
 
@@ -144,11 +144,11 @@ module.exports = {
                     // // const candidateExist1 = await Candidate.findOne({phone:req.body.phone});
                     // // console.log(candidateExist)
 
-                    if(candidateExist?.agency_job == req.body.agency_job){
+                    if(candidateExist){
                         console.log('in..')
                         return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
                     }
-                    else if(candidateExist1?.agency_job == req.body.agency_job){
+                    else if(candidateExist1){
                         return res.status(400).send({ error: true, message: `Candidate data already exist with this phone no ${candidateExist1?.phone}` })
                     }
                     // if(checkdata) return res.status(400).send({error: true, message: `Candidate already exist`})
