@@ -53,12 +53,17 @@ module.exports = {
             if(!agencyJobExist) return res.status(400).send({ error: true, message: "AGgency job does not exist" });
 
             // Checking the candidate exist or not
-            const candidateExist = await CandidateModel.findOne({email:req.body.email});
-            const candidateExist1 = await CandidateModel.findOne({phone:req.body.phone})
+            // const candidateExist = await CandidateModel.findOne({email:req.body.email});
+            // const candidateExist1 = await CandidateModel.findOne({phone:req.body.phone})
+
+            let candidateExist = await CandidateModel.findOne({$and:[{email:req.body.email},{agency_job:req.body.agency_job}]});
+            let candidateExist1 = await CandidateModel.findOne({$and:[{phone:req.body.phone},{agency_job:req.body.agency_job}]});
 
             console.log("candidate>>>>>",candidateExist)
             console.log("candidate.id",candidateExist?.agency_job)
-            console.log('patrams',req.body.agency_job)
+            console.log('patrams',req.body.agency_job);
+            console.log('candidateExist1',candidateExist1);
+            console.log("body",req.body);
 
             if(candidateExist?.agency_job == req.body.agency_job){
                 console.log('in..')

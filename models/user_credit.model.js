@@ -5,6 +5,11 @@ const UserCreditSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "employers"
     },
+    package: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "packages",
+       // required: true
+    },
     free_count: {
         type: Number,
         default: 0,
