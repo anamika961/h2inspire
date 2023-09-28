@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const UserSubscription = require("../models/user_subscription.model");
+const UserCredit = require('../models/user_credit.model');
 const Package = require("../models/package.model");
 const PackageType = require("../models/package_type.model");
 const path = require("path");
@@ -42,43 +43,33 @@ module.exports = {
             let packageNameData = await PackageType.findOne({_id:packageTypeId});
             let packageName = packageNameData?.name
             console.log({packageName});
-            // let subscription_data;
-            // let result
+            
             if(packageName == "PAY AS YOU GO"){
                 let packageAmount = packageData?.payAsYou_detail?.amount;
                 let gstAmount = packageAmount * (18/100);
                 req.body.total_amount = (packageAmount * req.body.quantity + gstAmount).toFixed(2) ;
 
-                // console.log({packageAmount});
-                // console.log({total_amount})
-                // subscription_data = new UserSubscription(req.body)
-                // result = await subscription_data.save();
-
             }else if(packageName == "BUSINESS"){
                 let packageAmount = packageData?.business_detail?.amount;
                 let gstAmount = packageAmount * (18/100);
                 req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
-                // subscription_data = new UserSubscription(req.body)
-                // result = await subscription_data.save();
+               
             }else if(packageName == "SCALE"){
-                // let packageType
                 if(packageData?.scale_detail[0].type == "monthly"){
                     let packageAmount = packageData?.scale_detail[0]?.amount;
                     let gstAmount = packageAmount * (18/100);
                     req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
-                    // subscription_data = new UserSubscription(req.body)
-                    // result = await subscription_data.save();
                 }else if(packageData?.scale_detail[1]?.type == "quaterly"){
                     let packageAmount = packageData?.scale_detail[1]?.amount;
                     let gstAmount = packageAmount * (18/100);
                     req.body.total_amount = (packageAmount + gstAmount).toFixed(2) ;
-                    // subscription_data = new UserSubscription(req.body)
-                    // result = await subscription_data.save();
                 }
             }
 
              const subscription_data = new UserSubscription(req.body)
              const result = await subscription_data.save();
+
+             //console.log({result});
 
              let subscriptionData = await UserSubscription.findOne({_id:result?._id}).populate([
                  {
@@ -95,6 +86,45 @@ module.exports = {
                 }
              ]);
 
+               //console.log({subscriptionData})
+
+
+             let employerData;
+             let packageDet;
+             let purchaseData;
+             if(packageName == "PAY AS YOU GO"){
+                employerData = subscriptionData?.employer;
+                packageDet = subscriptionData?.package;
+                purchaseData = subscriptionData?.package?.payAsYou_detail?.job_credit;
+                console.log({purchaseData})
+             }else if(packageName == "BUSINESS"){
+                employerData = subscriptionData?.employer;
+                packageDet = subscriptionData?.package;
+                purchaseData = subscriptionData?.package?.business_detail?.job_credit
+
+             }else if(packageName == "SCALE"){
+                if(packageData?.scale_detail[0].type == "monthly"){
+                    employerData = subscriptionData?.employer;
+                    packageDet = subscriptionData?.package;
+                    purchaseData = subscriptionData?.package?.scale_detail[0]?.job_credit
+                    
+                }else if(packageData?.scale_detail[1]?.type == "quaterly"){
+                    employerData = subscriptionData?.employer;
+                    packageDet = subscriptionData?.package;
+                    purchaseData = subscriptionData?.package?.scale_detail[1]?.job_credit
+                   
+                }
+
+             };
+
+              const crediData = new UserCredit({employer:employerData,package:packageData,purchased_count:purchaseData});
+             const creditAdd = await crediData.save();
+
+            //console.log({crediData});
+
+
+           //  console.log({subscriptionData})
+
              let empEmail = subscriptionData?.employer?.email;
 
              let empPhoneNo = subscriptionData?.employer?.mobile;
@@ -106,7 +136,7 @@ module.exports = {
 
              let packaeName = packageTypeData?.name
 
-             console.log({packaeName});
+            // console.log({packaeName});
             
              let amount;
              if(packaeName == "PAY AS YOU GO"){
@@ -116,19 +146,20 @@ module.exports = {
              }else if(packaeName == "SCALE"){
                 amount = (packageList?.scale_detail?.amount)
              }
-             console.log({amount})
+            // console.log({amount})
 
 
 
             const invoiceNo =  "INV" + Math.floor(Math.random() * 90000) + 10000;
             const subDate = moment(subscriptionData?.createdAt).format("DD/MM/YYYY");
-            const totalAmount = subscriptionData?.total_amount
+            const totalAmount = subscriptionData?.total_amount;
+           // console.log({totalAmount})
             
 
             const fileName = Date.now()+ '.pdf'
             const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
 
-            console.log({filePath});
+           // console.log({filePath});
         
             const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
             generateInvoicePdf(invoiceDetails, filePath);
