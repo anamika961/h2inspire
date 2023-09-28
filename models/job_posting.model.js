@@ -106,8 +106,8 @@ const JobPostingSchema = mongoose.Schema({
     status: {
         type: String,
         enum: {
-            values: [1,2,3],
-            message: "only 1:(active)/2:(closed)/3:(draft) allowed."
+            values: [1,2,3,4],
+            message: "only 1:(active)/2:(closed)/3:(draft)/4:(filled) allowed."
         },
         
         default: 1,

@@ -587,7 +587,7 @@ module.exports = {
             const jobData = await JobPosting.findOneAndUpdate({_id:result?.job},{ '$inc': { 'no_of_opening': -1 }, },{new:true});
 
             if(jobData?.no_of_opening == 0){
-                const jobUpdate = await JobPosting.findOneAndUpdate({_id:result?.job},{status:"2"},{new:true});
+                const jobUpdate = await JobPosting.findOneAndUpdate({_id:result?.job},{status:"4"},{new:true});
             };
 
             if(hiringList){
