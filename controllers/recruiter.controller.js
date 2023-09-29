@@ -188,7 +188,7 @@ module.exports = {
           .status(400)
           .send({ error: true, message: "User Unauthorized" });
 
-      const recruiterData = await RecruiterModel.find({}).select(
+      const recruiterData = await RecruiterModel.find({agency:userId}).select(
         "-password -otp"
       );
 
@@ -212,7 +212,7 @@ module.exports = {
           .status(400)
           .send({ error: true, message: "User Unauthorized" });
 
-      const recruiterData = await RecruiterModel.find({})
+      const recruiterData = await RecruiterModel.find({employer:userId})
 
       return res.status(200).send({
         error: false,
