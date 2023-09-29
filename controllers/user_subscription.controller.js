@@ -117,10 +117,16 @@ module.exports = {
 
              };
 
-              const crediData = new UserCredit({employer:employerData,package:packageData,purchased_count:purchaseData});
-             const creditAdd = await crediData.save();
+             const creditUser = await UserCredit.findOne({employer:employerData});
+             console.log({creditUser});
+             let creditData
+             if(creditUser){
+                creditData = await UserCredit.findOneAndUpdate({employer:employerData},{'$inc':{'purchased_count':purchaseData}},{new:true})
+             }else{
+                 const creditAmt = new UserCredit({employer:employerData,package:packageData,purchased_count:purchaseData});
+                creditAdd = await creditAmt.save();
+            }
 
-            //console.log({crediData});
 
 
            //  console.log({subscriptionData})

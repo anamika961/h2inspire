@@ -95,7 +95,9 @@ module.exports = {
       const accessToken = await signAccessToken(savedEmployer.id, "employers")
       const refreshToken = await signRefreshToken(savedEmployer.id, "employers")
 
-      const UserCreditData = await UserCredit.findOneAndUpdate({employer: savedEmployer._id}, {$inc: {free_count: 1}}, {upsert: true, new: true}).select("free_count purchased_count free_used_count purchased_used_count")
+      const UserCreditData = await UserCredit.findOneAndUpdate({employer: savedEmployer._id}, {$inc: {free_count: 1}}, {upsert: true, new: true}).select("free_count purchased_count free_used_count purchased_used_count");
+
+      // console.log
 
       const transactionData = new Transaction({employer:savedEmployer.id});
       const tranResult = await transactionData.save();
