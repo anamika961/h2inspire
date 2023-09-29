@@ -95,7 +95,7 @@ module.exports = {
              if(packageName == "PAY AS YOU GO"){
                 employerData = subscriptionData?.employer;
                 packageDet = subscriptionData?.package;
-                purchaseData = subscriptionData?.package?.payAsYou_detail?.job_credit;
+                purchaseData = (subscriptionData?.package?.payAsYou_detail?.job_credit) * (subscriptionData?.quantity);
                 console.log({purchaseData})
              }else if(packageName == "BUSINESS"){
                 employerData = subscriptionData?.employer;

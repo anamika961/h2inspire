@@ -10,24 +10,24 @@ const UserCreditSchema = mongoose.Schema({
         ref: "packages",
        // required: true
     },
-    free_count: {
-        type: Number,
-        default: 0,
-        required: true
-    },
+    // free_count: {
+    //     type: Number,
+    //     default: 0,
+    //     required: true
+    // },
     purchased_count: {
         type: Number,
         default: 0,
         required: true
     },
-    free_used_count: {
-        type: Number,
-        default: 0
-    },
-    purchased_used_count: {
-        type: Number,
-        default: 0
-    }
+    // free_used_count: {
+    //     type: Number,
+    //     default: 0
+    // },
+    // purchased_used_count: {
+    //     type: Number,
+    //     default: 0
+    // }
 }, {timestamps: true});
 
 module.exports = mongoose.model("user_credits", UserCreditSchema);
