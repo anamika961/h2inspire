@@ -15,6 +15,7 @@ const Transaction = require('../models/transaction.model')
 const AgencyTransaction = require('../models/agency_transaction.model')
 const UserSubscription = require("../models/user_subscription.model");
 const JobPosting = require("../models/job_posting.model");
+//const UserCredit = require("../models/user_credit.model");
 
 module.exports = {
   list: async (req, res, next) => {
@@ -194,7 +195,23 @@ module.exports = {
         }
     ]);
 
-    console.log("employerSubscriptionData",employerSubscriptionData)
+    console.log("employerSubscriptionData",employerSubscriptionData);
+
+    const employerCreditData = await UserCredit.findOne({employer: userId}).populate([
+      {
+          path:"employer",
+          select:""
+      },
+      {
+          path:"package",
+          select:"",
+          populate:{
+            path:"package_type",
+            select:"name"
+          }
+      }
+  ]);
+
 
       res.status(200).send({
         error: false,
@@ -202,7 +219,8 @@ module.exports = {
         data: checkEmployer,
         billingData,
         transactionData,
-        employerSubscriptionData
+        employerSubscriptionData,
+        employerCreditData
       })
     } catch (error) {
       next(error)
