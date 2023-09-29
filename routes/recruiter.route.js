@@ -5,6 +5,10 @@ const RecruiterRouter = express.Router()
 
 RecruiterRouter.get('/list-by-agency', verifyAccessToken, RecruiterController.list)
 
+RecruiterRouter.get('/list-by-employer', verifyAccessToken, RecruiterController.empReqlist)
+
+RecruiterRouter.get('/add-by-employer', verifyAccessToken, RecruiterController.addByEmp)
+
 RecruiterRouter.post('/login', RecruiterController.login)
 
 RecruiterRouter.post('/add-by-agency', verifyAccessToken, RecruiterController.addByAgency)

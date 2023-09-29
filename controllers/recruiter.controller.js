@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const Agency = require("../models/agency.model");
+const Employer = require("../models/employer.model");
 const {
   recruiterLoginSchema,
   recruiterChangePasswordSchema,
@@ -200,6 +201,90 @@ module.exports = {
       next(error);
     }
   },
+//////////////////////// list of recruiter by emp /////////////////////////
+  empReqlist: async (req, res, next) => {
+    try {
+      let token = req.headers["authorization"]?.split(" ")[1];
+      let { userId, dataModel } = await getUserViaToken(token);
+      const checkemp = await Employer.findOne({ _id: userId });
+      if (!checkemp && !["employer"].includes(dataModel))
+        return res
+          .status(400)
+          .send({ error: true, message: "User Unauthorized" });
+
+      const recruiterData = await RecruiterModel.find({})
+
+      return res.status(200).send({
+        error: false,
+        message: "Recruiter list found",
+        data: recruiterData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  //////////////////////// list of recruiter by emp /////////////////////////
+
+  addByEmp: async (req, res, next) => {
+    try {
+      let token = req.headers["authorization"]?.split(" ")[1];
+      let { userId, dataModel } = await getUserViaToken(token);
+      console.log("{ userId, dataModel } >>> ", { userId, dataModel });
+      const checkEmp = await Employer.findOne({ _id: userId });
+      if (!checkEmp && dataModel != "employer")
+        return res
+          .status(401)
+          .send({ error: true, message: "User unauthorize." });
+
+      const emails = req.body.email;
+
+      const data = [];
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash("secret", salt);
+
+      for (let index = 0; index < emails.length; index++) {
+        const checkInvitation = await RecruiterModel.findOne({$and:[
+          {employer:userId},
+          {email: emails[index]}
+        ]});
+        console.log({checkInvitation})
+        if (checkInvitation)
+          return res
+            .status(200)
+            .send({
+              error: true,
+              message: `${emails[index]} already invited as a recruiter`,
+            });
+        data.push({
+          email: emails[index],
+          password: hashedPassword,
+          employer: userId,
+          token: uuidv4(),
+        });
+      }
+
+      const recruiterInvite = await RecruiterModel.insertMany(data);
+      const invitedRecruiters = await RecruiterModel.find({
+        employer:userId,
+      }).select("-otp -password").sort({_id: -1});
+
+      console.log({recruiterInvite});
+      console.log({invitedRecruiters})
+      return res.status(200).send({
+        error: false,
+        message: "Invitation sent successfully",
+        invitation_links: recruiterInvite.map((e) => {
+          return { [e.email]: `${req.body.callback}?token=${e.token}` };
+        }),
+        invitedRecruiters: invitedRecruiters
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
 
   changePassword: async (req, res, next) => {
     try {

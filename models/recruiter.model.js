@@ -9,6 +9,10 @@ const RecruiterSchema = new Schema(
             type: ObjectId,
             ref: 'agencies'
         },
+		employer: {
+            type: ObjectId,
+            ref: 'employers'
+        },
         fname: {
             type: String
         },
@@ -19,7 +23,6 @@ const RecruiterSchema = new Schema(
 			type: String,
 			required: true,
 			lowercase: true,
-			unique: true,
 			trim: true,
 			validate(value) {
 				const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z-.]+$/g;
