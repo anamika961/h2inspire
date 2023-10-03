@@ -57,7 +57,14 @@ const ExpertiseInSchema = new Schema({
             type: ObjectId,
             ref: "industries"
         }
-    ]
+    ],
+
+    candidate_Role:{
+        type:Array
+    },
+    comp_industry:{
+        type:Array
+    }
 })
 
 const CandidateSenioritySchema = new Schema({
@@ -139,7 +146,7 @@ const AgencySchema = new Schema(
             type: String,
             required: true,
             enum: [1, 2]
-        },
+        }
 	},
 	{ timestamps: true }
 );

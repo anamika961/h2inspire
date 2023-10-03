@@ -42,6 +42,7 @@ const employerRegistrationAuthSchema = Joi.object({
   //   }),
   email: Joi.string().email().trim().required(),
   fname: Joi.string().trim(),
+  type: Joi.string().trim(),
   lname: Joi.string().trim(),
   linkedin_url: Joi.string().trim(),
   company_website_url: Joi.string().trim(),
@@ -94,6 +95,7 @@ const agencyRegistrationAuthSchema = Joi.object({
   corporate_email: Joi.string().email().trim().required(),
   name: Joi.string().trim().required(),
   agency_estd_year: Joi.string().trim().required(),
+  type: Joi.string().trim(),
   password: Joi.string()
     .regex(RegExp(/(?=.*)(?=.*[!@#$%+_^&*(){}])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}/))
     .trim()

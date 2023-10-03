@@ -83,7 +83,9 @@ module.exports = {
     try {
       // const { email, password } = req.body
       // if (!email || !password) throw createError.BadRequest()
-      const result = await employerRegistrationAuthSchema.validateAsync(req.body)
+      const result = await employerRegistrationAuthSchema.validateAsync(req.body);
+
+      console.log({result})
 
       const doesExist = await Employer.findOne({ email: result.email })
       if (doesExist)
