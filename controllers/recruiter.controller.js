@@ -285,6 +285,40 @@ module.exports = {
     }
   },
 
+/////////////////////////// status update by emp ///////////////////
+
+  statusEmpUpdate: async (req, res, next) => {
+    try {
+      let token = req.headers["authorization"]?.split(" ")[1];
+      let { userId, dataModel } = await getUserViaToken(token);
+      const checkEmp = await Employer.findOne({ _id: userId });
+      if (!checkEmp && !["employer"].includes(dataModel))
+        return res
+          .status(400)
+          .send({ error: true, message: "User Unauthorized" });
+
+      const recruiterData = await RecruiterModel.findOneAndUpdate(
+        { _id: req.params.id },
+        { status: req.body.status },
+        { new: true }
+      );
+
+      if (recruiterData) {
+        return res.status(200).send({
+          error: false,
+          message: "Recruiter status updated.",
+        });
+      } else {
+        return res.status(400).send({
+          error: true,
+          message: "Recruiter status not updated.",
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+
 
   changePassword: async (req, res, next) => {
     try {

@@ -25,4 +25,6 @@ RecruiterRouter.patch('/reset-password', RecruiterController.resetPassword)
 
 RecruiterRouter.patch('/change-password', verifyAccessToken, RecruiterController.changePassword)
 
+RecruiterRouter.patch('/status-update-by-emp/:id', verifyAccessToken, RecruiterController.statusEmpUpdate)
+
 module.exports = RecruiterRouter
