@@ -297,7 +297,11 @@ module.exports = {
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
 
       let transactionId = req.body.transactionId;
-         let type = req.body.type
+         let type = req.body.type;
+
+         let description = req.body.description;
+
+         console.log("description",description)
          
          let emp_id = req.body.emp_id;
 
@@ -306,12 +310,13 @@ module.exports = {
          const getEmpData  = await Transaction.find({employer:emp_id})
 
 
-         function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
+         function addPaymentRes(transactions, targetTransactionId, invoiceValue,desc) {
             
              for (let i = 0; i < transactions.length; i++) {
                if (transactions[i].transaction_id == targetTransactionId) {
                    
                  transactions[i]["type"] = invoiceValue;
+               transactions[i]["description"] = desc;
                  
                }
              }
@@ -321,11 +326,11 @@ module.exports = {
            }
           
            const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
-           , "paid");
+           , "paid",description);
          //   console.log(req.body,"msg")
-            console.log(updatedData);
+            //console.log(updatedData);
 
-            const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData,description:req.body.description}, {new: true});
+            const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
 
       return res.status(200).send({
         error: false,
@@ -346,7 +351,9 @@ module.exports = {
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
 
       let transactionId = req.body.transactionId;
-         let type = req.body.type
+         let type = req.body.type;
+
+         let description = req.body.description;
          
          let agencyId = req.body.agencyId;
 
@@ -355,12 +362,13 @@ module.exports = {
          const getEmpData  = await AgencyTransaction.find({agency:agencyId})
 
 
-         function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
+         function addPaymentRes(transactions, targetTransactionId, invoiceValue,desc) {
             
              for (let i = 0; i < transactions.length; i++) {
                if (transactions[i].transaction_id == targetTransactionId) {
                    
                  transactions[i]["type"] = invoiceValue;
+                 transactions[i]["description"] = desc;
                  
                }
              }
@@ -370,7 +378,7 @@ module.exports = {
            }
           
            const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
-           , "paid");
+           , "paid",description);
          //   console.log(req.body,"msg")
             console.log(updatedData);
 
