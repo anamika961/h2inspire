@@ -130,7 +130,16 @@ const AgencySchema = new Schema(
         is_approved: {
             type: Boolean,
             default: false
-        }
+        },
+         /**
+         * 1: Super/Main Agency
+         * 2: Sub Agency
+         */
+        type: {
+            type: String,
+            required: true,
+            enum: [1, 2]
+        },
 	},
 	{ timestamps: true }
 );

@@ -66,6 +66,15 @@ const EmployerSchema = new Schema({
     required: true,
     default: false
   },
+  /**
+   * 1: Super/Main Employer
+   * 2: Sub Employer
+   */
+  type: {
+    type: String,
+    required: true,
+    enum: [1, 2]
+  },
   isDeleted: {
     type: Boolean,
     required: true,
