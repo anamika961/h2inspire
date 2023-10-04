@@ -391,6 +391,22 @@ module.exports = {
     }
   },
 
+  updateWelcomeStatus: async (req, res, next) => {
+    try {
+      const updatedData = await Agency.findOneAndUpdate({_id: req.params.id},{is_welcome:req.body.is_welcome}, {new: true});
+      if(updatedData) {
+        return res.status(200).send({
+          error: false,
+          message: "Agency data updated",
+          data: updatedData
+        })
+      }
+      return res.status(400).send({error: true, message: "Agency not updated"})
+    } catch (error) {
+      next(error)
+    }
+  },
+
   logout: async (req, res, next) => {
     try {
       const { refreshToken } = req.body

@@ -1,0 +1,2 @@
+[Wed, 04 Oct 2023 08:52:55 GMT] - ::1 - - "PATCH /api/agency/update-status/651cf97625eab00054acf6e3 HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":404,"message":"Not Found"}
+[Wed, 04 Oct 2023 08:54:38 GMT] - ::1 - - "PATCH /api/agency/update-status/651cf97625eab00054acf6e3 HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {"is_welcome":true} response {"error":true,"status":404,"message":"Not Found"}

@@ -33,6 +33,8 @@ AgencyRouter.patch('/change-password', verifyAccessToken, AgencyController.chang
 
 AgencyRouter.post('/refresh-token', AgencyController.refreshToken)
 
+AgencyRouter.patch('/update-status/:id', AgencyController.updateWelcomeStatus)
+
 AgencyRouter.delete('/logout', AgencyController.logout)
 
 module.exports = AgencyRouter

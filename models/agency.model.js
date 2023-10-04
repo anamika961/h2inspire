@@ -146,6 +146,10 @@ const AgencySchema = new Schema(
             type: String,
             required: true,
             enum: [1, 2]
+        },
+        is_welcome: {
+            type: Boolean,
+            default: false
         }
 	},
 	{ timestamps: true }
