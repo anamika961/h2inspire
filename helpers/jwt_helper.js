@@ -7,7 +7,7 @@ module.exports = {
       const payload = {model: dataModel}
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
-        expiresIn: '1d',
+        expiresIn: '1hr',
         audience: userId,
       }
       JWT.sign(payload, secret, options, (err, token) => {
