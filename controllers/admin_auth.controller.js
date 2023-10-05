@@ -239,8 +239,16 @@ module.exports = {
       const checkAdmin = await Admin.findOne({_id: userId})
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
 
-      const agencyData = await Agency.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved})
-      if(agencyData) {
+      const agencyData = await Agency.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved},{new:true});
+
+      let agencyapprove;
+      if(agencyData?.is_approved == false){
+        agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: false},{new:true});
+      }else{
+        agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: true},{new:true});
+      }
+
+      if(agencyapprove) {
         return res.status(200).send({
           error: false,
           message: "Admin approval for agency updated."

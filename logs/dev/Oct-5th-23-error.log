@@ -1,0 +1,1 @@
+[Thu, 05 Oct 2023 07:49:01 GMT] - ::1 - - "PATCH /api/admin/agency-approval/651e538b54e5150053cf5d19 HTTP/1.1" code - 500 60 "-" "PostmanRuntime/7.29.3" request {"is_approved":true} response {"error":true,"status":500,"message":"flase is not defined"}
