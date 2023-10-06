@@ -7,7 +7,7 @@ DraftJobRouter.post('/add',verifyAccessToken, DraftJobController.create)
 
 DraftJobRouter.get('/all-list', DraftJobController.alllist)
 
-DraftJobRouter.get('/detail/:id', DraftJobController.alllist)
+DraftJobRouter.get('/detail/:id', DraftJobController.detailJob)
 
 
 module.exports = DraftJobRouter
