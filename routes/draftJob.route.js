@@ -9,3 +9,4 @@ DraftJobRouter.get('/all-list', DraftJobController.alllist)
 
 
 module.exports = DraftJobRouter
+
