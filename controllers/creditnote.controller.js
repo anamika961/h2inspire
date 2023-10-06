@@ -51,8 +51,12 @@ module.exports = {
                         select:"",
                         populate:{
                             path:"candidate",
-                            select:""
-                        }
+                            select:"",
+                            populate:{
+                                path:"agency",
+                                select:""
+                            }
+                        },
                     },
                    
                 }
