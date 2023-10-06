@@ -38,7 +38,7 @@ module.exports = {
     
             return res.status(200).send({
                 error: false,
-                message: "Industry updated",
+                message: "job saved as draft",
                 data: result
             })
         } catch (error) {
