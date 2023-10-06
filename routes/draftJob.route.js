@@ -9,6 +9,8 @@ DraftJobRouter.get('/all-list', DraftJobController.alllist)
 
 DraftJobRouter.get('/detail/:id', DraftJobController.detailJob)
 
+DraftJobRouter.patch('/update/:id', DraftJobController.update)
+
 
 module.exports = DraftJobRouter
 
