@@ -290,7 +290,9 @@ module.exports = {
                 !["employers", "admins"].includes(dataModel)
             ) return res.status(401).send({ error: true, message: "User unauthorized." })
 
-            req.body.employer = checkEmployer ? userId : req.body.employer
+            req.body.employer = checkEmployer ? userId : req.body.employer;
+
+            req.body.job_id = Math.random().toString(36).substr(2, 10);
             
             let userCreditData = await UserCredit.findOne({employer:userId});
             // console.log({userCreditData})

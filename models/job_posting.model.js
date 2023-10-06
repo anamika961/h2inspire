@@ -7,6 +7,9 @@ const JobPostingSchema = mongoose.Schema({
         ref: 'employers',
         required: true
     },
+    job_id:{
+        type:String
+    },
     comp_name:{
         type:String
     },

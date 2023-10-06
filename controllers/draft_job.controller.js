@@ -46,5 +46,21 @@ module.exports = {
         }
     },
 
+    detailJob: async(req,res,next)=>{
+        detailJob: async (req, res, next) => {
+            try {
+                const job_data = await DraftJob.findOne({_id:req.params.id});
+        
+                return res.status(200).send({
+                    error: false,
+                    message: "Draft job detail",
+                    data: detailJob
+                })
+            } catch (error) {
+                next(error);
+            }
+    }
+}
+
 }
 
