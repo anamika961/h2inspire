@@ -20,6 +20,7 @@ const PackageRouter = require('./package.route');
 const UserSubscriptionRouter = require('./user_subscription.route');
 const PackageTypeRouter = require('./package_type.route');
 const CreditNoteRouter = require('./creditnote.route');
+const DraftJobRouter = require('./draftJob.route');
 
 
 router.use("/admin", AdminAuthRouter);
@@ -41,6 +42,7 @@ router.use("/package", PackageRouter);
 router.use("/user-subscription", UserSubscriptionRouter);
 router.use("/package-type", PackageTypeRouter);
 router.use("/credit-note", CreditNoteRouter);
+router.use("/draft-job", DraftJobRouter);
 
 
 module.exports = router;
