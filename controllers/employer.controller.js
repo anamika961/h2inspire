@@ -106,6 +106,8 @@ module.exports = {
       const empFname = savedEmployer?.fname;
       const empLname = savedEmployer?.lname;
       const empEmail = savedEmployer?.email;
+
+      console.log({empEmail});
     
       const accessToken = await signAccessToken(savedEmployer.id, "employers")
       const refreshToken = await signRefreshToken(savedEmployer.id, "employers")
@@ -123,15 +125,13 @@ module.exports = {
     <body>
         <p>Dear ${empFname} ${empLname},</p>
         <p>Thank you for choosing Hire2Inspire - the platform that connects talented job seekers with employers like you!</p>
-        <p>To complete your employer registration, please click the button below:</p>
-        <p><a href="[Registration Link]" class="button">Register as an Employer</a></p>
         <p>If you have any questions or need assistance, feel free to contact our support team at [Support Email Address].</p>
         <p>We look forward to helping you find the perfect candidates for your job openings!</p>
         <p>Thank you and best regards,</p>
         <p> Hire2Inspire </p>
     </body>
 `
-};   
+}; 
 
       transport.sendMail(mailOptions, function(error, info){
         if (error) {
