@@ -14,6 +14,7 @@ const HiringDetail = require('../models/hiringDetails.model');
 const sendNotification = require('../helpers/send_notification');
 const nodemailer = require("nodemailer");
 const UserSubscription = require("../models/user_subscription.model");
+const DraftJob = require("../models/draft_job.model");
 
 var transport = nodemailer.createTransport({
     host: "mail.demo91.co.in",
@@ -326,6 +327,14 @@ module.exports = {
 
             const jobPostingData = new JobPosting(req.body);
             const result = await jobPostingData.save();
+
+            let jobName = result?.job_name;
+            console.log({jobName});
+
+            let draftJobdata = await DraftJob.deleteOne({job_name:jobName});
+
+            console.log({draftJobdata});
+
 
             //console.log("result>>>>",result)
     

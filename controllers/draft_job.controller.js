@@ -58,8 +58,9 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+    
 
-},
 
 update: async (req, res, next) => {
     try {
@@ -76,6 +77,36 @@ update: async (req, res, next) => {
         next(error);
     }
 },
+
+delete: async (req, res, next) => {
+    try {
+        const draftJobData = await DraftJob.deleteOne({_id:req.params.id});
+
+        if(draftJobData.deletedCount == 1){
+            message = {
+				error: false,
+				message: "Draft job deleted successfully!",
+			};
+			res.status(200).send(message);
+        }else{
+            message = {
+				error: true,
+				message: "Operation failed!",
+			};
+			res.status(200).send(message);
+        }
+
+        // return res.status(200).send({
+        //     error: false,
+        //     message: "Draft job update",
+        //     data: job_data
+        // })
+    } catch (error) {
+        next(error);
+    }
+},
+
+
 
 }
 
