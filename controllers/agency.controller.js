@@ -11,7 +11,16 @@ const bcrypt = require('bcrypt')
 const AgencyJobModel = require('../models/agency_job.model')
 const Recruiter = require('../models/recruiter.model')
 const Admin = require('../models/admin.model')
-const AgencyTransaction = require('../models/agency_transaction.model')
+const AgencyTransaction = require('../models/agency_transaction.model');
+const nodemailer = require("nodemailer");
+var transport = nodemailer.createTransport({
+  host: "mail.demo91.co.in",
+  port: 465,
+  auth: {
+    user: "developer@demo91.co.in",
+    pass: "Developer@2023"
+  }
+});
 
 module.exports = {
   allList: async (req, res, next) => {
@@ -70,6 +79,41 @@ module.exports = {
       const AgencyData = new Agency(result)
       const savedAgency = await AgencyData.save()
       // console.log(savedAgency.id);
+      const agencyName = savedAgency?.name;
+      console.log({agencyName});
+      const agencyFname = savedAgency?.AgencyUserAccountInfo?.first_name;
+      console.log({agencyFname});
+      const agencyLname = savedAgency?.AgencyUserAccountInfo?.last_name;
+      console.log({agencyLname});
+      const agencyEmail = savedAgency?.corporate_email;
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: agencyEmail,
+        subject: `Agency registered successfully`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+        <p>Dear ${agencyName},</p>
+        <p>Thank you for choosing Hire2Inspire - the platform that connects talented job seekers with employers like you!</p>
+        <p>If you have any questions or need assistance, feel free to contact our support team at [Support Email Address].</p>
+        <p>We look forward to helping you find the perfect candidates for your job openings!</p>
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
+
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      
       const accessToken = await signAccessToken(savedAgency.id, "agency")
       const refreshToken = await signRefreshToken(savedAgency.id, "agency");
 
