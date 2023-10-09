@@ -328,12 +328,12 @@ module.exports = {
             const jobPostingData = new JobPosting(req.body);
             const result = await jobPostingData.save();
 
-            let jobName = result?.job_name;
-            console.log({jobName});
+            // let jobName = result?.job_name;
+            // console.log({jobName});
 
-            let draftJobdata = await DraftJob.deleteOne({job_name:jobName});
+            // let draftJobdata = await DraftJob.deleteOne({job_name:jobName});
 
-            console.log({draftJobdata});
+            // console.log({draftJobdata});
 
 
             //console.log("result>>>>",result)

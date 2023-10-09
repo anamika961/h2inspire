@@ -16,6 +16,15 @@ const AgencyTransaction = require('../models/agency_transaction.model')
 const UserSubscription = require("../models/user_subscription.model");
 const JobPosting = require("../models/job_posting.model");
 //const UserCredit = require("../models/user_credit.model");
+const nodemailer = require("nodemailer");
+var transport = nodemailer.createTransport({
+  host: "mail.demo91.co.in",
+  port: 465,
+  auth: {
+    user: "developer@demo91.co.in",
+    pass: "Developer@2023"
+  }
+});
 
 module.exports = {
   list: async (req, res, next) => {
@@ -93,13 +102,44 @@ module.exports = {
 
       const EmployerData = new Employer(result)
       const savedEmployer = await EmployerData.save()
-      // console.log(savedEmployer.id);
+
+      const empFname = savedEmployer?.fname;
+      const empLname = savedEmployer?.lname;
+      const empEmail = savedEmployer?.email;
+    
       const accessToken = await signAccessToken(savedEmployer.id, "employers")
       const refreshToken = await signRefreshToken(savedEmployer.id, "employers")
 
       const UserCreditData = await UserCredit.findOneAndUpdate({employer: savedEmployer._id}, {$inc: {free_count: 1}}, {upsert: true, new: true}).select("free_count purchased_count free_used_count purchased_used_count");
 
-      // console.log
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: empEmail,
+        subject: `Employer registered successfully`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+        <p>Dear ${empFname} ${empLname},</p>
+        <p>Thank you for choosing Hire2Inspire - the platform that connects talented job seekers with employers like you!</p>
+        <p>To complete your employer registration, please click the button below:</p>
+        <p><a href="[Registration Link]" class="button">Register as an Employer</a></p>
+        <p>If you have any questions or need assistance, feel free to contact our support team at [Support Email Address].</p>
+        <p>We look forward to helping you find the perfect candidates for your job openings!</p>
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+};   
+
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 
       const transactionData = new Transaction({employer:savedEmployer.id});
       const tranResult = await transactionData.save();
