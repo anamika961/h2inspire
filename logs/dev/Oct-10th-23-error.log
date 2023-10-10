@@ -1,0 +1,4 @@
+[Tue, 10 Oct 2023 12:05:31 GMT] - ::1 - - "POST /api/credit-note/add HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.29.3" request {"billingId":"651589cbccaca80053b6f9a2","backOut_date":"10-07-2023","employer":"64ccb537c121c066b86cc5f6","agency":"64df1b721fcee355c54fdac5"} response {"error":true,"status":500,"message":"agency is not defined"}
+[Tue, 10 Oct 2023 12:14:27 GMT] - ::1 - - "GET /api/credit-note/list HTTP/1.1" code - 401 52 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"Unauthorized"}
+[Tue, 10 Oct 2023 12:14:47 GMT] - ::1 - - "GET /api/credit-note/list HTTP/1.1" code - 500 70 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"getUserViaToken is not defined"}
+[Tue, 10 Oct 2023 12:16:02 GMT] - ::1 - - "GET /api/credit-note/list HTTP/1.1" code - 500 63 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"Employer is not defined"}
