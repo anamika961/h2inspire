@@ -244,9 +244,11 @@ module.exports = {
       let agencyapprove;
       if(agencyData?.is_approved == false){
         agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: false},{new:true});
-      }else{
-        agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: true},{new:true});
       }
+      
+      // else{
+      //   agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: true},{new:true});
+      // }
 
       if(agencyapprove) {
         return res.status(200).send({
