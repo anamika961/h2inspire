@@ -97,6 +97,10 @@ const transactionSchema = mongoose.Schema({
         },
         sgst_cal_amount:{
             type:Number
+        },
+        creditnote_status:{
+            type:Boolean,
+            default:false
         }
    }],
    total_amount:{

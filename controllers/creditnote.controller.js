@@ -4,6 +4,7 @@ const { getUserViaToken, verifyAccessToken } = require("../helpers/jwt_helper");
 const Employer = require('../models/employer.model')
 const Agency = require('../models/agency.model')
 const Billing = require('../models/billing.model')
+const Transaction = require("../models/transaction.model");
 
 module.exports = { 
     create: async (req, res, next) => {
@@ -41,7 +42,34 @@ module.exports = {
             }
             const creditNoteData = new CreditNote(req.body)
             const result = await creditNoteData.save();
-           console.log({CreditNote})
+           console.log({CreditNote});
+
+        let transactionId = result?.transactionId;
+         
+         let empId = result?.employer;
+
+        
+         const getEmpData  = await Transaction.find({employer:empId})
+
+
+         function addPaymentRes(transactions, targetTransactionId, status) {
+            
+             for (let i = 0; i < transactions.length; i++) {
+               if (transactions[i].transaction_id == targetTransactionId) {
+                   
+                 transactions[i]["creditnote_status"] = status;
+                 
+               }
+             }
+            return transactions;
+            
+           }
+          
+           const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
+           , "true");
+
+          
+           const transactionData = await Transaction.findOneAndUpdate({employer:empId},{passbook_amt:updatedData}, {new: true});
     
             return res.status(200).send({
                 error: false,
