@@ -477,11 +477,11 @@ module.exports = {
         let candidateData = billinglist?.hire_id?.candidate?._id;
         let tranId = Math.floor(Math.random() * 90000) + 10000;
 
-        const generateNextInvoice = (prevInv) => {
+        const generateNextInvoice = (prevInv,type) => {
     
           if(prevInv == undefined){
             console.log('here')
-            return "H2I/23-24-01"
+            return `H2I/${type}/23-24-01`
           }else{
             const [, yearPart, numberPart] = prevInv.match(/(\d{2}-\d{2})-(\d{2})/);
             let newNumberPart = (parseInt(numberPart, 10) + 1).toString().padStart(2, '0')
@@ -531,7 +531,7 @@ module.exports = {
                 desg: designation,
                 transaction_id: tranId,
                 invoice_file:"",
-                invoice_No:generateNextInvoice(PrevInvoiceId),
+                invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
                 gst_in:"09ABCCS9765L1ZH",
                 hsn_code:"SAC 9983",
                 gst_type:"IGST",
@@ -560,7 +560,7 @@ module.exports = {
                 desg: designation,
                 transaction_id: tranId,
                 invoice_file:"",
-                invoice_No:generateNextInvoice(PrevInvoiceId),
+                invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
                 gst_in:"09ABCCS9765L1ZH",
                 hsn_code:"SAC 9983",
                 gst_type:"CGST/SGST",
@@ -608,7 +608,7 @@ module.exports = {
                   desg: designation,
                   transaction_id: tranId,
                   invoice_file:"",
-                  invoice_No:generateNextInvoice(PrevInvoiceId),
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
                   employer:result?.employer,
                   gst_in:"09ABCCS9765L1ZH",
                   hsn_code:"SAC 9983",
@@ -638,7 +638,7 @@ module.exports = {
                   desg: designation,
                   transaction_id: tranId,
                   invoice_file:"",
-                  invoice_No:generateNextInvoice(PrevInvoiceId),
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
                   employer:result?.employer,
                   gst_in:"09ABCCS9765L1ZH",
                   hsn_code:"SAC 9983",
