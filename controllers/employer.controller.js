@@ -498,7 +498,7 @@ module.exports = {
             }
             
             else{
-              return `H2I/${currentYear}-${currentYearNext}-${newNumberPart}`
+              return `H2I/${type}/${currentYear}-${currentYearNext}-${newNumberPart}`
             }
             
           }
