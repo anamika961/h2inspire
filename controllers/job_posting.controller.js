@@ -293,7 +293,49 @@ module.exports = {
 
             req.body.employer = checkEmployer ? userId : req.body.employer;
 
-            req.body.job_id = Math.random().toString(36).substr(2, 10);
+           // req.body.job_id = Math.random().toString(36).substr(2, 10);
+
+           function generateIncrementalJobId(prejob) {
+
+            if(prejob == undefined){
+                console.log('here1')
+                const now = new Date();
+                const year = now.getFullYear().toString();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+                return `H2I${day}${month}${year}01`                    //H2IDDMMYYYY01
+            }else{
+                let currentNumeric = JobList?.job_id;
+                let cn = [...currentNumeric];
+                let currentNumericPart = cn[cn?.length-2] + cn[cn?.length-1]
+                console.log('here2');
+                console.log('currentNumericPart',currentNumericPart);
+                const now = new Date();
+                const year = now.getFullYear().toString();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+            
+                // Extract the numeric part (01) and increment it
+                // let currentNumericPart = "01";
+                currentNumericPart = (parseInt(currentNumericPart, 10) + 1).toString().padStart(2, '0');
+            
+                // Create the job ID
+                const jobId = `H2I${day}${month}${year}${currentNumericPart}`;
+            
+                return jobId;
+            }
+            
+          };
+
+          let JobList  = await JobPosting.findOne({employer:req.body.employer}).sort({_id:-1});
+          console.log({JobList});
+          let preJobId = JobList?.job_id;
+
+          console.log({preJobId});
+
+            req.body.job_id = generateIncrementalJobId(preJobId);
+
+            console.log("job_id",req.body.job_id )
             
             let userCreditData = await UserCredit.findOne({employer:userId});
             // console.log({userCreditData})
