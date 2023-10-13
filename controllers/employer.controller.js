@@ -16,6 +16,7 @@ const AgencyTransaction = require('../models/agency_transaction.model')
 const UserSubscription = require("../models/user_subscription.model");
 const JobPosting = require("../models/job_posting.model");
 //const UserCredit = require("../models/user_credit.model");
+const HiringDetail = require('../models/hiringDetails.model');
 const nodemailer = require("nodemailer");
 var transport = nodemailer.createTransport({
   host: "mail.demo91.co.in",
@@ -682,11 +683,10 @@ module.exports = {
 
       const empJobs = await JobPosting.find({employer: userId}).sort({_id: -1});
 
-      // for(var i in empJobs){
-      //   if(empJobs[i]?.offer_count >= 0){
-      //     job
-      //   }
-      // }
+      let jobIds = empJobs.map(e => e._id.toString());
+      
+      let hiringData = await HiringDetail.find({job: {$in: jobIds}});
+
 
       return res.status(200).send({
         error: false,
@@ -696,7 +696,8 @@ module.exports = {
           activeJobs: empJobs.filter(e => e.status == "1").length,
           closedJobs: empJobs.filter(e => e.status == "2").length,
           draftJobs:  empJobs.filter(e => e.status == "3").length,
-          offerJobs:  empJobs.filter(e => e.offer_count >= 0).length,
+          //offerJobs:  empJobs.filter(e => e.offer_count >= 0).length,
+          offerJobs: hiringData.length
         }
       })
     } catch (error) {
