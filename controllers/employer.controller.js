@@ -519,7 +519,7 @@ module.exports = {
       let gstAmount;
       let cgstAmount;
       let sgstAmount;
-      if(billinglist?.supply_code == "29"){
+      if(billinglist?.supply_code != "29"){
         gstAmount = (amount * (18/100));
         const transactionData = await Transaction.findOneAndUpdate(
           { employer: result?.employer },
@@ -547,7 +547,7 @@ module.exports = {
           },
           { new: true }
         );
-      }else{
+      }else if(billinglist?.supply_code == "29"){
         cgstAmount = (amount * (9/100));
         sgstAmount = (amount * (9/100));
         const transactionData = await Transaction.findOneAndUpdate(
