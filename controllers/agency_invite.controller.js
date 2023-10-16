@@ -49,7 +49,7 @@ module.exports = {
 
         for (let index = 0; index < emails.length; index++) {
             const checkInvitation = await AgencyInviteModel.findOne({invited_by: userId, invited_by_ref: dataModel, email: emails[index]});
-            if(checkInvitation) return res.status(200).send({ error: true, message: `${emails[index]} already invited`});
+            if(checkInvitation) return res.status(200).send({ error: true, message: `${emails[index]} is already invited`});
             data.push({
                 email: emails[index],
                 invited_by: userId,
