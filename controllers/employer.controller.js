@@ -596,7 +596,7 @@ module.exports = {
         let cgstAmountData;
         let sgstAmountData;
 
-        if(billinglist?.supply_code == "29"){
+        if(billinglist?.supply_code != "29"){
           gstAmountData = (agency_amountData * (18/100));
           const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
             { agency: agencyId },
@@ -625,7 +625,7 @@ module.exports = {
             },
             { new: true }
           );    
-        }else{
+        }else if(billinglist?.supply_code == "29"){
           cgstAmountData = (agency_amountData * (9/100));
           sgstAmountData = (agency_amountData * (9/100));
           const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
