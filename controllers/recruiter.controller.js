@@ -15,6 +15,16 @@ const bcrypt = require("bcrypt");
 const RecruiterModel = require("../models/recruiter.model");
 const { v4: uuidv4 } = require("uuid");
 
+const nodemailer = require("nodemailer");
+var transport = nodemailer.createTransport({
+  host: "mail.demo91.co.in",
+  port: 465,
+  auth: {
+    user: "developer@demo91.co.in",
+    pass: "Developer@2023"
+  }
+});
+
 module.exports = {
   login: async (req, res, next) => {
     try {
@@ -105,6 +115,53 @@ module.exports = {
       const invitedRecruiters = await RecruiterModel.find({
         agency: userId,
       }).select("-otp -password").sort({_id: -1});
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        subject: `Recruiter Invitation`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+    <p>Dear Recruiter,</p>
+
+    <p>
+        I hope this message finds you well. We're thrilled to extend a warm and exclusive invitation to your esteemed recruiter
+        to become a part of the Hire2inspire platform - a dynamic community dedicated to connecting exceptional agencies with
+        clients seeking top-notch services.
+    </p>
+
+    <p>
+        At Hire2inspire, we believe in the power of collaboration and innovation, and we see your recruiter as a perfect fit for
+        our community. We are impressed by your talents and capabilities, and we are confident that your involvement will
+        greatly enrich our platform.
+    </p>
+
+    <p>
+        To start this exciting journey, all you need to do is click the link below to create your recruiter's profile on our
+        platform. The onboarding process is designed to be straightforward, and our support team is available to assist you at
+        every step.
+    </p>
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
+
+
+data.forEach((recipient) => {
+  mailOptions.to = recipient?.email;
+
+  transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(`Error sending email to ${recipient}: ${error}`);
+    } else {
+      console.log(`Email sent to ${recipient?.email}: ${info.response}`);
+    }
+  });
+});
+      
       return res.status(200).send({
         error: false,
         message: "Invitation sent successfully",
@@ -271,7 +328,53 @@ module.exports = {
       }).select("-otp -password").sort({_id: -1});
 
       console.log({recruiterInvite});
-      console.log({invitedRecruiters})
+      console.log({invitedRecruiters});
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        subject: `Recruiter Invitation`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+    <p>Dear Recruiter,</p>
+
+    <p>
+        I hope this message finds you well. We're thrilled to extend a warm and exclusive invitation to your esteemed recruiter
+        to become a part of the Hire2inspire platform - a dynamic community dedicated to connecting exceptional agencies with
+        clients seeking top-notch services.
+    </p>
+
+    <p>
+        At Hire2inspire, we believe in the power of collaboration and innovation, and we see your recruiter as a perfect fit for
+        our community. We are impressed by your talents and capabilities, and we are confident that your involvement will
+        greatly enrich our platform.
+    </p>
+
+    <p>
+        To start this exciting journey, all you need to do is click the link below to create your recruiter's profile on our
+        platform. The onboarding process is designed to be straightforward, and our support team is available to assist you at
+        every step.
+    </p>
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
+
+
+data.forEach((recipient) => {
+  mailOptions.to = recipient?.email;
+
+  transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(`Error sending email to ${recipient}: ${error}`);
+    } else {
+      console.log(`Email sent to ${recipient?.email}: ${info.response}`);
+    }
+  });
+});
       return res.status(200).send({
         error: false,
         message: "Invitation sent successfully",
