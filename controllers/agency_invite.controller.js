@@ -98,6 +98,9 @@ module.exports = {
           platform. The onboarding process is designed to be straightforward, and our support team is available to assist you at
           every step.
       </p>
+      <p>Find the link 
+      <a href="https://hire2inspire-dev.netlify.app/agency/login" target="blank">Registration Link</a>
+    </p>
           <p>Thank you and best regards,</p>
           <p> Hire2Inspire </p>
       </body>
