@@ -15,7 +15,7 @@ module.exports = {
                     select:"fname lname agency",
                     populate:{
                         path:"agency",
-                        select:"name corporate_email",
+                        select:"name corporate_email gst",
                     }
                 },
                 {
@@ -39,7 +39,7 @@ module.exports = {
                     select:"fname lname",
                     populate:{
                         path:"agency",
-                        select:"name corporate_email agency_account_info",
+                        select:"name corporate_email gst agency_account_info",
                         populate:{
                             path:"AgencyUserAccountInfo",
                             select:"first_name last_name personal_phone agency_location"
