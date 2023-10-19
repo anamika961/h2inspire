@@ -27,6 +27,9 @@ const CreditNoteSchema = mongoose.Schema({
     },
     transactionId:{
         type:String
+    },
+    credit_inv_no:{
+        type:String
     }  
 
 }, {timestamps: true});

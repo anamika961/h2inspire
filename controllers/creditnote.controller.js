@@ -24,7 +24,41 @@ module.exports = {
                     },
                 }
             ]);
-            // console.log("billingData",billingData)
+
+            console.log("billingData",billingData)
+            const generateNextInvoice = (prevInv) => {
+    
+                if(prevInv == undefined){
+                  console.log('here')
+                  return `H2I/CN/23-24-01`
+                }else{
+                  const [, yearPart, numberPart] = prevInv.match(/(\d{2}-\d{2})-(\d{2})/);
+                  let newNumberPart = (parseInt(numberPart, 10) + 1).toString().padStart(2, '0')
+                  const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
+                  let currentYear = new Date().getFullYear() % 100;
+                  let currentYearNext  = currentYear+1;
+                  if(currentMonth > 3 && currentYear != 23){
+                    if(currentYear != yearPart.split('-')[0]){
+                      return `H2I/${currentYear}-${currentYearNext}-01`  
+                    }else{
+                      return `H2I/${currentYear}-${currentYearNext}-${(parseInt(numberPart, 10) + 1).toString().padStart(2, '0')}`  
+                    }
+                    
+                  }
+                  
+                  else{
+                    return `H2I/CN/${currentYear}-${currentYearNext}-${newNumberPart}`
+                  }
+                  
+                }
+            }
+
+            let creditNotelist = await CreditNote.find({});
+
+            let prevInv  = (creditNotelist?.length-1)?.credit_inv_no;
+            
+      
+            req.body.credit_inv_no = generateNextInvoice(prevInv);
             req.body.employer = billingData?.employer;
             req.body.agency = billingData?.hire_id?.candidate?.agency?._id;
             const billingamount =(billingData?.hire_id?.comp_offered);
