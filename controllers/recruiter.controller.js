@@ -143,6 +143,12 @@ module.exports = {
         platform. The onboarding process is designed to be straightforward, and our support team is available to assist you at
         every step.
     </p>
+    <p>Find the link 
+    <a href="https://hire2inspire-dev.netlify.app/recruiter/login" target="blank">Registration Link</a>
+  </p>
+  <p>
+   password: secret
+</p>
         <p>Thank you and best regards,</p>
         <p> Hire2Inspire </p>
     </body>
@@ -357,6 +363,11 @@ data.forEach((recipient) => {
         platform. The onboarding process is designed to be straightforward, and our support team is available to assist you at
         every step.
     </p>
+    <a href="https://hire2inspire-dev.netlify.app/recruiter/login" target="blank">Registration Link</a>
+  </p>
+  <p>
+   password: secret
+</p>
         <p>Thank you and best regards,</p>
         <p> Hire2Inspire </p>
     </body>
