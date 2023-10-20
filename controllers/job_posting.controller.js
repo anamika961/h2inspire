@@ -164,7 +164,23 @@ module.exports = {
 
             let jobIds = job_postings.map(e => e._id.toString());
 
-            const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}}).populate([
+            console.log({jobIds});
+
+            // const CandidateJobData = await CandidateJobModel.find( {emp_job: {$in: jobIds}}).populate([
+            //     {
+            //         path:"candidate",
+            //         select:" "
+            //     },
+            //     {
+            //         path:"agency_id",
+            //         select:" "
+            //     }
+            // ]);
+
+            // console.log({CandidateJobData})
+
+
+            const CandidateData = await Candidate.find( {job: {$in: jobIds}}).populate([
                 {
                     path:"candidate",
                     select:" "
@@ -173,14 +189,17 @@ module.exports = {
                     path:"agency_id",
                     select:" "
                 }
-            ])
+            ]);
+
+             console.log({CandidateData})
 
     
             return res.status(200).send({
                 error: false,
                 message: "Job posting list",
                 data: job_postings,
-                CandidateJobData
+               // CandidateJobData
+               CandidateData
             })
         } catch (error) {
             next(error);
