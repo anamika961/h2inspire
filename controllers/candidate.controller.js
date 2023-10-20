@@ -261,7 +261,13 @@ module.exports = {
                 return res.status(201).send({
                     error: false,
                     message: "Candidate data submitted",
-                    data: {candidateDataResult,candidatejobData}
+                    data: candidateDataResult
+                })
+            }else if(candidatejobData.length){
+                return res.status(201).send({
+                    error: false,
+                    message: "Candidate data submitted",
+                    data: candidatejobData
                 })
             }
             return res.status(400).send({
