@@ -179,6 +179,8 @@ module.exports = {
 
             // console.log({CandidateJobData})
 
+            let
+
 
             const CandidateData = await Candidate.find( {job: {$in: jobIds}}).populate([
                 {
@@ -187,6 +189,10 @@ module.exports = {
                 },
                 {
                     path:"agency_id",
+                    select:" "
+                },
+                {
+                    path:"job",
                     select:" "
                 }
             ]);

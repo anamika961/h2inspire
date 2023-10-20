@@ -186,9 +186,13 @@ module.exports = {
 
             // Checking the corresponding agency job exist or not
             const agencyJobExist = await AgencyJobModel.findOne({_id: req.body.agency_job})
+
+            const empJobExist = await JobPosting.findOne({_id: req.body.job})
             
             // if corresponding agency job not exist
             if(!agencyJobExist) return res.status(400).send({ error: true, message: "Candidate submission failed" })
+
+            if(!empJobExist) return res.status(400).send({ error: true, message: "Candidate submission failed" })
 
             // if corresponding agency job exist
             // Submit candidate here
@@ -210,19 +214,43 @@ module.exports = {
                             ]
                         }
                     ]
+                });
+
+                const candidateExist1 = await CandidateModel.findOne({
+                    $and: [
+                        { job: empJobExist?._id},
+                        {
+                            $or: [
+                                {email: candidates[index].email},
+                                {phone: candidates[index].phone}
+                            ]
+                        }
+                    ]
                 })
                 // console.log("candidateExist >>>>>>>>>>>>>>>>>>> ", candidateExist);
                 // if candidate exist
                 if(candidateExist) return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
 
+                if(candidateExist1) return res.status(400).send({ error: true, message: `Candidate data already exist with this email ${candidateExist?.email}` })
+
+
                 candidates[index].agency = agencyJobExist.agency
                 candidates[index].recruiter = checkRecruiter?._id
-                candidates[index].job = agencyJobExist.job
+               // candidates[index].job = agencyJobExist.job
+                candidates[index].job = empJobExist?._id
                 candidateData.push(candidates[index])
+
+             
+    
+               
+                
             }
 
             // console.log("candidates >>>>>>>>>>>>", candidateData);
-            const candidateDataResult = await CandidateModel.insertMany(candidateData)
+            const candidateDataResult = await CandidateModel.insertMany(candidateData);
+            const candidatejobData = await CandidateJobModel.insertMany(candidateData);
+
+            console.log({candidatejobData});
 
             submitted_candidates_id = candidateDataResult.map(e => e._id) 
             const agencyJobUpdate = await AgencyJobModel.findOneAndUpdate({_id: agencyJobExist._id}, {$push: {candidates: submitted_candidates_id}}, {new: true})
@@ -233,7 +261,7 @@ module.exports = {
                 return res.status(201).send({
                     error: false,
                     message: "Candidate data submitted",
-                    data: candidateDataResult
+                    data: {candidateDataResult,candidatejobData}
                 })
             }
             return res.status(400).send({
