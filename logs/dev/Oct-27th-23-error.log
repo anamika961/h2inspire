@@ -1,0 +1,2 @@
+[Fri, 27 Oct 2023 06:31:45 GMT] - ::1 - - "POST /api/file/save-csv-to-db/bulk-candidate HTTP/1.1" code - 401 45 "-" "PostmanRuntime/7.29.3" request {"agency_job":"652acdc310b203d20bdaf2b4"} response {"error":true,"message":"User unauthorized."}
+[Fri, 27 Oct 2023 07:00:37 GMT] - ::1 - - "GET /api/job-posting/list-by-employer HTTP/1.1" code - 400 46 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"message":"Employer not found."}

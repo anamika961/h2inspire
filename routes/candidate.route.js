@@ -34,6 +34,8 @@ CandidateRouter.post('/submit', verifyAccessToken, CandidateController.submitCan
 
 CandidateRouter.post('/bulk-submit', verifyAccessToken, CandidateController.submitBulkCandidate)
 
+//CandidateRouter.post('/bulk', verifyAccessToken, CandidateController.BulkCandidate)
+
 CandidateRouter.patch('/status/:candidateId', verifyAccessToken, CandidateController.statusUpdate)
 
 CandidateRouter.patch('/resume-upload/:candidateId', upload.single('resume'), verifyAccessToken, CandidateController.resumeUpload)

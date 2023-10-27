@@ -240,9 +240,7 @@ module.exports = {
                 candidates[index].job = empJobExist?._id
                 candidateData.push(candidates[index])
 
-             
-    
-               
+            
                 
             }
 
@@ -493,5 +491,34 @@ module.exports = {
         }catch(error){
             next(error)
         }
-    }
+    },
+
+    // BulkCandidate: async (req, res, next) => {
+    //     try {
+    //         let token = req.headers["authorization"]?.split(" ")[1];
+    //         let { userId, dataModel } = await getUserViaToken(token);
+    //         const checkAgency = await Agency.findOne({ _id: userId });
+    //         const checkRecruiter = await Recruiter.findOne({ _id: userId });
+    //         if (
+    //             (!checkAgency || !checkRecruiter) &&
+    //             !["agency", "recruiters"].includes(dataModel)
+    //         ) return res.status(401).send({ error: true, message: "User unauthorized." })
+
+            
+    //         if (candidateDataResult.length) {
+    //             return res.status(201).send({
+    //                 error: false,
+    //                 message: "Candidate data submitted",
+    //                 data: candidateDataResult
+    //             })
+    //         }
+    //         return res.status(400).send({
+    //             error: true,
+    //             message: "Candidate submission failed"
+    //         })
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // },
+
 }
