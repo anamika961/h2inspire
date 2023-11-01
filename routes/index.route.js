@@ -21,6 +21,8 @@ const UserSubscriptionRouter = require('./user_subscription.route');
 const PackageTypeRouter = require('./package_type.route');
 const CreditNoteRouter = require('./creditnote.route');
 const DraftJobRouter = require('./draftJob.route');
+const GetInTouchRouter = require('./getInTouch.route');
+
 
 
 router.use("/admin", AdminAuthRouter);
@@ -43,6 +45,7 @@ router.use("/user-subscription", UserSubscriptionRouter);
 router.use("/package-type", PackageTypeRouter);
 router.use("/credit-note", CreditNoteRouter);
 router.use("/draft-job", DraftJobRouter);
+router.use("/get-in-touch", GetInTouchRouter);
 
 
 module.exports = router;
