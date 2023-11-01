@@ -101,7 +101,7 @@ module.exports = {
             .status(200)
             .send({
               error: true,
-              message: `${emails[index]} already invited as a recruiter`,
+              message: `${emails[index]} is already invited as a recruiter`,
             });
         data.push({
           email: emails[index],
