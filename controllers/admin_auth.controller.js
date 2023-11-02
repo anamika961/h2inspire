@@ -297,7 +297,12 @@ module.exports = {
       const checkAdmin = await Admin.findOne({_id: userId})
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
 
-      const agencyData = await Agency.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved},{new:true});
+      const agencyData = await Agency.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved},{new:true}).populate([
+        {
+          path:"",
+          select:""
+        }
+      ]);
 
       let agencyapprove;
       if(agencyData?.is_approved == false){
@@ -305,41 +310,31 @@ module.exports = {
       };
 
 
-      
-//       var mailOptions = {
-//         from: 'developer@demo91.co.in',
-//         to: empEmail,
-//         subject: `Confirmaition for Job Approval`,
-//         html:`
-//         <head>
-//             <title>Notification: Confirmation for Job approval</title>
-//     </head>
-//     <body>
-//     <p>Dear ${empFname} ${empLname},</p>
-//     <p>I hope this message finds you well. We are pleased to inform you that your recent job posting has been approved and is now live on our platform. This will help you reach a wider audience and attract potential candidates for the position.</p>
-
-//     <p>Here are the details of your approved job posting:</p>
-//     <ul>
-//       <li><strong>Job Title:</strong> ${jobName}</li>
-//       <li><strong>Company:</strong> ${compName}</li>
-//     </ul>
-
-//     <p>Your job posting is now accessible to job seekers, and we will begin promoting it to potential candidates. We recommend reviewing the job posting regularly to ensure it accurately represents the position and its requirements.</p>
-
-//     <p>Thank you for choosing our platform to connect with talented individuals. We wish you the best of luck in finding the perfect candidate for your job opening. If you have any further questions or require any assistance, please don't hesitate to reach out.</p>
-
-//     <p>Best regards,</p>
-//     <p>Hire2Inspire</p>
-//   </body>
-// `
-// };   
-//     transport.sendMail(mailOptions, function(error, info){
-//         if (error) {
-//           console.log(error);
-//         } else {
-//           console.log('Email sent: ' + info.response);
-//         }
-//     });
+      let agencyName = agencyData?.name;
+      let agencyEmail = agencyData?.corporate_email;
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: agencyEmail,
+        subject: `Confirmaition for Job Approval`,
+        html:`
+        <head>
+        <title>Confirmation of Agency Approval</title>
+      </head>
+      <body>
+        <p>Dear ${agencyName},</p>
+        <p>I hope this email finds you well. We are pleased to inform you that your agency's application for approval has been successfully processed and has received the necessary clearance. We are excited to confirm your agency's status as an approved partner with [Your Company Name].</p>
+        <p>Best regards,</p>
+        <p>Hire2Inspire</p>
+      </body>
+`
+};   
+    transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
 
 
       if(agencyapprove) {
