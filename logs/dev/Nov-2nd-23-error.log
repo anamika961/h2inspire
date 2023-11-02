@@ -8,3 +8,4 @@
 [Thu, 02 Nov 2023 12:34:45 GMT] - ::1 - - "GET /api/transaction/agency-list/64df1b721fcee355c54fdac5 HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":404,"message":"Not Found"}
 [Thu, 02 Nov 2023 12:37:01 GMT] - ::1 - - "GET /api/transaction/agency-list/64df1b721fcee355c54fdac5 HTTP/1.1" code - 404 49 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":404,"message":"Not Found"}
 [Thu, 02 Nov 2023 12:37:11 GMT] - ::1 - - "GET /api/transaction/agency-list HTTP/1.1" code - 500 60 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":500,"message":"Admin is not defined"}
+[Thu, 02 Nov 2023 13:46:08 GMT] - ::1 - - "GET /api/transaction/agency-list HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.3" request {} response {"error":true,"status":401,"message":"jwt expired"}

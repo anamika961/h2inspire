@@ -220,7 +220,11 @@ module.exports = {
                     select:" ",
                     populate:{
                       path:"hire_id",
-                      select:" "
+                      select:" ",
+                      populate:{
+                          path:"job",
+                          select:"job_id job_name"
+                      }
                     }
                   },
                   {
