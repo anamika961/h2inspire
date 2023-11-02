@@ -51,7 +51,7 @@ module.exports = {
 
             return res.status(200).send({
                 error: false,
-                message: "submit get in Touch",
+                message: "Thank you for submit your query",
                 data: result
             })
         } catch (error) {
