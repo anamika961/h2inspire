@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Transaction = require("../models/transaction.model");
-const AgencyTransaction = require('../models/agency_transaction.model')
+const AgencyTransaction = require('../models/agency_transaction.model');
+const Agency = require('../models/agency.model');
+const { getUserViaToken, verifyAccessToken } = require("../helpers/jwt_helper");
 
 module.exports = {
     list: async (req, res, next) => {
@@ -188,6 +190,58 @@ module.exports = {
     //         next(error);
     //     }
     // },
+
+
+    agencylist: async (req, res, next) => {
+        try {
+            let token = req.headers['authorization']?.split(" ")[1];
+            let {userId, dataModel} = await getUserViaToken(token)
+            const checkAgency = await Agency.findOne({_id: userId})
+            if(!checkAgency && dataModel != "admins") return res.status(401).send({ error: true, message: "User unauthorized." })
+            const agency_transaction_data = await AgencyTransaction.findOne({agency:userId}).populate([
+                {
+                    path:"agency",
+                    select:"name"
+                },
+                {
+                    path:"passbook_amt.candidate",
+                    select:"fname lname",
+                    populate:{
+                        path:"agency",
+                        select:"name corporate_email gst agency_account_info",
+                        populate:{
+                            path:"AgencyUserAccountInfo",
+                            select:"first_name last_name personal_phone agency_location"
+                        }
+                    }
+                },
+                {
+                    path:"passbook_amt.billing_id",
+                    select:" ",
+                    populate:{
+                      path:"hire_id",
+                      select:" "
+                    }
+                  },
+                  {
+                    path:"passbook_amt.employer",
+                    select:"fname lname email mobile",
+                  }
+            ]);
+
+           // console.log({agency_transaction_data})
+
+
+            return res.status(200).send({
+                error: false,
+                message: "Transaction list",
+                data:  agency_transaction_data
+                
+            })
+        } catch (error) {
+            next(error);
+        }
+    }, 
        
 
 }
