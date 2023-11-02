@@ -17,6 +17,16 @@ const Agency = require("../models/agency.model");
 const Transaction = require("../models/transaction.model");
 const AgencyTransaction = require('../models/agency_transaction.model');
 const HiringDetail = require('../models/hiringDetails.model');
+const nodemailer = require("nodemailer");
+
+var transport = nodemailer.createTransport({
+  host: "mail.demo91.co.in",
+  port: 465,
+  auth: {
+    user: "developer@demo91.co.in",
+    pass: "Developer@2023"
+  }
+});
 
 module.exports = {
   register: async (req, res, next) => {
@@ -216,13 +226,61 @@ module.exports = {
       const checkAdmin = await Admin.findOne({_id: userId})
       if(!checkAdmin && dataModel != "admins") return res.status(401).send({ error: true, message: "Admin not authorized." })
 
-      const jobPostingData = await JobPosting.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved})
+      const jobPostingData = await JobPosting.findOneAndUpdate({_id: req.params.jobId}, {is_approved: req.body.is_approved}).populate([
+        {
+          path:"employer",
+          select:"fname lname email"
+        }
+      ]);
+      let empFname = jobPostingData?.employer?.fname;
+      let empLname = jobPostingData?.employer?.lname;
+      let empEmail = jobPostingData?.employer?.email;
+      let jobName = jobPostingData?.job_name;
+      let compName = jobPostingData?.comp_name;
       if(jobPostingData) {
         return res.status(200).send({
           error: false,
           message: "Admin approval for job updated."
         });
       }
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: empEmail,
+        subject: `Confirmaition for Job Approval`,
+        html:`
+        <head>
+            <title>Notification: Confirmation for Job approval</title>
+    </head>
+    <body>
+    <p>Dear ${empFname} ${empLname},</p>
+    <p>I hope this message finds you well. We are pleased to inform you that your recent job posting has been approved and is now live on our platform. This will help you reach a wider audience and attract potential candidates for the position.</p>
+
+    <p>Here are the details of your approved job posting:</p>
+    <ul>
+      <li><strong>Job Title:</strong> ${jobName}</li>
+      <li><strong>Company:</strong> ${compName}</li>
+    </ul>
+
+    <p>Your job posting is now accessible to job seekers, and we will begin promoting it to potential candidates. We recommend reviewing the job posting regularly to ensure it accurately represents the position and its requirements.</p>
+
+    <p>Thank you for choosing our platform to connect with talented individuals. We wish you the best of luck in finding the perfect candidate for your job opening. If you have any further questions or require any assistance, please don't hesitate to reach out.</p>
+
+    <p>Best regards,</p>
+    <p>Hire2Inspire</p>
+  </body>
+`
+};   
+    transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+
+
+
       return res.status(400).send({
         error: false,
         message: "Job approval failed."
@@ -244,11 +302,45 @@ module.exports = {
       let agencyapprove;
       if(agencyData?.is_approved == false){
         agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: false},{new:true});
-      }
+      };
+
+
       
-      // else{
-      //   agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: true},{new:true});
-      // }
+//       var mailOptions = {
+//         from: 'developer@demo91.co.in',
+//         to: empEmail,
+//         subject: `Confirmaition for Job Approval`,
+//         html:`
+//         <head>
+//             <title>Notification: Confirmation for Job approval</title>
+//     </head>
+//     <body>
+//     <p>Dear ${empFname} ${empLname},</p>
+//     <p>I hope this message finds you well. We are pleased to inform you that your recent job posting has been approved and is now live on our platform. This will help you reach a wider audience and attract potential candidates for the position.</p>
+
+//     <p>Here are the details of your approved job posting:</p>
+//     <ul>
+//       <li><strong>Job Title:</strong> ${jobName}</li>
+//       <li><strong>Company:</strong> ${compName}</li>
+//     </ul>
+
+//     <p>Your job posting is now accessible to job seekers, and we will begin promoting it to potential candidates. We recommend reviewing the job posting regularly to ensure it accurately represents the position and its requirements.</p>
+
+//     <p>Thank you for choosing our platform to connect with talented individuals. We wish you the best of luck in finding the perfect candidate for your job opening. If you have any further questions or require any assistance, please don't hesitate to reach out.</p>
+
+//     <p>Best regards,</p>
+//     <p>Hire2Inspire</p>
+//   </body>
+// `
+// };   
+//     transport.sendMail(mailOptions, function(error, info){
+//         if (error) {
+//           console.log(error);
+//         } else {
+//           console.log('Email sent: ' + info.response);
+//         }
+//     });
+
 
       if(agencyapprove) {
         return res.status(200).send({

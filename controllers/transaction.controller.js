@@ -53,6 +53,10 @@ module.exports = {
                       path:"hire_id",
                       select:" "
                     }
+                  },
+                  {
+                    path:"passbook_amt.employer",
+                    select:"fname lname email mobile",
                   }
             ]);
 

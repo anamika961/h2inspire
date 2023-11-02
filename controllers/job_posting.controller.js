@@ -385,7 +385,15 @@ module.exports = {
                     break;
             }
 
-            const jobPosted = await JobPosting.findOne({employer: userId});
+            const jobPosted = await JobPosting.findOne({employer: userId}).populate([
+                {
+                    path:"employer",
+                    select:"fname lname"
+                }
+            ]);
+
+            let empFname = jobPosted?.employer?.fname;
+            let empLname = jobPosted?.employer?.lname;
 
             var today = new Date();
             req.body.expired_on = new Date(new Date().setDate(today.getDate() + (JobPosting ? 30 : 15)));
@@ -393,16 +401,47 @@ module.exports = {
             const jobPostingData = new JobPosting(req.body);
             const result = await jobPostingData.save();
 
-            // let jobName = result?.job_name;
-            // console.log({jobName});
 
-            // let draftJobdata = await DraftJob.deleteOne({job_name:jobName});
+            const AdminData = await Admin.findOne({});
 
-            // console.log({draftJobdata});
+            let adminMail = AdminData?.email;
+            let adminName = AdminData?.name
+           
+            var mailOptions = {
+                from: 'developer@demo91.co.in',
+                to: adminMail,
+                subject: `Hired candidate!`,
+                html:`
+                <head>
+                    <title>Notification: Request for Job Approval</title>
+            </head>
+            <body>
+            <p>
+              Dear ${adminName},
+            </p>
+            <p>
+              I hope this message finds you well. I am writing to request your kind attention to the job posting submitted by a employer on our platform. We believe that this job opportunity aligns perfectly with our community's needs, and we kindly request your approval to make it visible to our job seekers.
+            </p>
+            <p>
+              Please let us know if you have any questions or need additional details. We look forward to your positive response.
+            </p>
+            <p>Find the link 
+                <a href="https://hire2inspire-dev.netlify.app/admin/login" target="blank">LogIn</a>
+              </p>
+            <p>Warm regards,</p>
+            <p>${empFname} ${empLname} </p>
+          </body>
+        `
+ };   
+            transport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
 
 
-            //console.log("result>>>>",result)
-    
             if (result) {
                 let userCreditData2;
                 userCreditData2 = await UserCredit.findOneAndUpdate({employer:userId},{'$inc': { 'purchased_count': -1}},{new:true});
