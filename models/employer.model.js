@@ -36,6 +36,9 @@ const EmployerSchema = new Schema({
     required: false,
     trim: true
   },
+  comp_name:{
+    type:String
+  },
   linkedin_url: {
     type: String,
     trim: true
