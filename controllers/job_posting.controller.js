@@ -827,7 +827,7 @@ module.exports = {
             let sendNotificationData = await sendNotification({
                 user: agencyId,
                 title: "Candidate Hired",
-                description: `${candidateFname} ${candidateLname} get a job offer from ${compName} with ${jobRole}`
+                description: `${candidateFname} ${candidateLname} got a job offer from ${compName} with ${jobRole}`
             });
 
             console.log("sendNotificationData",sendNotificationData)
