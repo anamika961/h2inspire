@@ -33,5 +33,7 @@ EmployerRouter.delete('/logout', EmployerController.logout)
 
 EmployerRouter.get('/dashboard', verifyAccessToken, EmployerController.dashboard)
 
+EmployerRouter.patch('/verify-email', verifyAccessToken, EmployerController.verifyEmail)
+
 
 module.exports = EmployerRouter

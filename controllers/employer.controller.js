@@ -8,6 +8,7 @@ const {
   getUserViaToken,
 } = require('../helpers/jwt_helper')
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const Admin = require('../models/admin.model')
 const UserCredit = require('../models/user_credit.model')
 const Billing = require('../models/billing.model')
@@ -18,6 +19,7 @@ const JobPosting = require("../models/job_posting.model");
 //const UserCredit = require("../models/user_credit.model");
 const HiringDetail = require('../models/hiringDetails.model');
 const nodemailer = require("nodemailer");
+const Token = require("../models/token.model");
 var transport = nodemailer.createTransport({
   host: "mail.demo91.co.in",
   port: 465,
@@ -115,6 +117,17 @@ module.exports = {
 
       const UserCreditData = await UserCredit.findOneAndUpdate({employer: savedEmployer._id}, {$inc: {free_count: 1}}, {upsert: true, new: true}).select("free_count purchased_count free_used_count purchased_used_count");
 
+
+     
+      const TokenData = new Token({user_id:savedEmployer?._id,user_type:"employers",token:crypto.randomBytes(32).toString("hex")});
+
+      const tokenResult = await TokenData.save();
+
+
+      const user_id = savedEmployer?._id;
+      const token_id = tokenResult?.token;
+
+      //console.log("tokenResult",tokenResult);
       var mailOptions = {
         from: 'developer@demo91.co.in',
         to: empEmail,
@@ -144,6 +157,44 @@ module.exports = {
 
       const transactionData = new Transaction({employer:savedEmployer.id});
       const tranResult = await transactionData.save();
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: empEmail,
+        subject: `Employer Email Verify`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+        <p>Dear ${empFname} ${empLname},</p>
+        <p>Thank you for signing up with [Your Company Name]. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
+  
+        <p>Please click on the following link to verify your email:</p>
+        <p><a href="https://hire2inspire-dev.netlify.app/${user_id}/${token_id}">Verify Email</a></p>
+
+        <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
+        <p>[Copy and Paste Verification URL]</p>
+
+        <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
+
+        <p>If you did not sign up for an account with [Your Company Name], please ignore this email.</p>
+
+        <p>Thank you for choosing [Your Company Name]. If you have any questions or need further assistance,
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
+
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
 
       res.status(201).send({
         error: false,
@@ -700,6 +751,29 @@ module.exports = {
           offerJobs: hiringData.length
         }
       })
+    } catch (error) {
+      next(error)
+    }
+  },
+
+
+  verifyEmail: async (req, res, next) => {
+    try {
+      let token = req.headers['authorization']?.split(" ")[1];
+      let {userId, dataModel} = await getUserViaToken(token)
+      const checkEmployer = await Employer.findOne({_id: userId})
+      if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
+
+      const result = await Employer.findOneAndUpdate({
+        _id: userId
+      }, {verified:req.body.verified}, { new: true });
+      message = {
+        error: false,
+        message: "Employer profile updated",
+        data: result
+      }
+      return res.status(200).send(message);
+
     } catch (error) {
       next(error)
     }
