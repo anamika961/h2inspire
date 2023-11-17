@@ -150,6 +150,10 @@ const AgencySchema = new Schema(
         is_welcome: {
             type: Boolean,
             default: false
+        },
+        verified: {
+            type: Boolean,
+            default: false
         }
 	},
 	{ timestamps: true }

@@ -1,0 +1,3 @@
+[Fri, 17 Nov 2023 08:23:55 GMT] - ::1 - - "PATCH /api/admin/agency-approval/6556764c2b3d0900484ae1e0 HTTP/1.1" code - 401 51 "-" "PostmanRuntime/7.29.4" request {"is_approved":true} response {"error":true,"status":401,"message":"jwt expired"}
+[Fri, 17 Nov 2023 08:24:04 GMT] - ::1 - - "PATCH /api/admin/agency-approval/6556764c2b3d0900484ae1e0 HTTP/1.1" code - 400 51 "-" "PostmanRuntime/7.29.4" request {"is_approved":true} response {"error":false,"message":"Agency approval failed."}
+[Fri, 17 Nov 2023 08:26:32 GMT] - ::1 - - "PATCH /api/admin/agency-approval/6556764c2b3d0900484ae1e0 HTTP/1.1" code - 400 62 "-" "PostmanRuntime/7.29.4" request {"is_approved":true} response {"error":false,"message":"Admin approval for agency updated."}

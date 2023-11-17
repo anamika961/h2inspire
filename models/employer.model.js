@@ -82,6 +82,10 @@ const EmployerSchema = new Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  verified: {
+    type: Boolean,
+    default: false
   }
 }, {timestamps: true})
 

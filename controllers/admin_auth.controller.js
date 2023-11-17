@@ -304,11 +304,14 @@ module.exports = {
         }
       ]);
 
+      console.log("agencyData",agencyData)
+
       let agencyapprove;
       if(agencyData?.is_approved == false){
         agencyapprove = await Agency.findOneAndUpdate({_id: req.params.jobId},{is_welcome: false},{new:true});
       };
 
+      console.log("agencyapprove",agencyapprove)
 
       let agencyName = agencyData?.name;
       let agencyEmail = agencyData?.corporate_email;
@@ -337,15 +340,15 @@ module.exports = {
     });
 
 
-      if(agencyapprove) {
-        return res.status(200).send({
-          error: false,
-          message: "Admin approval for agency updated."
-        });
-      }
+      // if(agencyapprove) {
+      //   return res.status(200).send({
+      //     error: false,
+      //     message: "Admin approval for agency updated."
+      //   });
+      // }
       return res.status(400).send({
         error: false,
-        message: "Agency approval failed."
+        message: "Admin approval for agency updated."
       });
     } catch (error) {
       next(error)  
