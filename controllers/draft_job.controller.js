@@ -6,7 +6,12 @@ const DraftJob = require("../models/draft_job.model");
 module.exports = {
     alllist: async (req, res, next) => {
         try {
-            const job_data = await DraftJob.find({});
+            let token = req.headers['authorization']?.split(" ")[1];
+            let {userId, dataModel} = await getUserViaToken(token)
+            const checkEmployer = await Employer.findOne({_id: userId})
+            if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
+
+            const job_data = await DraftJob.find({employer:userId});
     
             return res.status(200).send({
                 error: false,

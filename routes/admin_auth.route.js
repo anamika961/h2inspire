@@ -31,6 +31,6 @@ AdminAuthRouter.delete('/logout', AdminAuthController.logout);
 
 AdminAuthRouter.patch('/update/:adminId', AdminAuthController.adminUpdate);
 
-AdminAuthRouter.get('/dashboard', AdminAuthController.dashboard)
+AdminAuthRouter.get('/dashboard',verifyAccessToken, AdminAuthController.dashboard)
 
 module.exports = AdminAuthRouter

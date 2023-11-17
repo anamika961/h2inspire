@@ -5,7 +5,7 @@ const DraftJobRouter = express.Router()
 
 DraftJobRouter.post('/add',verifyAccessToken, DraftJobController.create)
 
-DraftJobRouter.get('/all-list', DraftJobController.alllist)
+DraftJobRouter.get('/all-list',verifyAccessToken, DraftJobController.alllist)
 
 DraftJobRouter.get('/detail/:id', DraftJobController.detailJob)
 

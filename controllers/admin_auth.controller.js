@@ -507,6 +507,11 @@ module.exports = {
 
   dashboard: async (req,res,next) =>{
     try{
+      let token = req.headers['authorization']?.split(" ")[1];
+      let {userId, dataModel} = await getUserViaToken(token)
+      const checkEmployer = await Employer.findOne({_id: userId})
+      if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
+
       const hiringData = await HiringDetail.find({});
 
       let totalHireAmount = 0;
@@ -516,7 +521,7 @@ module.exports = {
 
       let totalHired = hiringData.length;
 
-      const transactionData = await Transaction.find({});
+      const transactionData = await Transaction.find({employer:userId});
 
         let totalSpend = 0;
         for(let i = 0 ; i<transactionData?.length ; i++){
@@ -526,7 +531,7 @@ module.exports = {
         }
 
       let totalgiveto = 0;
-      const agencyTransactionData = await AgencyTransaction.find({});
+      const agencyTransactionData = await AgencyTransaction.find({"passbook_amt.employer":userId});
       for(let i = 0 ; i<agencyTransactionData?.length ; i++){
         if(agencyTransactionData[i]?.total_amount !== undefined){
           totalgiveto = totalgiveto + agencyTransactionData[i]?.total_amount;
