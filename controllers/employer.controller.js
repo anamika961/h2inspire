@@ -759,17 +759,12 @@ module.exports = {
 
   verifyEmail: async (req, res, next) => {
     try {
-      let token = req.headers['authorization']?.split(" ")[1];
-      let {userId, dataModel} = await getUserViaToken(token)
-      const checkEmployer = await Employer.findOne({_id: userId})
-      if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
-
       const result = await Employer.findOneAndUpdate({
-        _id: userId
+        _id: req.params.userId
       }, {verified:req.body.verified}, { new: true });
       message = {
         error: false,
-        message: "Employer profile updated",
+        message: "Email verified",
         data: result
       }
       return res.status(200).send(message);
