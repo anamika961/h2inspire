@@ -168,19 +168,17 @@ module.exports = {
         </head>
     <body>
         <p>Dear ${empFname} ${empLname},</p>
-        <p>Thank you for signing up with [Your Company Name]. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
+        <p>Thank you for signing up with Hire2Inspire. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
   
         <p>Please click on the following link to verify your email:</p>
-        <p><a href="https://hire2inspire-dev.netlify.app/${user_id}/${token_id}">Verify Email</a></p>
+        <a href="https://hire2inspire.com/api/verify/${user_id}/${token_id}">Click Here to Verify Email</a>
 
         <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
-        <p>[Copy and Paste Verification URL]</p>
-
         <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
 
-        <p>If you did not sign up for an account with [Your Company Name], please ignore this email.</p>
+        <p>If you did not sign up for an account with Hire2Inspire, please ignore this email.</p>
 
-        <p>Thank you for choosing [Your Company Name]. If you have any questions or need further assistance,
+        <p>Thank you for choosing Hire2Inspire. If you have any questions or need further assistance,
         <p>Thank you and best regards,</p>
         <p> Hire2Inspire </p>
     </body>
