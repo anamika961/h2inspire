@@ -214,7 +214,9 @@ module.exports = {
     try {
       const result = await employerLoginSchema.validateAsync(req.body)
       const employerData = await Employer.findOne({ email: result.email })
-      if (!employerData) throw createError.NotFound('Employer not registered')
+      if (!employerData) throw createError.NotFound('Employer not registered');
+
+      if(employerData?.verified == false) throw createError.NotFound('Your Email is not yet verified');
 
       const isMatch = await employerData.isValidPassword(result.password)
       if (!isMatch)
