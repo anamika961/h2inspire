@@ -18,6 +18,7 @@ const Transaction = require("../models/transaction.model");
 const AgencyTransaction = require('../models/agency_transaction.model');
 const HiringDetail = require('../models/hiringDetails.model');
 const nodemailer = require("nodemailer");
+const Billing = require('../models/billing.model')
 
 var transport = nodemailer.createTransport({
   host: "mail.demo91.co.in",
@@ -517,14 +518,25 @@ module.exports = {
 
       const hiringData = await HiringDetail.find({employer:userId});
 
-      console.log({hiringData})
+      const billingData = await Billing.find({employer:userId});
+
 
       let totalHireAmount = 0;
-      hiringData.forEach((element,index)=>{
+      if(billingData.length != null){
+        //console.log("hii")
+        // let totalHireAmount = 0;
+        hiringData.forEach((element,index)=>{
         totalHireAmount += element?.comp_offered
       });
+    }
 
-      console.log({totalHireAmount});
+      
+
+      // let totalHireAmount = 0;
+      // hiringData.forEach((element,index)=>{
+      //   totalHireAmount += element?.comp_offered
+      // });
+
 
       let totalHired = hiringData.length;
 

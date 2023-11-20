@@ -30,7 +30,11 @@ const billingSchema = mongoose.Schema({
     },
     supply_code:{
         type:String
-    }
+    },
+    // status:{
+    //     type:Boolean,
+    //     default:true
+    // }
     
 
 }, {timestamps: true});
