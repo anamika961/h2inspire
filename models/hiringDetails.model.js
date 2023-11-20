@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const HiringDetailSchema = mongoose.Schema({
+    employer: {
+        type: ObjectId,
+        ref: 'employers',
+    },
     job:{
         type:ObjectId,
         ref: 'job_postings',
-
     },
     candidate:{
         type:ObjectId,

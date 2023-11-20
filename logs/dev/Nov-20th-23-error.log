@@ -1,0 +1,3 @@
+[Mon, 20 Nov 2023 07:04:35 GMT] - ::1 - - "GET /api/admin/dashboard HTTP/1.1" code - 401 52 "-" "PostmanRuntime/7.35.0" request {} response {"error":true,"status":401,"message":"Unauthorized"}
+[Mon, 20 Nov 2023 07:05:13 GMT] - ::1 - - "POST /api/employer/login HTTP/1.1" code - 404 70 "-" "PostmanRuntime/7.35.0" request {"email":"employer@h2i.com","password":"Employer@123"} response {"error":true,"status":404,"message":"Your Email is not yet verified"}
+[Mon, 20 Nov 2023 07:05:23 GMT] - ::1 - - "POST /api/employer/login HTTP/1.1" code - 404 70 "-" "PostmanRuntime/7.35.0" request {"email":"employer@h2i.com","password":"Employer@123"} response {"error":true,"status":404,"message":"Your Email is not yet verified"}

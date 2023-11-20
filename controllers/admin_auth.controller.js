@@ -515,12 +515,16 @@ module.exports = {
       const checkEmployer = await Employer.findOne({_id: userId})
       if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
-      const hiringData = await HiringDetail.find({});
+      const hiringData = await HiringDetail.find({employer:userId});
+
+      console.log({hiringData})
 
       let totalHireAmount = 0;
       hiringData.forEach((element,index)=>{
         totalHireAmount += element?.comp_offered
       });
+
+      console.log({totalHireAmount});
 
       let totalHired = hiringData.length;
 
