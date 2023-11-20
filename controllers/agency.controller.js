@@ -11,7 +11,9 @@ const bcrypt = require('bcrypt')
 const AgencyJobModel = require('../models/agency_job.model')
 const Recruiter = require('../models/recruiter.model')
 const Admin = require('../models/admin.model')
+// const Billing = require('../models/billing.model')
 const AgencyTransaction = require('../models/agency_transaction.model');
+const Token = require("../models/token.model");
 const nodemailer = require("nodemailer");
 var transport = nodemailer.createTransport({
   host: "mail.demo91.co.in",
@@ -119,6 +121,50 @@ module.exports = {
 
       const transactionData = new AgencyTransaction({agency:savedAgency.id});
       const tranResult = await transactionData.save();
+
+      const TokenData = new Token({user_id:savedAgency?._id,user_type:"agencies",token:crypto.randomBytes(32).toString("hex")});
+
+      const tokenResult = await TokenData.save();
+
+
+      const user_id = savedAgency?._id;
+      const token_id = tokenResult?.token;
+
+      var mailOptions = {
+        from: 'developer@demo91.co.in',
+        to: empEmail,
+        subject: `Agency Email Verify`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+        <p>Dear ${agencyFname} ${agencyLname},</p>
+        <p>Thank you for signing up with Hire2Inspire. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
+  
+        <p>Please click on the following link to verify your email:</p>
+        <a href="https://hire2inspire.com/verify/${user_id}/${token_id}">Click Here to Verify Email</a>
+
+        <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
+        <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
+
+        <p>If you did not sign up for an account with Hire2Inspire, please ignore this email.</p>
+
+        <p>Thank you for choosing Hire2Inspire. If you have any questions or need further assistance,
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
+
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
 
       res.status(201).send({
         error: false,
@@ -257,6 +303,8 @@ module.exports = {
       const result = await agencyLoginSchema.validateAsync(req.body)
       const AgencyData = await Agency.findOne({ corporate_email: result.email })
       if (!AgencyData) throw createError.NotFound('Agency not registered')
+
+      //if(AgencyData?.verified == false) throw createError.NotFound('Your Email is not yet verified');
 
       const isMatch = await AgencyData.isValidPassword(result.password)
       if (!isMatch)
@@ -446,6 +494,23 @@ module.exports = {
         })
       }
       return res.status(400).send({error: true, message: "Agency not updated"})
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  verifyEmail: async (req, res, next) => {
+    try {
+      const result = await Agency.findOneAndUpdate({
+        _id: req.params.userId
+      }, {verified:req.body.verified}, { new: true });
+      message = {
+        error: false,
+        message: "Email verified",
+        data: result
+      }
+      return res.status(200).send(message);
+
     } catch (error) {
       next(error)
     }
