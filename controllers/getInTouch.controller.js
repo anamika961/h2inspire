@@ -3,11 +3,11 @@ const GetInTouch = require("../models/getInTouch.model");
 const nodemailer = require("nodemailer");
 
 var transport = nodemailer.createTransport({
-    host: "mail.demo91.co.in",
+    host: "hire2inspire.com",
     port: 465,
     auth: {
-      user: "developer@demo91.co.in",
-      pass: "Developer@2023"
+      user: "info@hire2inspire.com",
+      pass: "h2I@2023"
     }
   });
 
@@ -29,7 +29,7 @@ module.exports = {
 
             var mailOptions = {
                 from: getEmail,
-                to: 'developer@demo91.co.in',
+                to: 'info@hire2inspire.com',
                 subject: `${getSubject}`,
                 html:`
             <body>
