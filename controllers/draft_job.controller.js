@@ -11,7 +11,7 @@ module.exports = {
             const checkEmployer = await Employer.findOne({_id: userId})
             if(!checkEmployer && dataModel != "employers") return res.status(400).send({ error: true, message: "Employer not found." })
 
-            const job_data = await DraftJob.find({employer:userId});
+            const job_data = await DraftJob.find({employer:userId}).sort({_id:-1});
     
             return res.status(200).send({
                 error: false,
