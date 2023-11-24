@@ -17,14 +17,13 @@ const UserSubscription = require("../models/user_subscription.model");
 const DraftJob = require("../models/draft_job.model");
 
 var transport = nodemailer.createTransport({
-    host: "mail.demo91.co.in",
+    host: "hire2inspire.com",
     port: 465,
     auth: {
-      user: "developer@demo91.co.in",
-      pass: "Developer@2023"
+      user: "info@hire2inspire.com",
+      pass: "h2I@2023"
     }
   });
-
 
 
 module.exports = {
@@ -408,7 +407,7 @@ module.exports = {
             let adminName = AdminData?.name
            
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 to: adminMail,
                 subject: `Hired candidate!`,
                 html:`
@@ -796,7 +795,7 @@ module.exports = {
 
 
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 to: agencyMail,
                 subject: `Hired candidate!`,
                 html:`
@@ -827,7 +826,7 @@ module.exports = {
             let sendNotificationData = await sendNotification({
                 user: agencyId,
                 title: "Candidate Hired",
-                description: `${candidateFname} ${candidateLname} got a job offer from ${compName} with ${jobRole}`
+                description: `${candidateFname} ${candidateLname} got a job offer from ${compName} as ${jobRole}`
             });
 
             console.log("sendNotificationData",sendNotificationData)

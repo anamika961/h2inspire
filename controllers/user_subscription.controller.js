@@ -171,16 +171,16 @@ module.exports = {
             generateInvoicePdf(invoiceDetails, filePath);
 
             var transport = nodemailer.createTransport({
-                host: "mail.demo91.co.in",
+                host: "hire2inspire.com",
                 port: 465,
                 auth: {
-                  user: "developer@demo91.co.in",
-                  pass: "Developer@2023"
+                  user: "info@hire2inspire.com",
+                  pass: "h2I@2023"
                 }
-            });
+              });
 
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 to: empEmail,
                 subject: `Package purchase successfully`,
                 html: `

@@ -21,11 +21,11 @@ const nodemailer = require("nodemailer");
 const Billing = require('../models/billing.model')
 
 var transport = nodemailer.createTransport({
-  host: "mail.demo91.co.in",
+  host: "hire2inspire.com",
   port: 465,
   auth: {
-    user: "developer@demo91.co.in",
-    pass: "Developer@2023"
+    user: "info@hire2inspire.com",
+    pass: "h2I@2023"
   }
 });
 
@@ -246,7 +246,7 @@ module.exports = {
       }
 
       var mailOptions = {
-        from: 'developer@demo91.co.in',
+        from: 'info@hire2inspire.com',
         to: empEmail,
         subject: `Confirmaition for Job Approval`,
         html:`
@@ -317,7 +317,7 @@ module.exports = {
       let agencyName = agencyData?.name;
       let agencyEmail = agencyData?.corporate_email;
       var mailOptions = {
-        from: 'developer@demo91.co.in',
+        from: 'info@hire2inspire.com',
         to: agencyEmail,
         subject: `Confirmaition for Job Approval`,
         html:`

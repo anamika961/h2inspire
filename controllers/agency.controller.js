@@ -17,11 +17,11 @@ const Token = require("../models/token.model");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto")
 var transport = nodemailer.createTransport({
-  host: "mail.demo91.co.in",
+  host: "hire2inspire.com",
   port: 465,
   auth: {
-    user: "developer@demo91.co.in",
-    pass: "Developer@2023"
+    user: "info@hire2inspire.com",
+    pass: "h2I@2023"
   }
 });
 
@@ -91,7 +91,7 @@ module.exports = {
       const agencyEmail = savedAgency?.corporate_email;
 
       var mailOptions = {
-        from: 'developer@demo91.co.in',
+        from: 'info@hire2inspire.com',
         to: agencyEmail,
         subject: `Agency registered successfully`,
         html:`

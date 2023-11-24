@@ -14,14 +14,14 @@ const app = express();
 const nodemailer = require("nodemailer");
 
 var transport = nodemailer.createTransport({
-    host: "mail.demo91.co.in",
+    host: "hire2inspire.com",
     port: 465,
     auth: {
-      user: "developer@demo91.co.in",
-      pass: "Developer@2023"
+      user: "info@hire2inspire.com",
+      pass: "h2I@2023"
     }
   });
-
+  
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -122,7 +122,7 @@ module.exports = {
              console.log("candidateEmail>>>>",candidateEmail)
 
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 to: candidateEmail,
                 subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
                 html:`
