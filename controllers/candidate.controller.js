@@ -136,7 +136,7 @@ module.exports = {
                 <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
 
                 <p>Find the link 
-                <a href="https://hire2inspire-dev.netlify.app/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
+                <a href="https://hire2inspire.com/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
               </p>
 
                 <p>Best regards,</p>
