@@ -144,7 +144,7 @@ module.exports = {
         <p>Thank you for signing up with Hire2Inspire. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
   
         <p>Please click on the following link to verify your email:</p>
-        <a href="https://hire2inspire.com/verify/${user_id}/${token_id}">Click Here to Verify Email</a>
+        <a href="https://hire2inspire.com/agencyVerify/${user_id}/${token_id}">Click Here to Verify Email</a>
 
         <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
         <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
@@ -305,7 +305,7 @@ module.exports = {
       const AgencyData = await Agency.findOne({ corporate_email: result.email })
       if (!AgencyData) throw createError.NotFound('Agency not registered')
 
-      //if(AgencyData?.verified == false) throw createError.NotFound('Your Email is not yet verified');
+      if(AgencyData?.verified == false) throw createError.NotFound('Your Email is not yet verified');
 
       const isMatch = await AgencyData.isValidPassword(result.password)
       if (!isMatch)
