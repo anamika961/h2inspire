@@ -123,48 +123,48 @@ module.exports = {
       const transactionData = new AgencyTransaction({agency:savedAgency.id});
       const tranResult = await transactionData.save();
 
-      // const TokenData = new Token({user_id:savedAgency?._id,user_type:"agencies",token:crypto.randomBytes(32).toString("hex")});
+      const TokenData = new Token({user_id:savedAgency?._id,user_type:"agencies",token:crypto.randomBytes(32).toString("hex")});
 
-      // const tokenResult = await TokenData.save();
+      const tokenResult = await TokenData.save();
 
 
-      // const user_id = savedAgency?._id;
-      // const token_id = tokenResult?.token;
+      const user_id = savedAgency?._id;
+      const token_id = tokenResult?.token;
 
-//       var mailOptions = {
-//         from: 'developer@demo91.co.in',
-//         to: empEmail,
-//         subject: `Agency Email Verify`,
-//         html:`
-//         <head>
-//             <title>Welcome to Hire2Inspire</title>
-//         </head>
-//     <body>
-//         <p>Dear ${agencyFname} ${agencyLname},</p>
-//         <p>Thank you for signing up with Hire2Inspire. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
+      var mailOptions = {
+        from: 'info@hire2inspire.com',
+        to: agencyEmail,
+        subject: `Agency Email Verify`,
+        html:`
+        <head>
+            <title>Welcome to Hire2Inspire</title>
+        </head>
+    <body>
+        <p>Dear ${agencyName},</p>
+        <p>Thank you for signing up with Hire2Inspire. To complete the registration process and ensure the security of your account, we need to verify your email address.</p>
   
-//         <p>Please click on the following link to verify your email:</p>
-//         <a href="https://hire2inspire.com/verify/${user_id}/${token_id}">Click Here to Verify Email</a>
+        <p>Please click on the following link to verify your email:</p>
+        <a href="https://hire2inspire.com/verify/${user_id}/${token_id}">Click Here to Verify Email</a>
 
-//         <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
-//         <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
+        <p>If the link above does not work, copy and paste the following URL into your browser's address bar:</p>
+        <p>Note: This verification link is valid for the next 24 hours. After this period, you will need to request a new verification email.</p>
 
-//         <p>If you did not sign up for an account with Hire2Inspire, please ignore this email.</p>
+        <p>If you did not sign up for an account with Hire2Inspire, please ignore this email.</p>
 
-//         <p>Thank you for choosing Hire2Inspire. If you have any questions or need further assistance,
-//         <p>Thank you and best regards,</p>
-//         <p> Hire2Inspire </p>
-//     </body>
-// `
-// }; 
+        <p>Thank you for choosing Hire2Inspire. If you have any questions or need further assistance,
+        <p>Thank you and best regards,</p>
+        <p> Hire2Inspire </p>
+    </body>
+`
+}; 
 
-//       transport.sendMail(mailOptions, function(error, info){
-//         if (error) {
-//           console.log(error);
-//         } else {
-//           console.log('Email sent: ' + info.response);
-//         }
-//       });
+      transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 
 
       res.status(201).send({
