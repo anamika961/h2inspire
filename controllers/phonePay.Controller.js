@@ -13,8 +13,8 @@ const newPayment = async (req, res) => {
             merchantUserId: req.body.merchantUserId,
             name: req.body.name,
             amount: req.body.amount * 100,
-            callbackUrl: `http://localhost:10000/api/phone-pay/status`,
-            redirectUrl: `https://h2inspire.onrender.com/api/showPrice`,
+            callbackUrl: `https://h2inspire.onrender.com/api/phone-pay/status`,
+            redirectUrl: `http://localhost:5173/showPrice`,
             redirectMode: 'POST',
             mobileNumber: req.body.mobileNumber,
             paymentInstrument: {
@@ -87,13 +87,13 @@ const checkStatus = async(req, res) => {
    .request(options)
    .then(async(response)=>{
       console.log(response.data,"data")
-      if (response.data.success === true) {
-        const url ="http://localhost:5173/showPrice/success"
-        return res.redirect(url)
-    } else {
-        const url = "http://localhost:5173/showPrice/faliure"
-        return res.redirect(url)
-    }
+    //   if (response.data.success === true) {
+    //     const url ="http://localhost:5173/showPrice/success"
+    //     return res.redirect(url)
+    // } else {
+    //     const url = "http://localhost:5173/showPrice/faliure"
+    //     return res.redirect(url)
+    // }
    })
    .catch((error)=>{
        console.error(error,"err")
