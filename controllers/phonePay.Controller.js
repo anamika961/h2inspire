@@ -13,7 +13,8 @@ const newPayment = async (req, res) => {
             merchantUserId: req.body.merchantUserId,
             name: req.body.name,
             amount: req.body.amount * 100,
-            redirectUrl: `http://localhost:10000/api/status/${merchantTransactionId}`,
+            callbackUrl: `http://localhost:10000/api/phone-pay/status`,
+            redirectUrl: `http://localhost:10000/api/phone-pay/status`,
             redirectMode: 'POST',
             mobileNumber: req.body.mobileNumber,
             paymentInstrument: {
@@ -58,9 +59,52 @@ const newPayment = async (req, res) => {
     }
 }
 
+const checkStatus = async(req, res) => {
+    console.log("hdkjhdejh");
+    const merchantTransactionId = res.req.body.transactionId;
+    const merchantId = res.req.body.merchantId;
+
+    console.log(res.req.body,"result");
+    const key = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399'
+    const keyIndex = 1;
+    const string = `/pg/v1/status/${merchantId}/${merchantTransactionId}` + key;
+    const sha256 = crypto.createHash('sha256').update(string).digest('hex');
+    const checksum = sha256 + "###" + keyIndex;
+
+    const options = {
+    method: 'GET',
+    url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchantId}/${merchantTransactionId}`,
+    headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-VERIFY': checksum,
+        'X-MERCHANT-ID': `${merchantId}`
+    }
+    };
+
+    // CHECK PAYMENT STATUS
+   axios
+   .request(options)
+   .then(async(response)=>{
+      console.log(response.data,"data")
+      if (response.data.success === true) {
+        const url ="http://localhost:5173/showPrice/success"
+        return res.redirect(url)
+    } else {
+        const url = "http://localhost:5173/showPrice/faliure"
+        return res.redirect(url)
+    }
+   })
+   .catch((error)=>{
+       console.error(error,"err")
+   }
+)
+};
+
+
 
 
 module.exports = {
     newPayment,
-   // checkStatus
+   checkStatus
 }

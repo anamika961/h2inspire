@@ -3,6 +3,7 @@ const express = require('express');
 const PhonePayrouter = express();
 
 PhonePayrouter.post('/payment', newPayment);
-// router.post('/status/:txnId', checkStatus);
+PhonePayrouter.post('/status', checkStatus);
+
 
 module.exports = PhonePayrouter;
