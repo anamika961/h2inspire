@@ -14,7 +14,7 @@ const newPayment = async (req, res) => {
             name: req.body.name,
             amount: req.body.amount * 100,
             callbackUrl: `http://localhost:10000/api/phone-pay/status`,
-            redirectUrl: `http://localhost:10000/api/phone-pay/status`,
+            redirectUrl: `https://h2inspire.onrender.com/api/showPrice`,
             redirectMode: 'POST',
             mobileNumber: req.body.mobileNumber,
             paymentInstrument: {
