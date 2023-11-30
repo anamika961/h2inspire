@@ -13,9 +13,9 @@ const newPayment = async (req, res) => {
             merchantUserId: req.body.merchantUserId,
             name: req.body.name,
             amount: req.body.amount * 100,
-            callbackUrl: `https://h2inspire.onrender.com/api/phone-pay/status`,
+            callbackUrl: `https://localhost:10000/api/phone-pay/status`,
             // redirectUrl: `https://hire2inspire-4guju.kinsta.page/`,
-            redirectUrl: `https://h2inspire.onrender.com/api/phone-pay/status`,
+            redirectUrl: `https://localhost:10000/api/phone-pay/status`,
             redirectMode: 'POST',
             mobileNumber: req.body.mobileNumber,
             paymentInstrument: {
