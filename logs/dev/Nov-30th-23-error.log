@@ -1,0 +1,1 @@
+[Thu, 30 Nov 2023 07:09:04 GMT] - ::1 - - "POST /api/phone-pay/payment HTTP/1.1" code - 500 129 "-" "PostmanRuntime/7.35.0" request {"merchantTransactionId":"hrhrjhtj","merchantUserId":"124khngjrng","name":"tryergyue","amount":100,"mobileNumber":"7656453478"} response -

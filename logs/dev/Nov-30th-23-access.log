@@ -1,0 +1,2 @@
+[Thu, 30 Nov 2023 07:09:30 GMT] - ::1 - - "POST /api/phone-pay/payment HTTP/1.1" code - 302 108 "-" "PostmanRuntime/7.35.0" request {"merchantTransactionId":"hrhrjhtj","merchantUserId":"124khngjrng","name":"tryergyue","amount":100,"mobileNumber":"7656453478"} response -
+[Thu, 30 Nov 2023 07:20:11 GMT] - ::1 - - "POST /api/phone-pay/payment HTTP/1.1" code - 200 86 "-" "PostmanRuntime/7.35.0" request {"merchantTransactionId":"hrhrjhtj","merchantUserId":"124khngjrng","name":"tryergyue","amount":100,"mobileNumber":"7656453478"} response -

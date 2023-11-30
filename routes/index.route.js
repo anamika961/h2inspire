@@ -22,6 +22,7 @@ const PackageTypeRouter = require('./package_type.route');
 const CreditNoteRouter = require('./creditnote.route');
 const DraftJobRouter = require('./draftJob.route');
 const GetInTouchRouter = require('./getInTouch.route');
+const PhonePayrouter = require('./phonePay.route');
 
 
 
@@ -46,6 +47,7 @@ router.use("/package-type", PackageTypeRouter);
 router.use("/credit-note", CreditNoteRouter);
 router.use("/draft-job", DraftJobRouter);
 router.use("/get-in-touch", GetInTouchRouter);
+router.use("/phone-pay", PhonePayrouter);
 
 
 module.exports = router;
