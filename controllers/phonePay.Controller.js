@@ -1,12 +1,14 @@
 const crypto =  require('crypto');
 const axios = require('axios');
 //const {salt_key, merchant_id} = require('./secret');
+const Transaction = require("../models/transaction.model");
 
-
+let page = '';
 
 const newPayment = async (req, res) => {
     try {
-        const {merchantTransactionId,name,amount,merchantUserId,mobileNumber} = req.body;
+        const {merchantTransactionId,name,amount,merchantUserId,mobileNumber,pagetype} = req.body;
+        page = pagetype;
         const data = {
             merchantId: 'PGTESTPAYUAT',
             merchantTransactionId: merchantTransactionId,
@@ -83,30 +85,86 @@ const checkStatus = async(req, res) => {
     };
 
     // CHECK PAYMENT STATUS
-   axios
-   .request(options)
-   .then(async(response)=>{
-      console.log(response.data,"datatesting 2")
-      if (response.data.success === true) {
-          const url ="http://localhost:5173/showPrice/success"
-        return res.redirect(url)
-    } else {
-          const url = "http://localhost:5173/showPrice/failed"
-        return res.redirect(url)
+    axios
+    .request(options)
+    .then(async (response) => {
+        console.log(response.data, "datatesting 2", page)
+        if (page != 'transaction') {
+            if (response.data.success === true) {
+                const url = "http://localhost:5173/showPrice/success"
+                return res.redirect(url)
+            } else {
+                const url = "http://localhost:5173/showPrice/failed"
+                return res.redirect(url)
+            }
+        } else {
+            if (response.data.success === true) {
+                const url = "http://localhost:5173/employer/transactionamount/success"
+                return res.redirect(url)
+            } else {
+                const url = "http://localhost:5173/employer/transactionamount/failed"
+                return res.redirect(url)
+            }
+        }
+
+    })
+    .catch((error) => {
+        console.error(error?.data, "err")
+        if (page != 'transaction') {
+            const url = "http://localhost:5173/showPrice/failed"
+            return res.redirect(url)
+        } else {
+            const url = "http://localhost:5173/employer/transactionamount/failed"
+            return res.redirect(url)
+        }
     }
-   })
-   .catch((error)=>{
-       console.error(error,"err")
-       const url = "http://localhost:5173/showPrice/failed"
-       return res.redirect(url)
-   }
-)
+    )
 };
+
+const paymentVerify = async(req,res) =>{
+    try {
+        let transactionId = req.query.transactionId;
+        //let type = req.body.type
+         
+         let emp_id = req.body.emp_id;
+
+         const getEmpData  = await Transaction.find({employer:emp_id});
+         function addPaymentRes(transactions, targetTransactionId, invoiceValue) {
+            
+            for (let i = 0; i < transactions.length; i++) {
+              if (transactions[i].transaction_id == targetTransactionId) {
+                  
+                transactions[i]["type"] = invoiceValue;
+                
+              }
+            }
+           return transactions;
+           
+          }
+         
+          const updatedData = addPaymentRes(getEmpData[0].passbook_amt, transactionId
+          , "paid");
+        //   console.log(req.body,"msg")
+         //  console.log(updatedData);
+
+           const result = await Transaction.findOneAndUpdate({employer: emp_id},{passbook_amt:updatedData}, {new: true});
+
+           return res.status(200).send({
+            error: false,
+            message: "payment verified",
+            data: result
+        })
+
+    } catch (error) {
+        next(error);
+    }
+}
 
 
 
 
 module.exports = {
     newPayment,
-   checkStatus
+   checkStatus,
+   paymentVerify
 }
