@@ -1,4 +1,4 @@
-const {newPayment, checkStatus,paymentVerify} = require('../controllers/phonePay.Controller');
+const {newPayment, checkStatus, paymentVerify} = require('../controllers/phonePay.Controller');
 const express = require('express');
 const PhonePayrouter = express();
 
