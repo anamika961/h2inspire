@@ -15,6 +15,8 @@ const Billing = require('../models/billing.model')
 const Transaction = require('../models/transaction.model')
 const AgencyTransaction = require('../models/agency_transaction.model')
 const UserSubscription = require("../models/user_subscription.model");
+const Package = require("../models/package.model");
+const PackageType = require("../models/package_type.model");
 const JobPosting = require("../models/job_posting.model");
 //const UserCredit = require("../models/user_credit.model");
 const HiringDetail = require('../models/hiringDetails.model');
@@ -524,6 +526,13 @@ module.exports = {
 
         console.log("billinglist",billinglist);
 
+        const subscription = await UserSubscription.findOne({employer:result?.employer});
+        const subsData = await Package.findOne({package:subscription?.package});
+        console.log("subsData",subsData);
+        const packageData = await PackageType.findOne({_id:subsData?.package_type});
+        const packageName = packageData?.name;
+        console.log("packageName",packageName);
+
 
         let billingId = billinglist?._id
         let amount = (billinglist?.hire_id?.comp_offered) * (8.83/100);
@@ -570,67 +579,130 @@ module.exports = {
       let gstAmount;
       let cgstAmount;
       let sgstAmount;
-      if(billinglist?.supply_code != "29"){
-        gstAmount = (amount * (18/100));
-        const transactionData = await Transaction.findOneAndUpdate(
-          { employer: result?.employer },
-          {
-            '$inc': { 'total_amount': amount },
-            '$push': {
-              passbook_amt: {
-                amount: amount + gstAmount ,
-                "split_amount.agency_amount": agency_amount,
-                "split_amount.h2i_amount":h2i_amount,
-                type: "payble",
-                billing_id: billingId,
-                candidate: candidateData,
-                desg: designation,
-                transaction_id: tranId,
-                invoice_file:"",
-                invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
-                gst_in:"09ABCCS9765L1ZH",
-                hsn_code:"SAC 9983",
-                gst_type:"IGST",
-                igst:"18%",
-                gst_cal_amount: gstAmount,
+      if(packageName == "PAY AS YOU GO"){
+        if(billinglist?.supply_code != "29"){
+          gstAmount = (amount * (18/100));
+          const transactionData = await Transaction.findOneAndUpdate(
+            { employer: result?.employer },
+            {
+              '$inc': { 'total_amount': amount },
+              '$push': {
+                passbook_amt: {
+                  amount: amount + gstAmount ,
+                  "split_amount.agency_amount": agency_amount,
+                  "split_amount.h2i_amount":h2i_amount,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"IGST",
+                  igst:"18%",
+                  gst_cal_amount: gstAmount,
+                },
               },
             },
-          },
-          { new: true }
-        );
-      }else if(billinglist?.supply_code == "29"){
-        cgstAmount = (amount * (9/100));
-        sgstAmount = (amount * (9/100));
-        const transactionData = await Transaction.findOneAndUpdate(
-          { employer: result?.employer },
-          {
-            '$inc': { 'total_amount': amount },
-            '$push': {
-              passbook_amt: {
-                amount: amount + cgstAmount + sgstAmount,
-                "split_amount.agency_amount": agency_amount,
-                "split_amount.h2i_amount":h2i_amount,
-                type: "payble",
-                billing_id: billingId,
-                candidate: candidateData,
-                desg: designation,
-                transaction_id: tranId,
-                invoice_file:"",
-                invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
-                gst_in:"09ABCCS9765L1ZH",
-                hsn_code:"SAC 9983",
-                gst_type:"CGST/SGST",
-                cgst:"9%",
-                sgst:"9%",
-                cgst_cal_amount: cgstAmount,
-                sgst_cal_amount: sgstAmount,
+            { new: true }
+          );
+        }else if(billinglist?.supply_code == "29"){
+          cgstAmount = (amount * (9/100));
+          sgstAmount = (amount * (9/100));
+          const transactionData = await Transaction.findOneAndUpdate(
+            { employer: result?.employer },
+            {
+              '$inc': { 'total_amount': amount },
+              '$push': {
+                passbook_amt: {
+                  amount: amount + cgstAmount + sgstAmount,
+                  "split_amount.agency_amount": agency_amount,
+                  "split_amount.h2i_amount":h2i_amount,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"CGST/SGST",
+                  cgst:"9%",
+                  sgst:"9%",
+                  cgst_cal_amount: cgstAmount,
+                  sgst_cal_amount: sgstAmount,
+                },
               },
             },
-          },
-          { new: true }
-        );
+            { new: true }
+          );
+        }  
+      }else{
+        if(billinglist?.supply_code != "29"){
+          gstAmount = (amount * (18/100));
+          const transactionData = await Transaction.findOneAndUpdate(
+            { employer: result?.employer },
+            {
+              '$inc': { 'total_amount': amount },
+              '$push': {
+                passbook_amt: {
+                  amount: amount + gstAmount ,
+                  "split_amount.agency_amount": agency_amount,
+                  "split_amount.h2i_amount":0,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"IGST",
+                  igst:"18%",
+                  gst_cal_amount: gstAmount,
+                },
+              },
+            },
+            { new: true }
+          );
+        }else if(billinglist?.supply_code == "29"){
+          cgstAmount = (amount * (9/100));
+          sgstAmount = (amount * (9/100));
+          const transactionData = await Transaction.findOneAndUpdate(
+            { employer: result?.employer },
+            {
+              '$inc': { 'total_amount': amount },
+              '$push': {
+                passbook_amt: {
+                  amount: amount + cgstAmount + sgstAmount,
+                  "split_amount.agency_amount": agency_amount,
+                  "split_amount.h2i_amount":0,
+                  type: "payble",
+                  billing_id: billingId,
+                  candidate: candidateData,
+                  desg: designation,
+                  transaction_id: tranId,
+                  invoice_file:"",
+                  invoice_No:generateNextInvoice(PrevInvoiceId,"EM"),
+                  gst_in:"09ABCCS9765L1ZH",
+                  hsn_code:"SAC 9983",
+                  gst_type:"CGST/SGST",
+                  cgst:"9%",
+                  sgst:"9%",
+                  cgst_cal_amount: cgstAmount,
+                  sgst_cal_amount: sgstAmount,
+                },
+              },
+            },
+            { new: true }
+          );
+        }  
       }
-        
+     
         
        //console.log("transactionData>>>",transactionData)
 
@@ -647,68 +719,134 @@ module.exports = {
         let cgstAmountData;
         let sgstAmountData;
 
-        if(billinglist?.supply_code != "29"){
-          gstAmountData = (agency_amountData * (18/100));
-          const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
-            { agency: agencyId },
-            {
-              '$inc': { 'total_amount': amountData },
-              '$push': {
-                passbook_amt: {
-                  amount: amountData,
-                  "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
-                  "split_amount.h2i_amount":h2i_amountData,
-                  type: "payble",
-                  billing_id: billingId,
-                  candidate: candidateData,
-                  desg: designation,
-                  transaction_id: tranId,
-                  invoice_file:"",
-                  invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
-                  employer:result?.employer,
-                  gst_in:"09ABCCS9765L1ZH",
-                  hsn_code:"SAC 9983",
-                  gst_type:"IGST",
-                  igst:"18%",
-                  gst_cal_amount: gstAmountData,
+        if(packageName == "PAY AS YOU GO"){
+          if(billinglist?.supply_code != "29"){
+            gstAmountData = (agency_amountData * (18/100));
+            const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+              { agency: agencyId },
+              {
+                '$inc': { 'total_amount': amountData },
+                '$push': {
+                  passbook_amt: {
+                    amount: amountData,
+                    "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
+                    "split_amount.h2i_amount":h2i_amountData,
+                    type: "payble",
+                    billing_id: billingId,
+                    candidate: candidateData,
+                    desg: designation,
+                    transaction_id: tranId,
+                    invoice_file:"",
+                    invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
+                    employer:result?.employer,
+                    gst_in:"09ABCCS9765L1ZH",
+                    hsn_code:"SAC 9983",
+                    gst_type:"IGST",
+                    igst:"18%",
+                    gst_cal_amount: gstAmountData,
+                  },
                 },
               },
-            },
-            { new: true }
-          );    
-        }else if(billinglist?.supply_code == "29"){
-          cgstAmountData = (agency_amountData * (9/100));
-          sgstAmountData = (agency_amountData * (9/100));
-          const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
-            { agency: agencyId },
-            {
-              '$inc': { 'total_amount': amountData },
-              '$push': {
-                passbook_amt: {
-                  amount: amountData,
-                  "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
-                  "split_amount.h2i_amount":h2i_amountData,
-                  type: "payble",
-                  billing_id: billingId,
-                  candidate: candidateData,
-                  desg: designation,
-                  transaction_id: tranId,
-                  invoice_file:"",
-                  invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
-                  employer:result?.employer,
-                  gst_in:"09ABCCS9765L1ZH",
-                  hsn_code:"SAC 9983",
-                  gst_type:"CGST/SGST",
-                  cgst:"9%",
-                  sgst:"9%",
-                  cgst_cal_amount: cgstAmountData,
-                  sgst_cal_amount:  sgstAmountData,
+              { new: true }
+            );    
+          }else if(billinglist?.supply_code == "29"){
+            cgstAmountData = (agency_amountData * (9/100));
+            sgstAmountData = (agency_amountData * (9/100));
+            const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+              { agency: agencyId },
+              {
+                '$inc': { 'total_amount': amountData },
+                '$push': {
+                  passbook_amt: {
+                    amount: amountData,
+                    "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
+                    "split_amount.h2i_amount":h2i_amountData,
+                    type: "payble",
+                    billing_id: billingId,
+                    candidate: candidateData,
+                    desg: designation,
+                    transaction_id: tranId,
+                    invoice_file:"",
+                    invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
+                    employer:result?.employer,
+                    gst_in:"09ABCCS9765L1ZH",
+                    hsn_code:"SAC 9983",
+                    gst_type:"CGST/SGST",
+                    cgst:"9%",
+                    sgst:"9%",
+                    cgst_cal_amount: cgstAmountData,
+                    sgst_cal_amount:  sgstAmountData,
+                  },
                 },
               },
-            },
-            { new: true }
-          );
-    
+              { new: true }
+            );
+      
+          }
+        }else{
+          if(billinglist?.supply_code != "29"){
+            gstAmountData = (agency_amountData * (18/100));
+            const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+              { agency: agencyId },
+              {
+                '$inc': { 'total_amount': amountData },
+                '$push': {
+                  passbook_amt: {
+                    amount: amountData,
+                    "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
+                    "split_amount.h2i_amount":0,
+                    type: "payble",
+                    billing_id: billingId,
+                    candidate: candidateData,
+                    desg: designation,
+                    transaction_id: tranId,
+                    invoice_file:"",
+                    invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
+                    employer:result?.employer,
+                    gst_in:"09ABCCS9765L1ZH",
+                    hsn_code:"SAC 9983",
+                    gst_type:"IGST",
+                    igst:"18%",
+                    gst_cal_amount: gstAmountData,
+                  },
+                },
+              },
+              { new: true }
+            );    
+          }else if(billinglist?.supply_code == "29"){
+            cgstAmountData = (agency_amountData * (9/100));
+            sgstAmountData = (agency_amountData * (9/100));
+            const agencyTransactionData = await AgencyTransaction.findOneAndUpdate(
+              { agency: agencyId },
+              {
+                '$inc': { 'total_amount': amountData },
+                '$push': {
+                  passbook_amt: {
+                    amount: amountData,
+                    "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
+                    "split_amount.h2i_amount":0,
+                    type: "payble",
+                    billing_id: billingId,
+                    candidate: candidateData,
+                    desg: designation,
+                    transaction_id: tranId,
+                    invoice_file:"",
+                    invoice_No:generateNextInvoice(PrevInvoiceId,"AG"),
+                    employer:result?.employer,
+                    gst_in:"09ABCCS9765L1ZH",
+                    hsn_code:"SAC 9983",
+                    gst_type:"CGST/SGST",
+                    cgst:"9%",
+                    sgst:"9%",
+                    cgst_cal_amount: cgstAmountData,
+                    sgst_cal_amount:  sgstAmountData,
+                  },
+                },
+              },
+              { new: true }
+            );
+      
+          }
         }
    
 
