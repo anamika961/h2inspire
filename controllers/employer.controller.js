@@ -710,7 +710,7 @@ module.exports = {
 
        //console.log("agencyId",agencyId)
       
-       let amountData = (billinglist?.hire_id?.comp_offered) * (8.33/100);
+        let amountData = (billinglist?.hire_id?.comp_offered) * (8.33/100);
         let agency_amountData = (billinglist?.hire_id?.comp_offered) * (7.83/100);
         let h2i_amountData = (billinglist?.hire_id?.comp_offered) * (0.5/100);
 
@@ -793,7 +793,8 @@ module.exports = {
                 '$push': {
                   passbook_amt: {
                     amount: amountData,
-                    "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
+                   // "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
+                    "split_amount.agency_amount": amountData + gstAmountData,  // amount get agencys
                     "split_amount.h2i_amount":0,
                     type: "payble",
                     billing_id: billingId,
@@ -823,7 +824,8 @@ module.exports = {
                 '$push': {
                   passbook_amt: {
                     amount: amountData,
-                    "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
+                    // "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
+                    "split_amount.agency_amount": amountData + cgstAmountData + sgstAmountData,
                     "split_amount.h2i_amount":0,
                     type: "payble",
                     billing_id: billingId,
