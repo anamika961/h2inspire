@@ -191,7 +191,7 @@ module.exports = {
             var mailOptions = {
                 from: 'developer@demo91.co.in',
                 // to: empEmail,
-                to: `bera.anamika961@gmail.com`,
+                to:'ramdas999@yopmail.com',
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
