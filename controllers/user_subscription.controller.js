@@ -163,8 +163,8 @@ module.exports = {
             
 
             const fileName = Date.now()+ '.pdf'
-           // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
-            const filePath = `E:\\officeProject\\h2inspire\\uploads\\invoices\\${fileName}`;
+            // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+            const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
 
            console.log({filePath});
         
@@ -191,7 +191,7 @@ module.exports = {
             var mailOptions = {
                 from: 'developer@demo91.co.in',
                 // to: empEmail,
-                to:'ramdas999@yopmail.com',
+                to: 'ramdas999@yopmail.com',
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
@@ -235,8 +235,7 @@ module.exports = {
                 attachments: [
                     { 
                         filename: fileName,
-                        // content: fs.createReadStream(filePath)
-                        content: filePath
+                        content: fs.createReadStream(filePath)
                     }
                 ]
             };
