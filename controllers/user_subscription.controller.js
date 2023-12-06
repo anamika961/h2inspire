@@ -163,25 +163,35 @@ module.exports = {
             
 
             const fileName = Date.now()+ '.pdf'
-            const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+            // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+            const filePath = path.join( `E:/officeProject/h2inspire/uploads/invoices/${fileName}`);
 
-           // console.log({filePath});
+           console.log({filePath});
         
             const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
             generateInvoicePdf(invoiceDetails, filePath);
 
+            // var transport = nodemailer.createTransport({
+            //     host: "hire2inspire.com",
+            //     port: 465,
+            //     auth: {
+            //       user: "info@hire2inspire.com",
+            //       pass: "h2I@2023"
+            //     }
+            //   });
             var transport = nodemailer.createTransport({
-                host: "hire2inspire.com",
+                host: "mail.demo91.co.in",
                 port: 465,
                 auth: {
-                  user: "info@hire2inspire.com",
-                  pass: "h2I@2023"
+                  user: "developer@demo91.co.in",
+                  pass: "Developer@2023"
                 }
               });
 
             var mailOptions = {
-                from: 'info@hire2inspire.com',
-                to: empEmail,
+                from: 'developer@demo91.co.in',
+                // to: empEmail,
+                to: `bera.anamika961@gmail.com`,
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
