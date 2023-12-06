@@ -163,8 +163,8 @@ module.exports = {
             
 
             const fileName = Date.now()+ '.pdf'
-            // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
-            const filePath = path.join( `E:/officeProject/h2inspire/uploads/invoices/${fileName}`);
+           // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+            const filePath = `E:\\officeProject\\h2inspire\\uploads\\invoices\\${fileName}`;
 
            console.log({filePath});
         
@@ -235,7 +235,8 @@ module.exports = {
                 attachments: [
                     { 
                         filename: fileName,
-                        content: fs.createReadStream(filePath)
+                        // content: fs.createReadStream(filePath)
+                        content: filePath
                     }
                 ]
             };
