@@ -58,7 +58,8 @@ const employerRegistrationAuthSchema = Joi.object({
       "any.required": `Password is a required field`
     }),
   confirm_password: Joi.string().min(6).trim().required(),
-  employer_image: Joi.string().allow('')
+  employer_image: Joi.string().allow(''),
+  terms_condition_check:Joi.string()
 })
 
 const employerLoginSchema = Joi.object({
@@ -107,7 +108,8 @@ const agencyRegistrationAuthSchema = Joi.object({
       "string.pattern.base": `Password must contains 8 characters with 1 lowercase, 1 uppercase, 1 digit, 1 special character`,
       "any.required": `Password is a required field`
     }),
-  confirm_password: Joi.string().min(6).trim().required()
+  confirm_password: Joi.string().min(6).trim().required(),
+  terms_condition_check: Joi.string()
 })
 
 const agencyLoginSchema = Joi.object({
