@@ -86,7 +86,14 @@ const EmployerSchema = new Schema({
   verified: {
     type: Boolean,
     default: false
-  }
+  },
+  terms_condition_check:{
+    type:String,
+    enum:{
+      values:[0,1],
+      message:"only 0/1 allowed."
+    }
+  },
 }, {timestamps: true})
 
 EmployerSchema.pre('save', async function (next) {
