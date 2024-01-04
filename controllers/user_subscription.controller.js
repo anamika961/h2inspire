@@ -179,19 +179,30 @@ module.exports = {
             //       pass: "h2I@2023"
             //     }
             //   });
-            var transport = nodemailer.createTransport({
-                host: "mail.demo91.co.in",
-                port: 465,
-                auth: {
-                  user: "developer@demo91.co.in",
-                  pass: "Developer@2023"
-                }
-              });
+            // var transport = nodemailer.createTransport({
+            //     host: "mail.demo91.co.in",
+            //     port: 465,
+            //     auth: {
+            //       user: "developer@demo91.co.in",
+            //       pass: "Developer@2023"
+            //     }
+            //   });
 
+            var transport = nodemailer.createTransport({
+                host: "smtp.office365.com",
+                port: 25,
+                secure: false, // StartTLS should be enabled
+                auth: {
+                  user: "info@hire2inspire.com",
+                  pass: "Sant@1293"
+                },
+                requireTLS: true,
+              });
+         
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 // to: empEmail,
-                to: 'ramdas999@yopmail.com',
+                to: 'bera.anamoka961@gmail.com',
                 subject: `Package purchase successfully`,
                 html: `
                 <head>

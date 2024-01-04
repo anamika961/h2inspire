@@ -22,13 +22,24 @@ const JobPosting = require("../models/job_posting.model");
 const HiringDetail = require('../models/hiringDetails.model');
 const nodemailer = require("nodemailer");
 const Token = require("../models/token.model");
+// var transport = nodemailer.createTransport({
+//   host: "hire2inspire.com",
+//   port: 465,
+//   auth: {
+//     user: "info@hire2inspire.com",
+//     pass: "h2I@2023"
+//   }
+// });
+
 var transport = nodemailer.createTransport({
-  host: "hire2inspire.com",
-  port: 465,
+  host: "smtp.office365.com",
+  port: 25,
+  secure: false, // StartTLS should be enabled
   auth: {
     user: "info@hire2inspire.com",
-    pass: "h2I@2023"
-  }
+    pass: "Sant@1293"
+  },
+  requireTLS: true,
 });
 
 module.exports = {
@@ -132,7 +143,7 @@ module.exports = {
       //console.log("tokenResult",tokenResult);
       var mailOptions = {
         from: 'info@hire2inspire.com',
-        to: empEmail,
+        to: "bera.anamika961@gmail.com",
         subject: `Employer registered successfully`,
         html:`
         <head>
