@@ -163,8 +163,9 @@ module.exports = {
             
 
             const fileName = Date.now()+ '.pdf'
-            // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+           
             const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+           // const filePath = path.join(__dirname, `../../uploads/invoices/${fileName}`);
 
            console.log({filePath});
           
@@ -243,8 +244,7 @@ module.exports = {
                 attachments: [
                     { 
                         filename: fileName,
-                        // content: fs.createReadStream(filePath)
-                       // path: fs.createReadStream(filePath)
+                        content: filePath
                     }
                 ]
             };
@@ -256,6 +256,8 @@ module.exports = {
                   console.log('Email sent: ' + info.response);
                 }
             });
+
+           
             return res.status(200).send({
                 error: false,
                 message: "User subscribed successfully",
