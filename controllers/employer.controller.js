@@ -31,13 +31,24 @@ const Token = require("../models/token.model");
 //   }
 // });
 
+// var transport = nodemailer.createTransport({
+//   host: "smtp.office365.com",
+//   port: 25,
+//   secure: false, // StartTLS should be enabled
+//   auth: {
+//     user: "info@hire2inspire.com",
+//     pass: "Sant@1293"
+//   },
+//   requireTLS: true,
+// });
+
 var transport = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 25,
-  secure: false, // StartTLS should be enabled
+  host: "mail.demo91.co.in",
+  port: 465,
+ // secure: false, // StartTLS should be enabled
   auth: {
-    user: "info@hire2inspire.com",
-    pass: "Sant@1293"
+    user: "developer@demo91.co.in",
+    pass: "Developer@2023"
   },
   requireTLS: true,
 });
@@ -142,7 +153,7 @@ module.exports = {
 
       //console.log("tokenResult",tokenResult);
       var mailOptions = {
-        from: 'info@hire2inspire.com',
+        from: 'developer@demo91.co.in',
         to: "bera.anamika961@gmail.com",
         subject: `Employer registered successfully`,
         html:`
@@ -172,7 +183,7 @@ module.exports = {
       const tranResult = await transactionData.save();
 
       var mailOptions = {
-        from: 'info@hire2inspire.com',
+        from: 'developer@demo91.co.in',
         to: empEmail,
         subject: `Employer Email Verify`,
         html:`
