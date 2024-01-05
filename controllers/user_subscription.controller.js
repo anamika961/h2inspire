@@ -197,7 +197,7 @@ module.exports = {
             });
          
             var mailOptions = {
-                from: 'info@hire2inspire.com',
+                from: 'developer@demo91.co.in',
                 // to: empEmail,
                 to: 'bera.anamoka961@gmail.com',
                 subject: `Package purchase successfully`,
