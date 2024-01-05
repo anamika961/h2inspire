@@ -166,10 +166,8 @@ module.exports = {
            
             const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
             
-
            console.log({filePath});
           
-        
             const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
             generateInvoicePdf(invoiceDetails, filePath);
 
