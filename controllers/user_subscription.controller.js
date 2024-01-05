@@ -170,24 +170,6 @@ module.exports = {
         
             const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
             generateInvoicePdf(invoiceDetails, filePath);
-
-            // var transport = nodemailer.createTransport({
-            //     host: "hire2inspire.com",
-            //     port: 465,
-            //     auth: {
-            //       user: "info@hire2inspire.com",
-            //       pass: "h2I@2023"
-            //     }
-            //   });
-            // var transport = nodemailer.createTransport({
-            //     host: "mail.demo91.co.in",
-            //     port: 465,
-            //     auth: {
-            //       user: "developer@demo91.co.in",
-            //       pass: "Developer@2023"
-            //     }
-            //   });
-
             var transport = nodemailer.createTransport({
                 host: "smtp.office365.com",
                 port: 25,
@@ -243,12 +225,12 @@ module.exports = {
                         [Your Contact Information]</p>
                     </body>
                 `,
-                attachments: [
-                    { 
-                        filename: fileName,
-                        content: fs.createReadStream(filePath)
-                    }
-                ]
+                // attachments: [
+                //     { 
+                //         filename: fileName,
+                //         content: fs.createReadStream(filePath)
+                //     }
+                // ]
             };
               
             transport.sendMail(mailOptions, function(error, info){
