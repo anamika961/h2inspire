@@ -165,7 +165,7 @@ module.exports = {
             const fileName = Date.now()+ '.pdf'
            
             const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
-           // const filePath = path.join(__dirname, `../../uploads/invoices/${fileName}`);
+            
 
            console.log({filePath});
           
@@ -244,7 +244,6 @@ module.exports = {
                 attachments: [
                     { 
                         filename: fileName,
-                        content: filePath
                     }
                 ]
             };
