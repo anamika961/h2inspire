@@ -244,6 +244,7 @@ module.exports = {
                 attachments: [
                     { 
                         filename: fileName,
+                        content: filePath
                     }
                 ]
             };
