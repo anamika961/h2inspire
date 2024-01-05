@@ -140,7 +140,7 @@ module.exports = {
 
              let packageTypeData = await PackageType.findOne({_id:subscriptionData?.package?.package_type});
 
-             let packaeName = packageTypeData?.name
+             let packaeName = packageTypeData?.name;
 
             // console.log({packaeName});
             
@@ -167,20 +167,34 @@ module.exports = {
             const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
 
            console.log({filePath});
+          
         
             const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
             generateInvoicePdf(invoiceDetails, filePath);
+
+            //const fileContent = fs.readFileSync(filePath);
             
+            // var transport = nodemailer.createTransport({
+            //     host: "smtp.office365.com",
+            //     port: 25,
+            //     secure: false, // StartTLS should be enabled
+            //     auth: {
+            //       user: "info@hire2inspire.com",
+            //       pass: "Sant@1293"
+            //     },
+            //     requireTLS: true,
+            //   });
+
             var transport = nodemailer.createTransport({
-                host: "smtp.office365.com",
-                port: 25,
-                secure: false, // StartTLS should be enabled
-                auth: {
-                  user: "info@hire2inspire.com",
-                  pass: "Sant@1293"
-                },
-                requireTLS: true,
-              });
+                host: "mail.demo91.co.in",
+                 port: 465,
+                // secure: false, // StartTLS should be enabled
+                 auth: {
+                        user: "developer@demo91.co.in",
+                        pass: "Developer@2023"
+                     },
+                 requireTLS: true,
+            });
          
             var mailOptions = {
                 from: 'info@hire2inspire.com',
@@ -226,12 +240,13 @@ module.exports = {
                         [Your Contact Information]</p>
                     </body>
                 `,
-                // attachments: [
-                //     { 
-                //         filename: fileName,
-                //         content: fs.createReadStream(filePath)
-                //     }
-                // ]
+                attachments: [
+                    { 
+                        filename: fileName,
+                        // content: fs.createReadStream(filePath)
+                       // path: fs.createReadStream(filePath)
+                    }
+                ]
             };
               
             transport.sendMail(mailOptions, function(error, info){
