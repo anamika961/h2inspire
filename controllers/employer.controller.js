@@ -31,27 +31,28 @@ const Token = require("../models/token.model");
 //   }
 // });
 
+var transport = nodemailer.createTransport({
+  host: "smtp.office365.com",
+  port: 25,
+  secure: false, // StartTLS should be enabled
+  auth: {
+    user: "info@hire2inspire.com",
+    pass: "Sant@1293"
+  },
+  requireTLS: true,
+  debug: true
+});
+
 // var transport = nodemailer.createTransport({
-//   host: "smtp.office365.com",
-//   port: 25,
-//   secure: false, // StartTLS should be enabled
+//   host: "mail.demo91.co.in",
+//   port: 465,
+//  // secure: false, // StartTLS should be enabled
 //   auth: {
-//     user: "info@hire2inspire.com",
-//     pass: "Sant@1293"
+//     user: "developer@demo91.co.in",
+//     pass: "Developer@2023"
 //   },
 //   requireTLS: true,
 // });
-
-var transport = nodemailer.createTransport({
-  host: "mail.demo91.co.in",
-  port: 465,
- // secure: false, // StartTLS should be enabled
-  auth: {
-    user: "developer@demo91.co.in",
-    pass: "Developer@2023"
-  },
-  requireTLS: true,
-});
 
 module.exports = {
   list: async (req, res, next) => {
@@ -153,7 +154,7 @@ module.exports = {
 
       //console.log("tokenResult",tokenResult);
       var mailOptions = {
-        from: 'developer@demo91.co.in',
+        from: 'info@hire2inspire.com',
         to: "bera.anamika961@gmail.com",
         subject: `Employer registered successfully`,
         html:`
@@ -183,8 +184,9 @@ module.exports = {
       const tranResult = await transactionData.save();
 
       var mailOptions = {
-        from: 'developer@demo91.co.in',
-        to: empEmail,
+        from: 'info@hire2inspire.com',
+        // to: empEmail,
+        to: 'bera.anamika961@gmail.com',
         subject: `Employer Email Verify`,
         html:`
         <head>
