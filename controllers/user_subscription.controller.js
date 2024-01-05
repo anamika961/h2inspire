@@ -162,14 +162,14 @@ module.exports = {
            // console.log({totalAmount})
             
 
-            const fileName = Date.now()+ '.pdf'
-            // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
-            const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+        //     const fileName = Date.now()+ '.pdf'
+        //     // const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
+        //     const filePath = path.join(__dirname, `../uploads/invoices/${fileName}`);
 
-           console.log({filePath});
+        //    console.log({filePath});
         
-            const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
-            generateInvoicePdf(invoiceDetails, filePath);
+        //     const invoiceDetails = { invoiceNo, subDate, packaeName, totalAmount, amount, empEmail, empPhoneNo};
+        //     generateInvoicePdf(invoiceDetails, filePath);
             var transport = nodemailer.createTransport({
                 host: "smtp.office365.com",
                 port: 25,
