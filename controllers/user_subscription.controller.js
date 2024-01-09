@@ -173,30 +173,30 @@ module.exports = {
 
             //const fileContent = fs.readFileSync(filePath);
             
-            // var transport = nodemailer.createTransport({
-            //     host: "smtp.office365.com",
-            //     port: 25,
-            //     secure: false, // StartTLS should be enabled
-            //     auth: {
-            //       user: "info@hire2inspire.com",
-            //       pass: "Sant@1293"
-            //     },
-            //     requireTLS: true,
-            //   });
-
             var transport = nodemailer.createTransport({
-                host: "mail.demo91.co.in",
-                 port: 465,
-                // secure: false, // StartTLS should be enabled
-                 auth: {
-                        user: "developer@demo91.co.in",
-                        pass: "Developer@2023"
-                     },
-                 requireTLS: true,
-            });
+                host: "smtp.office365.com",
+                port: 25,
+                secure: false, // StartTLS should be enabled
+                auth: {
+                  user: "info@hire2inspire.com",
+                  pass: "Sant@1293"
+                },
+                requireTLS: true,
+              });
+
+            // var transport = nodemailer.createTransport({
+            //     host: "mail.demo91.co.in",
+            //      port: 465,
+            //     // secure: false, // StartTLS should be enabled
+            //      auth: {
+            //             user: "developer@demo91.co.in",
+            //             pass: "Developer@2023"
+            //          },
+            //      requireTLS: true,
+            // });
          
             var mailOptions = {
-                from: 'developer@demo91.co.in',
+                from: 'info@hire2inspire.com',
                 // to: empEmail,
                 to: 'bera.anamika961@gmail.com',
                 subject: `Package purchase successfully`,
