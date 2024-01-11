@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const GetInTouch = require("../models/getInTouch.model");
 const nodemailer = require("nodemailer");
-
 var transport = nodemailer.createTransport({
-    host: "hire2inspire.com",
+    host: "smtp.zoho.in",
+    secure: true,
     port: 465,
     auth: {
-      user: "info@hire2inspire.com",
-      pass: "h2I@2023"
+      user: "Info@hire2inspire.com",
+      pass: "17X2DnJJiQmm"
     }
   });
 
@@ -28,7 +28,7 @@ module.exports = {
 
 
             var mailOptions = {
-                from: getEmail,
+                from: "sugrinennabo-3797@yopmail.com",
                 to: 'info@hire2inspire.com',
                 subject: `${getSubject}`,
                 html:`
