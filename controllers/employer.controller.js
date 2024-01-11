@@ -313,10 +313,10 @@ module.exports = {
         },
         {
             path:"package",
-            select:"",
+            select:" ",
             populate:{
               path:"package_type",
-              select:"name"
+              select:" "
             }
         }
     ]).sort({_id:-1});
