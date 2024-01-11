@@ -24,7 +24,7 @@ const nodemailer = require("nodemailer");
 const Token = require("../models/token.model");
 
 var transport = nodemailer.createTransport({
-  host: "smtp.zoho.eu",
+  host: "smtp.zoho.in",
   secure: true,
   port: 465,
   auth: {
