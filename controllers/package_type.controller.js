@@ -40,12 +40,12 @@ module.exports = {
 
     update: async (req, res, next) => {
         try {
-            let token = req.headers['authorization']?.split(" ")[1];
-            let {userId, dataModel} = await getUserViaToken(token)
-            const checkAdmin = await Admin.findOne({_id: userId})
-            if(!checkAdmin && dataModel != "admins") return res.status(400).send({ error: true, message: "User not authorized." })
+            // let token = req.headers['authorization']?.split(" ")[1];
+            // let {userId, dataModel} = await getUserViaToken(token)
+            // const checkAdmin = await Admin.findOne({_id: userId})
+            // if(!checkAdmin && dataModel != "admins") return res.status(400).send({ error: true, message: "User not authorized." })
 
-            const result = await package-type.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
+            const result = await PackageType.findOneAndUpdate({_id: req.params.id}, req.body, {new: true});
     
             if(!result) return res.status(200).send({ error: false, message: "Package Type not updated" })
 

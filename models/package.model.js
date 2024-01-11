@@ -31,6 +31,9 @@ const PackageSchema = mongoose.Schema({
        job_credit_validity:{
         type:String
     },
+    tenure:{
+        type:String
+    }
    },
    business_detail:{
     amount:{
@@ -48,6 +51,9 @@ const PackageSchema = mongoose.Schema({
     job_credit_validity:{
      type:String
     },
+    tenure:{
+        type:String
+    }
     },
     scale_detail:[
         {
@@ -66,6 +72,9 @@ const PackageSchema = mongoose.Schema({
            job_credit_validity:{
             type:String
            },
+           tenure:{
+            type:String
+        }
         }
     ]
 }, {timestamps: true});

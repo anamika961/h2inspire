@@ -1,0 +1,1 @@
+[Thu, 11 Jan 2024 08:56:43 GMT] - ::1 - - "PATCH /api/package-type/update/64ff01025af5176ea468dc2e HTTP/1.1" code - 500 62 "-" "PostmanRuntime/7.36.0" request {"package_type":"payAsYou_detail"} response {"error":true,"status":500,"message":"package is not defined"}
