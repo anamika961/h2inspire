@@ -29,7 +29,7 @@ var transport = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "Info@hire2inspire.com",
-    pass: "Sant@1293"
+    pass: "17X2DnJJiQmm"
   }
 });
 
