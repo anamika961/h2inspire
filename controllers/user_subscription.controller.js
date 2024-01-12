@@ -69,7 +69,7 @@ module.exports = {
             
             if(packageName == "PAY AS YOU GO"){
                 let packageAmount = packageData?.payAsYou_detail?.amount;
-                let gstAmount = packageAmount * (18/100);
+                let gstAmount = (packageAmount * req.body.quantity) * (18/100);
                 req.body.total_amount = (packageAmount * req.body.quantity + gstAmount).toFixed(2) ;
 
             }else if(packageName == "BUSINESS"){
