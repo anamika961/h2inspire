@@ -94,7 +94,7 @@ module.exports = {
             }else{
                 req.body.gst_type = "IGST"
             }
-             req.body.hsn_code = "SAC 9983"
+             req.body.hsn_code = "998311"
              req.body.invoice_No =  generateNextInvoice(PrevInvoiceId)
              const subscription_data = new UserSubscription(req.body)
              const result = await subscription_data.save();
