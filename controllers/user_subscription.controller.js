@@ -36,14 +36,44 @@ module.exports = {
 
     create: async (req, res, next) => {
         try {
+            let subscriptionList = await UserSubscription.find({});
             let packageId = req.body.package;
             // console.log({packageId})
             let packageData = await Package.findOne({_id:packageId});
             let packageTypeId = packageData?.package_type;
 
             let packageNameData = await PackageType.findOne({_id:packageTypeId});
-            let packageName = packageNameData?.name
+            let packageName = packageNameData?.name;
             console.log({packageName});
+
+            const generateNextInvoice = (prevInv) => {
+    
+                if(prevInv == undefined){
+                  console.log('here')
+                  return `H2I/EM-SC/24-25-01`
+                }else{
+                  const [, yearPart, numberPart] = prevInv.match(/(\d{2}-\d{2})-(\d{2})/);
+                  let newNumberPart = (parseInt(numberPart, 10) + 1).toString().padStart(2, '0')
+                  const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
+                  let currentYear = new Date().getFullYear() % 100;
+                  let currentYearNext  = currentYear+1;
+                  if(currentMonth > 3 && currentYear != 24){
+                    if(currentYear != yearPart.split('-')[0]){
+                      return `H2I/${currentYear}-${currentYearNext}-01`  
+                    }else{
+                      return `H2I/${currentYear}-${currentYearNext}-${(parseInt(numberPart, 10) + 1).toString().padStart(2, '0')}`  
+                    }
+                    
+                  }
+                  
+                  else{
+                    return `H2I/${type}/${currentYear}-${currentYearNext}-${newNumberPart}`
+                  }
+                  
+                }
+            }
+
+            let PrevInvoiceId  = (subscriptionList.length-1)?.invoice_No;
             
             if(packageName == "PAY AS YOU GO"){
                 let packageAmount = packageData?.payAsYou_detail?.amount;
@@ -67,6 +97,13 @@ module.exports = {
                 }
             }
 
+            if(req.body.state_code == "KA"){
+                req.body.gst_type = "CGST + SGST"
+            }else{
+                req.body.gst_type = "IGST"
+            }
+             req.body.hsn_code = "SAC 9983"
+             req.body.invoice_No =  generateNextInvoice(PrevInvoiceId)
              const subscription_data = new UserSubscription(req.body)
              const result = await subscription_data.save();
 

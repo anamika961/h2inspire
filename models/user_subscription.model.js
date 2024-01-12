@@ -23,6 +23,15 @@ const UserSubscriptionSchema = mongoose.Schema({
     state_code:{
         type:String
     },
+    invoice_No:{
+        type:String
+    },
+    gst_type:{
+        type:String
+    },
+    hsn_code:{
+        type:String
+    },
     status:{
         type:Boolean,
         default:false
