@@ -17,6 +17,12 @@ const UserSubscriptionSchema = mongoose.Schema({
     total_amount:{
         type:Number
     },
+    city:{
+        type:String
+    },
+    state_code:{
+        type:String
+    },
     status:{
         type:Boolean,
         default:false

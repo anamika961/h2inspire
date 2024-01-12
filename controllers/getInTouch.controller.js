@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const GetInTouch = require("../models/getInTouch.model");
 const nodemailer = require("nodemailer");
 var transport = nodemailer.createTransport({
-    host: "smtp.zoho.in",
+    host: "imap.zoho.in",
     secure: true,
-    port: 465,
+    port: 993,
     auth: {
       user: "Info@hire2inspire.com",
       pass: "17X2DnJJiQmm"
@@ -28,7 +28,7 @@ module.exports = {
 
 
             var mailOptions = {
-                from: "sugrinennabo-3797@yopmail.com",
+                from: 'bera.anamika961@gmail.com',
                 to: 'info@hire2inspire.com',
                 subject: `${getSubject}`,
                 html:`
