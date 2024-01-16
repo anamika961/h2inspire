@@ -14,11 +14,12 @@ const app = express();
 const nodemailer = require("nodemailer");
 
 var transport = nodemailer.createTransport({
-    host: "hire2inspire.com",
+    host: "smtp.zoho.in",
+    secure: true,
     port: 465,
     auth: {
-      user: "info@hire2inspire.com",
-      pass: "h2I@2023"
+      user: "Info@hire2inspire.com",
+      pass: "17X2DnJJiQmm"
     }
   });
   
@@ -122,8 +123,8 @@ module.exports = {
              console.log("candidateEmail>>>>",candidateEmail)
 
             var mailOptions = {
-                from: 'info@hire2inspire.com',
-                to: candidateEmail,
+                from: 'Info@hire2inspire.com',
+                to: "anamika.bera@onenesstechs.in",
                 subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
                 html:`
                 <head>
