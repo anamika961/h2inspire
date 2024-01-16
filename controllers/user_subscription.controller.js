@@ -226,8 +226,7 @@ module.exports = {
          
             var mailOptions = {
                 from: 'info@hire2inspire.com',
-                // to: empEmail,
-                to: 'bera.anamika961@gmail.com',
+                to: empEmail,
                 subject: `Package purchase successfully`,
                 html: `
                 <head>
