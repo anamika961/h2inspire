@@ -48,7 +48,7 @@ module.exports = {
 
             const generateNextInvoice = (prevInv) => {
                 if (prevInv === undefined) {
-                    return `H2I/EM-SC/24-25-01`;
+                    return `H2I/SC/24-25-01`;
                 } else {
                     const [, yearPart, numberPart] = prevInv.match(/(\d{2}-\d{2})-(\d{2})/);
                     let newNumberPart = (parseInt(numberPart, 10) + 1).toString().padStart(2, '0');
@@ -59,7 +59,7 @@ module.exports = {
                     if (currentMonth > 3 && currentYear !== parseInt(yearPart.split('-')[0], 10)) {
                         return `H2I/${currentYear}-${currentYearNext}-01`;
                     } else {
-                        return `H2I/${yearPart}-${(parseInt(numberPart, 10) + 1).toString().padStart(2, '0')}`;
+                        return `H2I/SC/${yearPart}-${(parseInt(numberPart, 10) + 1).toString().padStart(2, '0')}`;
                     }
                 }
             }

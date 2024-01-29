@@ -124,6 +124,17 @@ const CandidateSchema = new Schema(
             type:Boolean,
             default:false
         },
+        reSubmit:{
+            type:Boolean,
+            default:false
+        },
+        updated_by: {
+            type: String,
+            enum: {
+                values: ["agency","candidate"]
+            },
+            default: "candidate"
+        },
 	},
 	{ timestamps: true }
 );
