@@ -559,6 +559,92 @@ module.exports = {
 
             if(candidateJobData?.final_submit == true){
                 const candidateDataUpdate = await CandidateModel.findOneAndUpdate({_id:req.params.candidateId},{final_submit:true},{new:true})
+
+                let agencyemail = candidateDataUpdate?.agency?.corporate_email;
+                let agencyName = candidateDataUpdate?.agency?.name;
+                let empemail = candidateDataUpdate?.job?.employer?.email;
+                let candidateFName = candidateDataUpdate?.fname;
+                let candidateLName = candidateDataUpdate?.lname;
+                let jobName = candidateDataUpdate?.job?.job_name;
+
+            sgMail.setApiKey(process.env.SENDGRID)
+            const msg = {
+              to: agencyemail, // Change to your recipient
+              from: 'info@hire2Inspire.com',
+               subject: `FInal Response from ${candidateFName} ${candidateLName} for JoB name ${jobName}`,
+                      html:`
+                      <body>
+                      <p>Dear ${agencyName},</p>
+                    
+                      <p>I hope this email finds you well. I am writing to inform you that we have received the final response from the candidate you uploaded for the [Job Title] position.</p>
+                    
+                      <p>After a thorough evaluation process, including multiple rounds of interviews and assessments, we are pleased to share that the candidate has accepted our job offer. We believe that their skills and experience align perfectly with our requirements, and we are confident that they will be a valuable addition to our team.</p>
+                    
+                      <p>We appreciate your assistance in the recruitment process and would like to express our gratitude for presenting us with such a well-qualified candidate. Your professionalism and dedication to finding the right fit for our organization have not gone unnoticed.</p>
+                    
+                      <p>Please convey our congratulations to the candidate on their successful acceptance of the offer, and thank them for their commitment to joining our team.</p>
+                    
+                      <p>We look forward to a successful collaboration and appreciate the ongoing support from your agency.</p>
+                    
+                      <p>If you have any further questions or if there are additional steps we need to take, please feel free to reach out.</p>
+                    
+                      <p>Thank you again for your partnership.</p>
+                    
+                      <p>Best regards</p>
+                      <p>Hire2Inspire</p>
+                    </body>
+              `
+        }
+      
+            sgMail
+              .send(msg)
+              .then(() => {
+                console.log('Email sent')
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+
+
+              sgMail.setApiKey(process.env.SENDGRID)
+              const new_msg = {
+                to: empemail, // Change to your recipient
+                from: 'info@hire2Inspire.com',
+                 subject: `FInal Response from ${candidateFName} ${candidateLName} for JoB name ${jobName}`,
+                        html:`
+                        <body>
+                        <p>Dear ${empemail},</p>
+                      
+                        <p>I hope this email finds you well. I am writing to inform you that we have received the final response from the candidate you uploaded for the [Job Title] position.</p>
+                      
+                        <p>After a thorough evaluation process, including multiple rounds of interviews and assessments, we are pleased to share that the candidate has accepted our job offer. We believe that their skills and experience align perfectly with our requirements, and we are confident that they will be a valuable addition to our team.</p>
+                      
+                        <p>We appreciate your assistance in the recruitment process and would like to express our gratitude for presenting us with such a well-qualified candidate. Your professionalism and dedication to finding the right fit for our organization have not gone unnoticed.</p>
+                      
+                        <p>Please convey our congratulations to the candidate on their successful acceptance of the offer, and thank them for their commitment to joining our team.</p>
+                      
+                        <p>We look forward to a successful collaboration and appreciate the ongoing support from your agency.</p>
+                      
+                        <p>If you have any further questions or if there are additional steps we need to take, please feel free to reach out.</p>
+                      
+                        <p>Thank you again for your partnership.</p>
+                      
+                        <p>Best regards</p>
+                        <p>Hire2Inspire</p>
+                      </body>
+                `
+          }
+        
+              sgMail
+                .send(new_msg)
+                .then(() => {
+                  console.log('Email sent')
+                })
+                .catch((error) => {
+                  console.error(error)
+                })
+  
+
             }
 
             if(candidateJobData?.screening_q_a.length != null){

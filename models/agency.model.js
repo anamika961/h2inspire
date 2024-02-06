@@ -155,6 +155,24 @@ const AgencySchema = new Schema(
             type: Boolean,
             default: false
         },
+        bank_name:{
+            type:String
+        },
+        benificiary_name:{
+            type:String
+        },
+        acc_no:{
+            type:String
+        },
+        ifsc_code:{
+            type:String
+        },
+        bank_branch:{
+            type:String
+        },
+        micr_code:{
+            type:String
+        },
         terms_condition_check:{
             type:String,
             enum:{
