@@ -1,0 +1,4 @@
+[Tue, 06 Feb 2024 06:12:32 GMT] - ::1 - - "PATCH /api/candidate/update/65c1cb9126905a0054754e1f HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.36.1" request {} response {"error":true,"status":500,"message":"sgMail is not defined"}
+[Tue, 06 Feb 2024 06:13:44 GMT] - ::1 - - "PATCH /api/candidate/update/65c1cb9126905a0054754e1f HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.36.1" request {} response {"error":true,"status":500,"message":"sgMail is not defined"}
+[Tue, 06 Feb 2024 06:13:46 GMT] - ::1 - - "PATCH /api/candidate/update/65c1cb9126905a0054754e1f HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.36.1" request {} response {"error":true,"status":500,"message":"sgMail is not defined"}
+[Tue, 06 Feb 2024 06:14:33 GMT] - ::1 - - "PATCH /api/candidate/update/65c1cb9126905a0054754e1f HTTP/1.1" code - 500 61 "-" "PostmanRuntime/7.36.1" request {} response {"error":true,"status":500,"message":"sgMail is not defined"}

@@ -422,12 +422,16 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const resData = await CandidateModel.find({_id: req.params.id});
-            const result = await CandidateModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}).populate([
+           // console.log({resData})
+            let result = await CandidateModel.findOneAndUpdate({_id: req.params.id}, req.body, {new: true}).populate([
                 {
                     path:"job",
                     select:""
                 }
             ]);
+
+            console.log("data",req.body)
+            console.log({result})
     
             if(!result) return res.status(200).send({ error: false, message: "Candidate not updated" });
 
@@ -445,75 +449,75 @@ module.exports = {
             let candidateId = result?._id;
 
             if(result?.final_submit == false){
-                sgMail.setApiKey(process.env.SENDGRID)
-            const msg = {
-              to: candidateEmail, // Change to your recipient
-              from: 'subhra.onenesstechs@gmail.com',
-               subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
-                      html:`
-                      <head>
-                          <title>Notification: Candidate Hired - Backend Development Position</title>
-                  </head>
-                  <body>
-                      <p>Dear ${candidatefName} ${candidatelName} ,</p>
-                      <p>I hope this email finds you well. I am writing to confirm that we have received your application for the ${jobRole} at ${companyName}. We appreciate your interest in joining our team and taking the time to submit your CV. Your application is currently being reviewed by our recruitment team.</p>
+        //         sgMail.setApiKey(process.env.SENDGRID)
+        //     const msg = {
+        //       to: candidateEmail, // Change to your recipient
+        //       from: 'subhra.onenesstechs@gmail.com',
+        //        subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
+        //               html:`
+        //               <head>
+        //                   <title>Notification: Candidate Hired - Backend Development Position</title>
+        //           </head>
+        //           <body>
+        //               <p>Dear ${candidatefName} ${candidatelName} ,</p>
+        //               <p>I hope this email finds you well. I am writing to confirm that we have received your application for the ${jobRole} at ${companyName}. We appreciate your interest in joining our team and taking the time to submit your CV. Your application is currently being reviewed by our recruitment team.</p>
       
-                      <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
+        //               <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
       
-                      <p>Find the link 
-                      <a href="https://hire2inspire.com/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
-                    </p>
+        //               <p>Find the link 
+        //               <a href="https://hire2inspire.com/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
+        //             </p>
       
-                      <p>Best regards,</p>
-                      <p>Hire2Inspire</p>
-                  </body>
-              `
-        }
+        //               <p>Best regards,</p>
+        //               <p>Hire2Inspire</p>
+        //           </body>
+        //       `
+        // }
       
-            sgMail
-              .send(msg)
-              .then(() => {
-                console.log('Email sent')
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+        //     sgMail
+        //       .send(msg)
+        //       .then(() => {
+        //         console.log('Email sent')
+        //       })
+        //       .catch((error) => {
+        //         console.error(error)
+        //       })
 
         }
         else if(result?.final_submit == false && resData?.email != result?.email && resData?.phone != result?.phone){
-            sgMail.setApiKey(process.env.SENDGRID)
-            const new_msg = {
-              to: candidateEmail, // Change to your recipient
-              from: 'subhra.onenesstechs@gmail.com',
-               subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
-                      html:`
-                      <head>
-                          <title>Notification: Candidate Hired - Backend Development Position</title>
-                  </head>
-                  <body>
-                      <p>Dear ${candidatefName} ${candidatelName} ,</p>
-                      <p>I hope this email finds you well. I am writing to confirm that we have received your application for the ${jobRole} at ${companyName}. We appreciate your interest in joining our team and taking the time to submit your CV. Your application is currently being reviewed by our recruitment team.</p>
+        //    sgMail.setApiKey(process.env.SENDGRID)
+        //     const new_msg = {
+        //       to: candidateEmail, // Change to your recipient
+        //       from: 'subhra.onenesstechs@gmail.com',
+        //        subject: `Subject: Confirmation of CV Submission for ${jobRole} - Next Steps`,
+        //               html:`
+        //               <head>
+        //                   <title>Notification: Candidate Hired - Backend Development Position</title>
+        //           </head>
+        //           <body>
+        //               <p>Dear ${candidatefName} ${candidatelName} ,</p>
+        //               <p>I hope this email finds you well. I am writing to confirm that we have received your application for the ${jobRole} at ${companyName}. We appreciate your interest in joining our team and taking the time to submit your CV. Your application is currently being reviewed by our recruitment team.</p>
       
-                      <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
+        //               <p>As we move forward in the selection process, we would like to gather some additional information from you. Please take a moment to answer the following screening questions. Your responses will help us better understand your qualifications and suitability for the role. Once we review your answers, we will determine the next steps in the process.</p>
       
-                      <p>Find the link 
-                      <a href="https://hire2inspire.com/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
-                    </p>
+        //               <p>Find the link 
+        //               <a href="https://hire2inspire.com/candidate/apply-job/${candidateId}" target="blank">Find your job</a>
+        //             </p>
       
-                      <p>Best regards,</p>
-                      <p>Hire2Inspire</p>
-                  </body>
-              `
-        }
+        //               <p>Best regards,</p>
+        //               <p>Hire2Inspire</p>
+        //           </body>
+        //       `
+        // }
       
-            sgMail
-              .send(new_msg)
-              .then(() => {
-                console.log('Email sent')
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+        //     sgMail
+        //       .send(new_msg)
+        //       .then(() => {
+        //         console.log('Email sent')
+        //       })
+        //       .catch((error) => {
+        //         console.error(error)
+        //       })
 
 
         }
