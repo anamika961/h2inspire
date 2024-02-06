@@ -170,6 +170,9 @@ const AgencySchema = new Schema(
         bank_branch:{
             type:String
         },
+        cancelled_cheque:{
+            type:String
+        },
         micr_code:{
             type:String
         },
