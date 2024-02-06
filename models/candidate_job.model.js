@@ -26,6 +26,9 @@ const CandidateJobSchema = mongoose.Schema({
     screening_q_a: {
         type: Array
     },
+    personal_q_a: {
+        type: Array
+    },
     review_apply:{
         type:Boolean,
         default:false
