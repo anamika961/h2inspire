@@ -221,6 +221,50 @@ module.exports = {
         }
       });
 
+      const AdminData = await Admin.findOne({});
+
+      let adminMail = AdminData?.email;
+      let adminName = AdminData?.name;
+
+      sgMail.setApiKey(process.env.SENDGRID)
+      const msg = {
+        to: "info@hire2inspire.com", // Change to your recipient
+        from: 'info@hire2inspire.com', // Change to your verified sender
+        subject: `New Employee Registration`,
+          html:`
+          <head>
+              <title>Notification:New Employee Registration</title>
+      </head>
+      <body>
+      <p>
+        Dear ${adminName},
+      </p>
+      <p>A new employee has been registered. Below are the details of the new employee:</p>
+      
+      <ul>
+        <li><strong>Name:</strong> ${empFname} ${empLname}</li>
+        <li><strong>Email:</strong> ${empEmail}</li>
+      </ul>
+      
+      <p>Please review the details and ensure that the necessary onboarding procedures are initiated for the new employee.</p>
+
+      <p>If you have any questions or need further information, feel free to contact the HR department at info@hire2inspire.com.</p>
+
+     
+      <p>Best regards,<br>
+      Hire2Ispire Team</p>
+    </body>
+      `
+    }
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log('Email sent')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+  
 
       res.status(201).send({
         error: false,
@@ -550,6 +594,20 @@ module.exports = {
             }
         ]);
 
+        let empFname =  billinglist?.employer?.fname;
+
+        let empLname =  billinglist?.employer?.lname;
+
+        let empEmail = billinglist?.employer?.email;
+
+        let candidateFName = billinglist?.employer?.hire_id?.candidate?.fname;
+
+        let candidateLName = billinglist?.employer?.hire_id?.candidate?.lname;
+
+        let agncyEmail = billinglist?.employer?.hire_id?.candidate?.agency?.corporate_email;
+
+      //  let agncyEmail = billinglist?.employer?.hire_id?.candidate?.agency?.corporate_email;
+
         console.log("billinglist",billinglist);
 
         const subscription = await UserSubscription.findOne({employer:result?.employer});
@@ -821,7 +879,7 @@ module.exports = {
                     amount: amountData,
                    // "split_amount.agency_amount": agency_amountData + gstAmountData,  // amount get agencys
                     "split_amount.agency_amount": amountData + gstAmountData,  // amount get agencys
-                    "split_amount.h2i_amount":0,
+                    "split_amount.h2i_amount":h2i_amountData,
                     type: "payble",
                     billing_id: billingId,
                     candidate: candidateData,
@@ -852,7 +910,7 @@ module.exports = {
                     amount: amountData,
                     // "split_amount.agency_amount": agency_amountData + cgstAmountData + sgstAmountData,
                     "split_amount.agency_amount": amountData + cgstAmountData + sgstAmountData,
-                    "split_amount.h2i_amount":0,
+                    "split_amount.h2i_amount":h2i_amountData,
                     type: "payble",
                     billing_id: billingId,
                     candidate: candidateData,
@@ -877,6 +935,75 @@ module.exports = {
           }
         }
    
+        // employer
+
+        sgMail.setApiKey(process.env.SENDGRID)
+        const msg = {
+          to: empEmail, // Change to your recipient
+          from: 'info@hire2inspire.com', // Change to your verified sender
+          subject: `Invoice for Recruitment Services`,
+            html:`
+            <head>
+                <title>Notification:Invoice for Recruitment Services</title>
+        </head>
+        <body>
+        <p>Dear ${empFname} ${empLname},</p>
+        <p>I trust this email finds you well. We are delighted to inform you that the recruitment process for the position of has been successfully concluded, and we are pleased to confirm the hiring of ${candidateFName} ${candidateLName} for the role.</p>
+        
+        <p>As per our agreement and the terms outlined in our contract, attached herewith is the invoice for the recruitment services rendered. Please find the details below:</p>
+    
+        <p>Please ensure that the payment is processed within the agreed-upon terms. The payment details are provided at the bottom of this email.</p>
+    
+        <p>If you have any questions or require further clarification regarding the invoice, feel free to reach out. We appreciate your prompt attention to this matter and look forward to continuing our successful partnership.</p>
+    
+        <p>Thank you for choosing us as your recruitment partner.</p>
+    
+        <p>Best regards,</p>
+        <p>Hire2Inspire</p>
+    </body>
+        `
+      }
+        sgMail
+          .send(msg)
+          .then(() => {
+            console.log('Email sent')
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+
+// agency
+          sgMail.setApiKey(process.env.SENDGRID)
+          const new_msg = {
+            to: agncyEmail, // Change to your recipient
+            from: 'info@hire2inspire.com', // Change to your verified sender
+            subject: `Notification of Successful Candidate Placement`,
+              html:`
+              <head>
+                  <title>Notification:Notification of Successful Candidate Placement</title>
+          </head>
+          <body>
+          <p>Subject: Calling All Talent Architects, A New Blueprint Awaits!</p>
+          <p>Dear Agency,</p>
+          <p>Greetings from hire2Inspire! We are thrilled to unveil a bold new blueprint that demands the expertise and finesse your agency can provide.</p>
+          <p>Our latest mandate is not just another project – it's an opportunity to shape careers, transform organizations, and leave an indelible mark on the landscape of talent acquisition.</p>
+          <p>Let us leverage our collective expertise to bring this blueprint to life.</p>
+          <p>(Job details and link of the job to be provided here posted on H2I)</p>
+          <p>Regards,</p>
+          <p>hire2Inspire</p>
+      </body>
+          `
+        }
+          sgMail
+            .send(new_msg)
+            .then(() => {
+              console.log('Email sent')
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      
+    
 
       message = {
         error: false,

@@ -404,42 +404,81 @@ module.exports = {
             const AdminData = await Admin.findOne({});
 
             let adminMail = AdminData?.email;
-            let adminName = AdminData?.name
-           
-            var mailOptions = {
-                from: 'info@hire2inspire.com',
-                to: adminMail,
-                subject: `Hired candidate!`,
-                html:`
-                <head>
-                    <title>Notification: Request for Job Approval</title>
-            </head>
-            <body>
-            <p>
-              Dear ${adminName},
-            </p>
-            <p>
-              I hope this message finds you well. I am writing to request your kind attention to the job posting submitted by a employer on our platform. We believe that this job opportunity aligns perfectly with our community's needs, and we kindly request your approval to make it visible to our job seekers.
-            </p>
-            <p>
-              Please let us know if you have any questions or need additional details. We look forward to your positive response.
-            </p>
-            <p>Find the link 
-                <a href="https://hire2inspire-dev.netlify.app/admin/login" target="blank">LogIn</a>
-              </p>
-            <p>Warm regards,</p>
-            <p>${empFname} ${empLname} </p>
-          </body>
-        `
- };   
-            transport.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
-            });
+            let adminName = AdminData?.name;
 
+            
+      sgMail.setApiKey(process.env.SENDGRID)
+      const msg = {
+        to: "info@hire2inspire.com", // Change to your recipient
+        from: 'info@hire2inspire.com', // Change to your verified sender
+        subject: `New Job Posting`,
+          html:`
+          <head>
+              <title>Notification:New Job Posting</title>
+        </head>
+        <body>
+        <p>
+            Dear ${adminName},
+        </p>
+        <p>A new job has been posted on your company's website. Below are the details of the job:</p>
+      
+        <ul>
+          <li><strong>Job Title:</strong> ${jobPostingData?.job_name}</li>
+        </ul>
+        
+        <p>Please review the details and take any necessary actions, such as sharing the job opening with the relevant teams or departments.</p>
+  
+        <p>If you have any questions or need further information, feel free to contact the HR department at info@hire2inspire.com .</p>
+    
+        <p>Best regards,<br>
+        Hire2Ispire Team</p>
+        </body>
+      `
+    }
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log('Email sent')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+
+        const agencydata = await Agency.find({});
+
+        let agencyEmails = agencydata.map(e=>e.corporate_email.toString());
+
+        sgMail.setApiKey(process.env.SENDGRID)
+        const new_msg = {
+          to: agencyEmails, // Change to your recipient
+          from: 'info@hire2inspire.com', // Change to your verified sender
+          subject: `New Job Posting`,
+            html:`
+            <head>
+                <title>Notification:New Job Posting</title>
+          </head>
+          <body>
+          <p>Subject: Calling All Talent Architects, A New Blueprint Awaits!</p>
+          <p>Dear Agency,</p>
+          <p>Greetings from hire2Inspire! We are thrilled to unveil a bold new blueprint that demands the expertise and finesse your agency can provide.</p>
+          <p>Our latest mandate is not just another project – it's an opportunity to shape careers, transform organizations, and leave an indelible mark on the landscape of talent acquisition.</p>
+          <p>Let us leverage our collective expertise to bring this blueprint to life.</p>
+          <p>(Job details and link of the job to be provided here posted on H2I)</p>
+          <p>Regards,</p>
+          <p>hire2Inspire</p>
+      </body>
+        `
+      }
+        sgMail
+          .sendMultiple(new_msg)
+          .then(() => {
+            console.log('Email sent')
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+  
+  
 
             if (result) {
                 let userCreditData2;
